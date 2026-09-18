@@ -1,0 +1,501 @@
+{
+  "chinese_katta": {
+    "restaurantName": "The Chinese Katta",
+    "legalEntityName": "RAMDAS POPAT KSHIRSAGAR",
+    "address": "Shop 9, Laxmi Chowk, Maharaja Food Court, Ward 5, Hinjawadi, Pune",
+    "fssai": "21526037000511",
+    "gstin": "UNREGISTERED",
+    "menu": [
+      {
+        "name": "Chicken Chilli Dry",
+        "price": 205,
+        "category": "Mains"
+      },
+      {
+        "name": "Chicken 65 Dry",
+        "price": 215,
+        "category": "Mains"
+      },
+      {
+        "name": "Chicken Triple Rice",
+        "price": 210,
+        "category": "Rice"
+      },
+      {
+        "name": "Chicken 65 Gravy",
+        "price": 215,
+        "category": "Mains"
+      },
+      {
+        "name": "Mushroom Manchurian Gravy",
+        "price": 220,
+        "category": "Mains"
+      },
+      {
+        "name": "Paneer Manchurian Gravy",
+        "price": 210,
+        "category": "Mains"
+      },
+      {
+        "name": "Chicken Combination Noodles",
+        "price": 200,
+        "category": "Noodles"
+      },
+      {
+        "name": "Chicken Lollipop Gravy",
+        "price": 200,
+        "category": "Starter"
+      },
+      {
+        "name": "Chicken Lollipop Masala",
+        "price": 190,
+        "category": "Starter"
+      },
+      {
+        "name": "Mushroom Manchurian Dry",
+        "price": 210,
+        "category": "Starter"
+      },
+      {
+        "name": "Crispy Paneer",
+        "price": 210,
+        "category": "Starter"
+      },
+      {
+        "name": "Paneer Manchurian Dry",
+        "price": 200,
+        "category": "Starter"
+      }
+    ],
+    "defaultPackaging": 5.0
+  },
+  "wow_momo": {
+    "restaurantName": "WOW! Momo",
+    "legalEntityName": "Wow Momo Foods Pvt Ltd",
+    "address": "Shop 14, VJ Happiness Street, Hinjawadi, Pune",
+    "fssai": "11524083000945",
+    "gstin": "27AABCW6316K2Z2",
+    "menu": [
+      {
+        "name": "Crunchy Kurkure Paneer Masala Momo [5pcs]",
+        "price": 209,
+        "category": "Momos"
+      },
+      {
+        "name": "Chicken Pahari Feast Chilli Momo [20pcs]",
+        "price": 499,
+        "category": "Feast Platters"
+      },
+      {
+        "name": "Corn & Cheese Fried Momos",
+        "price": 219,
+        "category": "Momos"
+      },
+      {
+        "name": "Chicken Darjeeling Fried Momo",
+        "price": 209,
+        "category": "Momos"
+      },
+      {
+        "name": "Chicken Cheese Fried Momo",
+        "price": 239,
+        "category": "Momos"
+      },
+      {
+        "name": "Chatpata Paneer Fried Momo",
+        "price": 209,
+        "category": "Momos"
+      },
+      {
+        "name": "Chicken Masala Fried Momo",
+        "price": 219,
+        "category": "Momos"
+      },
+      {
+        "name": "Corn Cheese Korean Spicy Momo - New",
+        "price": 219,
+        "category": "Korean Spicy"
+      },
+      {
+        "name": "Chicken Cheese Korean Spicy Momo - New",
+        "price": 259,
+        "category": "Korean Spicy"
+      },
+      {
+        "name": "Veg Hot Garlic Pan Fried Momo in Tomato Garlic Sauce",
+        "price": 209,
+        "category": "Pan Fried"
+      }
+    ],
+    "defaultPackaging": 7.08
+  },
+  "gharse": {
+    "restaurantName": "GharSe - Homestyle & Healthy Tiffins",
+    "legalEntityName": "EATCLUB BRANDS PRIVATE LIMITED",
+    "address": "Shop 15/16, Gawariwadi, A/P Maan, Taluka - Mulshi, Hinjawadi, Pune",
+    "fssai": "11521036001483",
+    "gstin": "27AAGCP7465F1Z4",
+    "menu": [
+      {
+        "name": "Sunday Rajma (100ml)",
+        "price": 60,
+        "category": "Curries"
+      },
+      {
+        "name": "Sunday Rajma (250ml)",
+        "price": 140,
+        "category": "Curries"
+      },
+      {
+        "name": "Sunday Rajma (500ml)",
+        "price": 220,
+        "category": "Curries"
+      },
+      {
+        "name": "Chole (100ml)",
+        "price": 60,
+        "category": "Curries"
+      },
+      {
+        "name": "Chole (250ml)",
+        "price": 140,
+        "category": "Curries"
+      },
+      {
+        "name": "Chole (500ml)",
+        "price": 220,
+        "category": "Curries"
+      },
+      {
+        "name": "Dal Makhani (100ml)",
+        "price": 70,
+        "category": "Dal"
+      },
+      {
+        "name": "Dal Makhani (250ml)",
+        "price": 160,
+        "category": "Dal"
+      },
+      {
+        "name": "Dal Makhani (500ml)",
+        "price": 270,
+        "category": "Dal"
+      },
+      {
+        "name": "Dum Aloo (250ml)",
+        "price": 150,
+        "category": "Curries"
+      },
+      {
+        "name": "Dum Aloo (500ml)",
+        "price": 270,
+        "category": "Curries"
+      },
+      {
+        "name": "Matar Paneer (250ml)",
+        "price": 190,
+        "category": "Curries"
+      },
+      {
+        "name": "Matar Paneer (500ml)",
+        "price": 310,
+        "category": "Curries"
+      },
+      {
+        "name": "Mom's Special Paneer (250ml/500ml)",
+        "price": 380,
+        "category": "Curries"
+      },
+      {
+        "name": "Ghee Paratha (Pack of 3)",
+        "price": 70,
+        "category": "Breads"
+      },
+      {
+        "name": "Ghee Paratha (Pack of 9)",
+        "price": 180,
+        "category": "Breads"
+      },
+      {
+        "name": "Steamed Basmati Rice (Half | 160 gm)",
+        "price": 80,
+        "category": "Rice"
+      },
+      {
+        "name": "Steamed Basmati Rice",
+        "price": 150,
+        "category": "Rice"
+      },
+      {
+        "name": "Plain Raita (100ml)",
+        "price": 35,
+        "category": "Sides"
+      },
+      {
+        "name": "Mini Aloo Samosa (Pack of 3)",
+        "price": 69,
+        "category": "Snacks"
+      },
+      {
+        "name": "Mini Aloo Samosa (Pack of 6)",
+        "price": 129,
+        "category": "Snacks"
+      },
+      {
+        "name": "Ghee Moong Dal Halwa (100gm)",
+        "price": 100,
+        "category": "Desserts"
+      },
+      {
+        "name": "Ghar Ke Gulab Jamun (100gm)",
+        "price": 100,
+        "category": "Desserts"
+      },
+      {
+        "name": "Fresh Masala Chaas (200ml)",
+        "price": 40,
+        "category": "Beverages"
+      },
+      {
+        "name": "Coke [475 ml]",
+        "price": 70,
+        "category": "Beverages"
+      },
+      {
+        "name": "Bisleri",
+        "price": 20,
+        "category": "Beverages"
+      }
+    ],
+    "defaultPackaging": 29.0
+  },
+  "nawabs_of_north": {
+    "restaurantName": "Nawabs Of North",
+    "legalEntityName": "AYUSH PANDEY",
+    "address": "Survey 198/1, Shop 3, Crystal Market, Phase 3, Hinjewadi Rajiv Gandhi Infotech Park, Megapolis, Mann Taluka Mulshi, Hinjawadi, Pune",
+    "fssai": "21521180000539",
+    "gstin": "UNREGISTERED",
+    "menu": [
+      {
+        "name": "Ghar Wala Khana",
+        "price": 250,
+        "category": "Meals"
+      },
+      {
+        "name": "Nawabs Special Meal",
+        "price": 299,
+        "category": "Meals"
+      },
+      {
+        "name": "Special Veg Thali",
+        "price": 249,
+        "category": "Thali"
+      },
+      {
+        "name": "Veg Thali",
+        "price": 270,
+        "category": "Thali"
+      },
+      {
+        "name": "Butter Dal Khichdi",
+        "price": 249,
+        "category": "Meals"
+      },
+      {
+        "name": "Dal Khichdi",
+        "price": 289,
+        "category": "Meals"
+      },
+      {
+        "name": "Paneer Pulao",
+        "price": 250,
+        "category": "Rice"
+      },
+      {
+        "name": "Chole Bhature Special (Must Try)",
+        "price": 230,
+        "category": "Snacks"
+      },
+      {
+        "name": "Puri Bhaji (Must Try)",
+        "price": 149,
+        "category": "Snacks"
+      },
+      {
+        "name": "Aaloo Kulcha",
+        "price": 239,
+        "category": "Snacks"
+      },
+      {
+        "name": "Paneer Kulcha",
+        "price": 269,
+        "category": "Snacks"
+      },
+      {
+        "name": "Dum Aloo Punjabi (Nawabs Special)",
+        "price": 352,
+        "category": "Veggie Main Course"
+      },
+      {
+        "name": "Kurkuri Bhindi",
+        "price": 272,
+        "category": "Veggie Main Course"
+      },
+      {
+        "name": "Mushroom Masala",
+        "price": 320,
+        "category": "Veggie Main Course"
+      },
+      {
+        "name": "Veg Kadhai",
+        "price": 304,
+        "category": "Veggie Main Course"
+      },
+      {
+        "name": "Veg Maratha",
+        "price": 336,
+        "category": "Veggie Main Course"
+      },
+      {
+        "name": "Veg Kolhapuri",
+        "price": 320,
+        "category": "Veggie Main Course"
+      },
+      {
+        "name": "Paneer Kolhapuri Combo",
+        "price": 288,
+        "category": "Combos"
+      },
+      {
+        "name": "Butter Naan",
+        "price": 65,
+        "category": "Breads"
+      },
+      {
+        "name": "Butter Tandoor Roti",
+        "price": 45,
+        "category": "Breads"
+      },
+      {
+        "name": "Butter Tawa Roti (Butter Fulka)",
+        "price": 25,
+        "category": "Breads"
+      },
+      {
+        "name": "Plain Tawa Roti (Fulka)",
+        "price": 27,
+        "category": "Breads"
+      },
+      {
+        "name": "Tawa Laccha Paratha",
+        "price": 39,
+        "category": "Breads"
+      },
+      {
+        "name": "Poori (3pc)",
+        "price": 75,
+        "category": "Breads"
+      },
+      {
+        "name": "Tandoori Plain Roti",
+        "price": 39,
+        "category": "Breads"
+      }
+    ],
+    "defaultPackaging": 5.0
+  },
+  "pizza_hut": {
+    "restaurantName": "PIZZAHUT",
+    "legalEntityName": "Devyani International Ltd.",
+    "address": "Shop.4 & 5, Ground Floor, VJ Happiness Street, Hinjewadi, Pune",
+    "fssai": "11522083000418",
+    "gstin": "27AABCD5534A1Z5",
+    "menu": [
+      {
+        "name": "Garlic Breadsticks",
+        "price": 78.58,
+        "category": "Sides"
+      },
+      {
+        "name": "Cheesy Garlic Bread Stix",
+        "price": 114.62,
+        "category": "Sides"
+      },
+      {
+        "name": "Pepsi PET Bottle@60",
+        "price": 57.0,
+        "category": "Beverages"
+      },
+      {
+        "name": "Bold BBQ Veggies-MED",
+        "price": 359.72,
+        "category": "Pizzas"
+      },
+      {
+        "name": "Bold BBQ Veggies-Ultimate Cheese MED",
+        "price": 431.09,
+        "category": "Pizzas"
+      },
+      {
+        "name": "Country Feast New -MED",
+        "price": 348.83,
+        "category": "Pizzas"
+      },
+      {
+        "name": "Tandoori Paneer New -MED",
+        "price": 380.69,
+        "category": "Pizzas"
+      },
+      {
+        "name": "Veggie Feast New -MED",
+        "price": 289.98,
+        "category": "Pizzas"
+      },
+      {
+        "name": "Classic Corn Flavour Fun Combo (Pizza + Dip + Breadsticks + Pepsi)",
+        "price": 99.0,
+        "category": "Combos"
+      },
+      {
+        "name": "Classic Onion Capsicum Combo (Pizza + Dip + Breadsticks + Pepsi)",
+        "price": 99.0,
+        "category": "Combos"
+      },
+      {
+        "name": "Classic Onion Combo (Pizza + Dip + Breadsticks + Pepsi)",
+        "price": 99.0,
+        "category": "Combos"
+      },
+      {
+        "name": "Margherita T&C Crust",
+        "price": 439.0,
+        "category": "Pizzas"
+      },
+      {
+        "name": "Tomato Ketchup Sachet",
+        "price": 0.95,
+        "category": "Sides"
+      },
+      {
+        "name": "Veg Mayonnaise Dip 20 Gm",
+        "price": 25.0,
+        "category": "Sides"
+      },
+      {
+        "name": "Tandoori Paneer MED Meal Deal (Pizza + Garlic Bread + 2 Pepsi)",
+        "price": 579.0,
+        "category": "Meal Deals"
+      },
+      {
+        "name": "Veggie Supreme MED Meal Deal (Pizza + Garlic Bread + 2 Pepsi)",
+        "price": 579.0,
+        "category": "Meal Deals"
+      },
+      {
+        "name": "Veggie Supreme New - MED",
+        "price": 380.69,
+        "category": "Pizzas"
+      }
+    ]
+  }
+}

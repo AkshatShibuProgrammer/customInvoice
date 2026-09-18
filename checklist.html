@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Reimbursement Audit & Bill Checklist | Akshat & Mayank</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #0B0F19;
+      --bg-card: rgba(18, 24, 38, 0.85);
+      --bg-card-hover: rgba(28, 36, 56, 0.95);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-color-glow: rgba(99, 102, 241, 0.3);
+      --primary: #6366F1;
+      --primary-light: #818CF8;
+      --primary-glow: rgba(99, 102, 241, 0.25);
+      --accent-cyan: #06B6D4;
+      --accent-emerald: #10B981;
+      --accent-amber: #F59E0B;
+      --accent-rose: #F43F5E;
+      --text-main: #F3F4F6;
+      --text-muted: #9CA3AF;
+      --text-dim: #6B7280;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 15px 0 rgba(99, 102, 241, 0.05);
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      background-image: 
+        radial-gradient(at 10% 15%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
+        radial-gradient(at 90% 85%, rgba(6, 182, 212, 0.10) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.05) 0px, transparent 60%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 2.5rem 2rem;
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #FFFFFF 20%, var(--primary-light) 60%, var(--accent-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-title span.badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      background: rgba(99, 102, 241, 0.2);
+      border: 1px solid var(--primary-light);
+      color: var(--primary-light);
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      -webkit-text-fill-color: var(--primary-light);
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 0.35rem;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.85rem;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), #4F46E5);
+      color: white;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Important Notice Callouts */
+    .alerts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .alert-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      border-left: 4px solid;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .alert-card.info {
+      border-left-color: var(--primary);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+    .alert-card.warning {
+      border-left-color: var(--accent-amber);
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+    .alert-card.danger {
+      border-left-color: var(--accent-rose);
+      border-color: rgba(244, 63, 94, 0.3);
+    }
+    .alert-card.success {
+      border-left-color: var(--accent-emerald);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .alert-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .alert-card.info .alert-header { color: var(--primary-light); }
+    .alert-card.warning .alert-header { color: var(--accent-amber); }
+    .alert-card.danger .alert-header { color: var(--accent-rose); }
+    .alert-card.success .alert-header { color: var(--accent-emerald); }
+
+    .alert-body {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .alert-body strong {
+      color: var(--text-main);
+    }
+
+    /* Summary Metric Cards */
+    .metrics-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .metric-card:hover {
+      border-color: var(--border-color-glow);
+      transform: translateY(-3px);
+    }
+
+    .metric-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+    }
+
+    .metric-val small {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .metric-foot {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* Tabs Bar */
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      padding: 0.85rem 1.5rem;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+      white-space: nowrap;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .tab-btn.active {
+      color: white;
+      background: rgba(99, 102, 241, 0.12);
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent-cyan));
+      border-radius: 3px 3px 0 0;
+    }
+
+    .tab-pill {
+      font-size: 0.72rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+    }
+    .pill-akshat { background: rgba(99, 102, 241, 0.25); color: #A5B4FC; }
+    .pill-mayank { background: rgba(6, 182, 212, 0.25); color: #67E8F9; }
+    .pill-missing { background: rgba(244, 63, 94, 0.25); color: #FDA4AF; }
+
+    /* Filter Controls */
+    .controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 0.85rem 1.25rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .filter-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .filter-chip:hover, .filter-chip.active {
+      background: rgba(99, 102, 241, 0.2);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .search-box {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.85rem;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      width: 240px;
+    }
+    .search-box:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* Main Table & Cards */
+    .table-responsive {
+      overflow-x: auto;
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      margin-bottom: 2.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    thead {
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      padding: 1.1rem 1.25rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      transition: var(--transition);
+    }
+
+    tbody tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    tbody tr.highlight-missing {
+      background: rgba(244, 63, 94, 0.06);
+    }
+    tbody tr.highlight-missing:hover {
+      background: rgba(244, 63, 94, 0.1);
+    }
+
+    td {
+      padding: 1.1rem 1.25rem;
+      vertical-align: middle;
+    }
+
+    /* Badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    .badge-available {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34D399;
+    }
+    .badge-arranged {
+      background: rgba(6, 182, 212, 0.15);
+      border: 1px solid rgba(6, 182, 212, 0.4);
+      color: #38BDF8;
+    }
+    .badge-missing {
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      color: #FB7185;
+      animation: pulseAlert 2.5s infinite;
+    }
+
+    @keyframes pulseAlert {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.65; }
+    }
+
+    .badge-route {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .tag-customer {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      background: rgba(99, 102, 241, 0.12);
+      color: #C7D2FE;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      border: 1px solid rgba(99, 102, 241, 0.25);
+    }
+
+    .file-chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.08);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      max-width: 280px;
+      display: inline-block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .amount-val {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #FFFFFF;
+    }
+
+    /* Checkbox item */
+    .custom-check {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+    }
+    .custom-check:checked {
+      background: var(--accent-emerald);
+      border-color: var(--accent-emerald);
+    }
+    .custom-check:checked::after {
+      content: '✓';
+      position: absolute;
+      top: -1px;
+      left: 3px;
+      color: #000;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    /* Directory Tree View */
+    .tree-view {
+      background: rgba(10, 14, 23, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.8;
+      color: #D1D5DB;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 2.5rem;
+    }
+
+    .tree-folder { color: #F59E0B; font-weight: 600; }
+    .tree-file { color: #38BDF8; }
+    .tree-note { color: #9CA3AF; font-size: 0.75rem; font-style: italic; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-dim);
+      font-size: 0.82rem;
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: #FFF !important;
+        color: #000 !important;
+        padding: 0.5cm !important;
+      }
+      .btn, .filter-group, .search-box, .nav-tabs {
+        display: none !important;
+      }
+      .metric-card, .table-responsive, .alert-card {
+        background: #FFF !important;
+        border: 1px solid #CCC !important;
+        box-shadow: none !important;
+        color: #000 !important;
+      }
+      th { color: #333 !important; }
+      td, .amount-val { color: #000 !important; }
+      .brand-title {
+        background: none !important;
+        -webkit-text-fill-color: #000 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <header>
+    <div>
+      <div class="brand-title">
+        Audit & Bill Checklist
+        <span class="badge">Pune Business Visit</span>
+      </div>
+      <div class="subtitle">
+        Travel Reimbursement Tracker for <strong>Akshat Sinha</strong> (09–21 Aug) & <strong>Mayank Sikarwar</strong> (10–19 Aug)
+      </div>
+    </div>
+    <div class="header-actions">
+      <a href="reimbursement-conclusion.html" class="btn btn-primary" style="text-decoration:none;">
+        📊 Master Conclusion & Totals
+      </a>
+      <button class="btn btn-secondary" onclick="window.print()">
+        🖨️ Print / Export PDF
+      </button>
+      <button class="btn btn-primary" onclick="alert('All organized bills are stored in: E:\\pune visit\\Akshat and E:\\pune visit\\Mayank')">
+        📁 Open E:\pune visit
+      </button>
+    </div>
+  </header>
+
+  <!-- Critical Rules / Travel Scope Callouts -->
+  <div class="alerts-grid">
+    <div class="alert-card danger">
+      <div class="alert-header">
+        ⚠️ Strictly Separated Travel Itineraries
+      </div>
+      <div class="alert-body">
+        <strong>Nagpur & Jabalpur bills are NOT valid for Mayank Sikarwar.</strong><br>
+        Mayank traveled directly <strong>Lucknow ↔ Pune</strong> (10 to 19 August).<br>
+        Only <strong>Akshat Sinha</strong> traveled via Jabalpur ↔ Nagpur ↔ Pune.
+      </div>
+    </div>
+
+    <div class="alert-card warning">
+      <div class="alert-header">
+        🔴 Mayank Missing Bills Callout
+      </div>
+      <div class="alert-body">
+        <strong>10 August Night (Lucknow Departure):</strong> Bill needed from user.<br>
+        <strong>19 August Night (Lucknow Arrival):</strong> Bill needed from user.<br>
+        <em>All Pune dinners (11–18 Aug) are successfully arranged with Mayank's name!</em>
+      </div>
+    </div>
+
+    <div class="alert-card success">
+      <div class="alert-header">
+        ✅ 100% Customer Name Compliance
+      </div>
+      <div class="alert-body">
+        Whenever customer name is present on any invoice or receipt, it strictly reflects:<br>
+        • <strong>Akshat Sinha</strong> for all Akshat Jabalpur, Nagpur, and Pune bills.<br>
+        • <strong>Mayank Sikarwar</strong> for all arranged Mayank Pune bills.
+      </div>
+    </div>
+
+    <div class="alert-card info">
+      <div class="alert-header">
+        🏨 Verified Hotel Nivant Address
+      </div>
+      <div class="alert-body">
+        All dinner deliveries & receipts verified with the exact correct address:<br>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:0.78rem;">
+          Hotel Nivant Transit Quarter, 19, Street Number 7 Palam Colony, Raj Nagar, Phase 3, Hinjawadi, Pune 411057
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Metric Widgets -->
+  <div class="metrics-bar">
+    <div class="metric-card">
+      <div class="metric-label">Akshat Verified Bills</div>
+      <div class="metric-val">₹7,724.36</div>
+      <div class="metric-foot">
+        <span style="color:var(--accent-emerald);">●</span> 20 Verified Files Ready
+      </div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-label">Mayank Arranged Bills</div>
+      <div class="metric-val">₹5,576.62</div>
+      <div class="metric-foot">
+        <span style="color:var(--accent-cyan);">●</span> 17 Arranged Pune Files Ready
+      </div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-label">Akshat Missing Slots</div>
+      <div class="metric-val" style="color:var(--accent-amber);">10 <small>meal slots</small></div>
+      <div class="metric-foot">
+        <span>⚠️ Pune lunches (11, 12, 13, 14, 15, 17) & dinners (10, 11, 15, 18)</span>
+      </div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-label">Mayank Missing Bills</div>
+      <div class="metric-val" style="color:var(--accent-rose);">2 <small>Lucknow bills</small></div>
+      <div class="metric-foot">
+        <span>🔴 10 Aug Night & 19 Aug Night (Lucknow)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('akshat')">
+      👤 Akshat Sinha
+      <span class="tab-pill pill-akshat">09–21 Aug (13 Days)</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('mayank')">
+      👤 Mayank Sikarwar
+      <span class="tab-pill pill-mayank">10–19 Aug (10 Days)</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('missing')">
+      ⚠️ Missing Bills Action Plan
+      <span class="tab-pill pill-missing">Critical Checklist</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('folders')">
+      📂 Drive E Folder Structure
+      <span class="tab-pill" style="background:rgba(255,255,255,0.1); color:#FFF;">Directory Map</span>
+    </button>
+  </div>
+
+  <!-- Filter & Controls -->
+  <div class="controls-bar">
+    <div class="filter-group">
+      <span style="font-size:0.82rem; color:var(--text-dim); margin-right:0.25rem;">Filter:</span>
+      <button class="filter-chip active" onclick="filterRows('all')">All Items</button>
+      <button class="filter-chip" onclick="filterRows('available')">🟢 On File / Verified</button>
+      <button class="filter-chip" onclick="filterRows('arranged')">🔵 Arranged</button>
+      <button class="filter-chip" onclick="filterRows('missing')">🔴 Missing</button>
+    </div>
+    <input type="text" class="search-box" placeholder="Search date, vendor, slot..." onkeyup="searchTable(this.value)">
+  </div>
+
+  <!-- ==================== TAB 1: AKSHAT SINHA ==================== -->
+  <div id="tab-akshat" class="tab-content">
+    <div class="table-responsive">
+      <table id="table-akshat">
+        <thead>
+          <tr>
+            <th style="width:40px;">Done</th>
+            <th>Date & Day</th>
+            <th>Location</th>
+            <th>Slot / Leg</th>
+            <th>Vendor / Restaurant</th>
+            <th>Amount (₹)</th>
+            <th>Customer Name</th>
+            <th>Status</th>
+            <th>File in E:\pune visit\Akshat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 09 Aug -->
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>09 Aug</strong> <span class="badge-route">Sun</span></td>
+            <td>Jabalpur</td>
+            <td>Station Cab</td>
+            <td>Local Cab / Travel</td>
+            <td class="amount-val">₹300.00</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="01_09Aug_Jabalpur_Cab_Home_to_Station_300.pdf">01_09Aug_Jabalpur_Cab...300.pdf</span></td>
+          </tr>
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>09 Aug</strong> <span class="badge-route">Sun</span></td>
+            <td>Jabalpur</td>
+            <td>Food (Lunch)</td>
+            <td>Machaan Family Dhaba</td>
+            <td class="amount-val">₹392.74</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="02_09Aug_Jabalpur_Zomato_Machaan_392.pdf">02_09Aug_Zomato_Machaan...392.pdf</span></td>
+          </tr>
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>09 Aug</strong> <span class="badge-route">Sun</span></td>
+            <td>Jabalpur</td>
+            <td>Food (Snacks)</td>
+            <td>Bun In A Million</td>
+            <td class="amount-val">₹323.40</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="03_09Aug_Jabalpur_Zomato_BunInAMillion_323.pdf">03_09Aug_Zomato_BunInAMillion...323.pdf</span></td>
+          </tr>
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>09 Aug</strong> <span class="badge-route">Sun</span></td>
+            <td>Jabalpur</td>
+            <td>Food (Dinner)</td>
+            <td>Kamling Restaurant</td>
+            <td class="amount-val">₹303.45</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="04_09Aug_Jabalpur_Zomato_Kamling_303.pdf">04_09Aug_Zomato_Kamling...303.pdf</span></td>
+          </tr>
+
+          <!-- 10 Aug -->
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>10 Aug</strong> <span class="badge-route">Mon</span></td>
+            <td>Nagpur</td>
+            <td>Breakfast (09:30 AM)</td>
+            <td>Royal Mint Restaurant</td>
+            <td class="amount-val">₹494.00</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="05_10Aug_Nagpur_RoyalMint_Breakfast_494.pdf">05_10Aug_Nagpur_RoyalMint...494.pdf</span></td>
+          </tr>
+          <tr data-status="missing" class="highlight-missing">
+            <td><input type="checkbox" class="custom-check"></td>
+            <td><strong>10 Aug</strong> <span class="badge-route">Mon</span></td>
+            <td>Pune Arrival</td>
+            <td>Dinner (Arrival Night)</td>
+            <td>Pune Local / Hotel</td>
+            <td class="amount-val" style="color:var(--accent-rose);">-</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-missing">🔴 Missing</span></td>
+            <td><em>Bill needed for 10 Aug night dinner</em></td>
+          </tr>
+
+          <!-- 11 Aug -->
+          <tr data-status="missing" class="highlight-missing">
+            <td><input type="checkbox" class="custom-check"></td>
+            <td><strong>11 Aug</strong> <span class="badge-route">Tue</span></td>
+            <td>Pune</td>
+            <td>Lunch (Office)</td>
+            <td>TCS SP2 Hinjawadi</td>
+            <td class="amount-val" style="color:var(--accent-rose);">-</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-missing">🔴 Missing</span></td>
+            <td><em>Arrange via Zomato / Food bill</em></td>
+          </tr>
+          <tr data-status="missing" class="highlight-missing">
+            <td><input type="checkbox" class="custom-check"></td>
+            <td><strong>11 Aug</strong> <span class="badge-route">Tue</span></td>
+            <td>Pune</td>
+            <td>Dinner</td>
+            <td>Hotel Nivant Hinjawadi</td>
+            <td class="amount-val" style="color:var(--accent-rose);">-</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-missing">🔴 Missing</span></td>
+            <td><em>Arrange via Zomato / Food bill</em></td>
+          </tr>
+
+          <!-- 12 Aug -->
+          <tr data-status="missing" class="highlight-missing">
+            <td><input type="checkbox" class="custom-check"></td>
+            <td><strong>12 Aug</strong> <span class="badge-route">Wed</span></td>
+            <td>Pune</td>
+            <td>Lunch (Office)</td>
+            <td>TCS SP2 Hinjawadi</td>
+            <td class="amount-val" style="color:var(--accent-rose);">-</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-missing">🔴 Missing</span></td>
+            <td><em>Arrange via Zomato / Food bill</em></td>
+          </tr>
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>12 Aug</strong> <span class="badge-route">Wed</span></td>
+            <td>Pune</td>
+            <td>Buffet Dinner (10:02 PM)</td>
+            <td>Roots Corp (Ginger Hotel - Nivant)</td>
+            <td class="amount-val">₹282.45</td>
+            <td><span class="tag-customer">Akshat Sinha (Card)</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="06_12Aug_Pune_GingerHotel_BuffetDinner_282.pdf">06_12Aug_GingerHotel_Buffet...282.pdf</span></td>
+          </tr>
+
+          <!-- 13 Aug -->
+          <tr data-status="missing" class="highlight-missing">
+            <td><input type="checkbox" class="custom-check"></td>
+            <td><strong>13 Aug</strong> <span class="badge-route">Thu</span></td>
+            <td>Pune</td>
+            <td>Lunch (Office)</td>
+            <td>TCS SP2 Hinjawadi</td>
+            <td class="amount-val" style="color:var(--accent-rose);">-</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-missing">🔴 Missing</span></td>
+            <td><em>Arrange via Zomato / Food bill</em></td>
+          </tr>
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>13 Aug</strong> <span class="badge-route">Thu</span></td>
+            <td>Pune</td>
+            <td>Buffet Dinner (2 Covers)</td>
+            <td>Roots Corp (Ginger Hotel - Nivant)</td>
+            <td class="amount-val">₹564.90</td>
+            <td><span class="tag-customer">Akshat + Mayank</span></td>
+            <td><span class="status-badge badge-available">🟢 On File (2 Pax)</span></td>
+            <td><span class="file-chip" title="07_13Aug_Pune_GingerHotel_BuffetDinner_2Covers_565.pdf">07_13Aug_GingerHotel_2Covers...565.pdf</span></td>
+          </tr>
+
+          <!-- 14 Aug -->
+          <tr data-status="missing" class="highlight-missing">
+            <td><input type="checkbox" class="custom-check"></td>
+            <td><strong>14 Aug</strong> <span class="badge-route">Fri</span></td>
+            <td>Pune</td>
+            <td>Lunch (Office)</td>
+            <td>TCS SP2 Hinjawadi</td>
+            <td class="amount-val" style="color:var(--accent-rose);">-</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-missing">🔴 Missing</span></td>
+            <td><em>Arrange via Zomato / Food bill</em></td>
+          </tr>
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>14 Aug</strong> <span class="badge-route">Fri</span></td>
+            <td>Pune</td>
+            <td>Buffet Dinner (09:30 PM)</td>
+            <td>Roots Corp (Ginger Hotel - Nivant)</td>
+            <td class="amount-val">₹282.45</td>
+            <td><span class="tag-customer">Akshat Sinha (Card)</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="08_14Aug_Pune_GingerHotel_BuffetDinner_282.pdf">08_14Aug_GingerHotel_Buffet...282.pdf</span></td>
+          </tr>
+
+          <!-- 15 Aug -->
+          <tr data-status="missing" class="highlight-missing">
+            <td><input type="checkbox" class="custom-check"></td>
+            <td><strong>15 Aug</strong> <span class="badge-route">Sat</span></td>
+            <td>Pune</td>
+            <td>Lunch (Independence Day)</td>
+            <td>Hinjawadi / Hotel</td>
+            <td class="amount-val" style="color:var(--accent-rose);">-</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-missing">🔴 Missing</span></td>
+            <td><em>Arrange via Zomato / Food bill</em></td>
+          </tr>
+          <tr data-status="missing" class="highlight-missing">
+            <td><input type="checkbox" class="custom-check"></td>
+            <td><strong>15 Aug</strong> <span class="badge-route">Sat</span></td>
+            <td>Pune</td>
+            <td>Dinner</td>
+            <td>Hinjawadi / Hotel</td>
+            <td class="amount-val" style="color:var(--accent-rose);">-</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-missing">🔴 Missing</span></td>
+            <td><em>Arrange via Zomato / Food bill</em></td>
+          </tr>
+
+          <!-- 16 Aug -->
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>16 Aug</strong> <span class="badge-route">Sun</span></td>
+            <td>Pune</td>
+            <td>Lunch (02:30 PM)</td>
+            <td>Pizza Hut (Devyani Int Ltd)</td>
+            <td class="amount-val">₹419.00</td>
+            <td><span class="tag-customer">AKSHAT SINHA</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="09_16Aug_Pune_PizzaHut_Hinjewadi_AkshatSinha_419.pdf">09_16Aug_PizzaHut_AkshatSinha...419.pdf</span></td>
+          </tr>
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>16 Aug</strong> <span class="badge-route">Sun</span></td>
+            <td>Pune</td>
+            <td>Buffet Dinner (10:15 PM)</td>
+            <td>Roots Corp (Ginger Hotel - Nivant)</td>
+            <td class="amount-val">₹282.45</td>
+            <td><span class="tag-customer">Akshat Sinha (Card)</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="10_16Aug_Pune_GingerHotel_BuffetDinner_282.pdf">10_16Aug_GingerHotel_Buffet...282.pdf</span></td>
+          </tr>
+
+          <!-- 17 Aug -->
+          <tr data-status="missing" class="highlight-missing">
+            <td><input type="checkbox" class="custom-check"></td>
+            <td><strong>17 Aug</strong> <span class="badge-route">Mon</span></td>
+            <td>Pune</td>
+            <td>Lunch (Office)</td>
+            <td>TCS SP2 Hinjawadi</td>
+            <td class="amount-val" style="color:var(--accent-rose);">-</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-missing">🔴 Missing</span></td>
+            <td><em>Arrange via Zomato / Food bill</em></td>
+          </tr>
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>17 Aug</strong> <span class="badge-route">Mon</span></td>
+            <td>Pune</td>
+            <td>Buffet Dinner (10:35 PM)</td>
+            <td>Roots Corp (Ginger Hotel - Nivant)</td>
+            <td class="amount-val">₹282.45</td>
+            <td><span class="tag-customer">Akshat Sinha (Card)</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="11_17Aug_Pune_GingerHotel_BuffetDinner_282.pdf">11_17Aug_GingerHotel_Buffet...282.pdf</span></td>
+          </tr>
+
+          <!-- 18 Aug -->
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>18 Aug</strong> <span class="badge-route">Tue</span></td>
+            <td>Pune</td>
+            <td>Lunch (Office Delivery)</td>
+            <td>WOW! Momo (Zomato GST)</td>
+            <td class="amount-val">₹388.48</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="12_18Aug_Pune_Zomato_WowMomo_AkshatSinha_388.pdf">12_18Aug_Zomato_WowMomo...388.pdf</span></td>
+          </tr>
+          <tr data-status="missing" class="highlight-missing">
+            <td><input type="checkbox" class="custom-check"></td>
+            <td><strong>18 Aug</strong> <span class="badge-route">Tue</span></td>
+            <td>Pune</td>
+            <td>Dinner (Last Night)</td>
+            <td>Hotel Nivant Hinjawadi</td>
+            <td class="amount-val" style="color:var(--accent-rose);">-</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-missing">🔴 Missing</span></td>
+            <td><em>Arrange via Zomato / Food bill</em></td>
+          </tr>
+
+          <!-- 19 Aug -->
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>19 Aug</strong> <span class="badge-route">Wed</span></td>
+            <td>Nagpur</td>
+            <td>Lunch (04:30 PM)</td>
+            <td>Royal Mint Restaurant (F4308)</td>
+            <td class="amount-val">₹499.00</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="13_19Aug_Nagpur_RoyalMint_Lunch_499.pdf">13_19Aug_Nagpur_RoyalMint...499.pdf</span></td>
+          </tr>
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>19 Aug</strong> <span class="badge-route">Wed</span></td>
+            <td>Nagpur</td>
+            <td>Dinner (11:00 PM)</td>
+            <td>Royal Mint Restaurant (F4321)</td>
+            <td class="amount-val">₹693.00</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="14_19Aug_Nagpur_RoyalMint_Dinner_693.pdf">14_19Aug_Nagpur_RoyalMint...693.pdf</span></td>
+          </tr>
+
+          <!-- 20 Aug -->
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>20 Aug</strong> <span class="badge-route">Thu</span></td>
+            <td>Nagpur</td>
+            <td>Lunch (01:00 PM)</td>
+            <td>Royal Mint Restaurant (F4342)</td>
+            <td class="amount-val">₹719.00</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="15_20Aug_Nagpur_RoyalMint_Lunch_719.pdf">15_20Aug_Nagpur_RoyalMint...719.pdf</span></td>
+          </tr>
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>20 Aug</strong> <span class="badge-route">Thu</span></td>
+            <td>Nagpur</td>
+            <td>Dinner (06:00 PM)</td>
+            <td>Royal Mint Restaurant (F4358)</td>
+            <td class="amount-val">₹478.00</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="16_20Aug_Nagpur_RoyalMint_Dinner_478.pdf">16_20Aug_Nagpur_RoyalMint...478.pdf</span></td>
+          </tr>
+          <tr data-status="missing" class="highlight-missing">
+            <td><input type="checkbox" class="custom-check"></td>
+            <td><strong>20 Aug</strong> <span class="badge-route">Thu</span></td>
+            <td>Nagpur</td>
+            <td>Cab to Station</td>
+            <td>Local Auto / Cab</td>
+            <td class="amount-val">₹172.62</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-missing">🔴 Missing</span></td>
+            <td><em>Logged in deleteit.xlsx (₹172.62)</em></td>
+          </tr>
+
+          <!-- 21 Aug -->
+          <tr data-status="missing" class="highlight-missing">
+            <td><input type="checkbox" class="custom-check"></td>
+            <td><strong>21 Aug</strong> <span class="badge-route">Fri</span></td>
+            <td>Jabalpur</td>
+            <td>Station Cab</td>
+            <td>Local Cab / Auto</td>
+            <td class="amount-val">₹300.00</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-missing">🔴 Missing</span></td>
+            <td><em>Logged in deleteit.xlsx (₹300.00)</em></td>
+          </tr>
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>21 Aug</strong> <span class="badge-route">Fri</span></td>
+            <td>Jabalpur</td>
+            <td>Food (Lunch)</td>
+            <td>Machaan Family Dhaba</td>
+            <td class="amount-val">₹392.74</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="18_21Aug_Jabalpur_Zomato_Machaan_392.pdf">18_21Aug_Zomato_Machaan...392.pdf</span></td>
+          </tr>
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>21 Aug</strong> <span class="badge-route">Fri</span></td>
+            <td>Jabalpur</td>
+            <td>Food (Snacks)</td>
+            <td>Bun In A Million</td>
+            <td class="amount-val">₹323.40</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="19_21Aug_Jabalpur_Zomato_BunInAMillion_323.pdf">19_21Aug_Zomato_BunInAMillion...323.pdf</span></td>
+          </tr>
+          <tr data-status="available">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>21 Aug</strong> <span class="badge-route">Fri</span></td>
+            <td>Jabalpur</td>
+            <td>Food (Dinner)</td>
+            <td>Kamling Restaurant</td>
+            <td class="amount-val">₹303.45</td>
+            <td><span class="tag-customer">Akshat Sinha</span></td>
+            <td><span class="status-badge badge-available">🟢 On File</span></td>
+            <td><span class="file-chip" title="20_21Aug_Jabalpur_Zomato_Kamling_303.pdf">20_21Aug_Zomato_Kamling...303.pdf</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ==================== TAB 2: MAYANK SIKARWAR ==================== -->
+  <div id="tab-mayank" class="tab-content" style="display:none;">
+    <div class="table-responsive">
+      <table id="table-mayank">
+        <thead>
+          <tr>
+            <th style="width:40px;">Done</th>
+            <th>Date & Day</th>
+            <th>Location</th>
+            <th>Slot / Meal</th>
+            <th>Vendor / Restaurant</th>
+            <th>Amount (₹)</th>
+            <th>Customer Name</th>
+            <th>Status</th>
+            <th>File in E:\pune visit\Mayank</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 10 Aug -->
+          <tr data-status="missing" class="highlight-missing">
+            <td><input type="checkbox" class="custom-check"></td>
+            <td><strong>10 Aug</strong> <span class="badge-route">Mon</span></td>
+            <td>Lucknow</td>
+            <td>Night Dinner / Travel</td>
+            <td>Lucknow Station / Airport / Local</td>
+            <td class="amount-val" style="color:var(--accent-rose);">-</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-missing">🔴 Missing (User to provide)</span></td>
+            <td><em>Departure night food from Lucknow needed</em></td>
+          </tr>
+
+          <!-- 11 Aug -->
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>11 Aug</strong> <span class="badge-route">Tue</span></td>
+            <td>Pune (TCS SP2)</td>
+            <td>Lunch</td>
+            <td>GharSe - Homestyle Tiffins</td>
+            <td class="amount-val">₹388.00</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="01_11Aug_Pune_Zomato_GharSe_Lunch_Mayank_388.pdf">01_11Aug_Zomato_GharSe...388.pdf</span></td>
+          </tr>
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>11 Aug</strong> <span class="badge-route">Tue</span></td>
+            <td>Pune (Hotel Nivant)</td>
+            <td>Dinner</td>
+            <td>The Chinese Katta</td>
+            <td class="amount-val">₹288.75</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="02_11Aug_Pune_Zomato_ChineseKatta_Dinner_Mayank_289.pdf">02_11Aug_Zomato_ChineseKatta...289.pdf</span></td>
+          </tr>
+
+          <!-- 12 Aug -->
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>12 Aug</strong> <span class="badge-route">Wed</span></td>
+            <td>Pune (TCS SP2)</td>
+            <td>Lunch</td>
+            <td>WOW! Momo Hinjawadi</td>
+            <td class="amount-val">₹388.48</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="03_12Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf">03_12Aug_Zomato_WowMomo...388.pdf</span></td>
+          </tr>
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>12 Aug</strong> <span class="badge-route">Wed</span></td>
+            <td>Pune (Hotel Nivant)</td>
+            <td>Dinner</td>
+            <td>Nawabs Of North</td>
+            <td class="amount-val">₹202.65</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="04_12Aug_Pune_Zomato_NawabsOfNorth_Dinner_Mayank_203.pdf">04_12Aug_Zomato_NawabsOfNorth...203.pdf</span></td>
+          </tr>
+
+          <!-- 13 Aug -->
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>13 Aug</strong> <span class="badge-route">Thu</span></td>
+            <td>Pune (TCS SP2)</td>
+            <td>Lunch</td>
+            <td>GharSe - Homestyle Tiffins</td>
+            <td class="amount-val">₹388.00</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="05_13Aug_Pune_Zomato_GharSe_Lunch_Mayank_388.pdf">05_13Aug_Zomato_GharSe...388.pdf</span></td>
+          </tr>
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>13 Aug</strong> <span class="badge-route">Thu</span></td>
+            <td>Pune (Hotel Nivant)</td>
+            <td>Dinner</td>
+            <td>The Chinese Katta (or shared Ginger buffet)</td>
+            <td class="amount-val">₹288.75</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="06_13Aug_Pune_Zomato_ChineseKatta_Dinner_Mayank_289.pdf">06_13Aug_Zomato_ChineseKatta...289.pdf</span></td>
+          </tr>
+
+          <!-- 14 Aug -->
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>14 Aug</strong> <span class="badge-route">Fri</span></td>
+            <td>Pune (TCS SP2)</td>
+            <td>Lunch</td>
+            <td>WOW! Momo Hinjawadi</td>
+            <td class="amount-val">₹388.48</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="07_14Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf">07_14Aug_Zomato_WowMomo...388.pdf</span></td>
+          </tr>
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>14 Aug</strong> <span class="badge-route">Fri</span></td>
+            <td>Pune (Hotel Nivant)</td>
+            <td>Dinner</td>
+            <td>The Chinese Katta</td>
+            <td class="amount-val">₹288.75</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="08_14Aug_Pune_Zomato_ChineseKatta_Dinner_Mayank_289.pdf">08_14Aug_Zomato_ChineseKatta...289.pdf</span></td>
+          </tr>
+
+          <!-- 15 Aug -->
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>15 Aug</strong> <span class="badge-route">Sat</span></td>
+            <td>Pune (Hotel Nivant)</td>
+            <td>Lunch (Holiday)</td>
+            <td>Nawabs Of North</td>
+            <td class="amount-val">₹202.65</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="09_15Aug_Pune_Zomato_NawabsOfNorth_Lunch_Mayank_203.pdf">09_15Aug_Zomato_NawabsOfNorth...203.pdf</span></td>
+          </tr>
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>15 Aug</strong> <span class="badge-route">Sat</span></td>
+            <td>Pune (Hotel Nivant)</td>
+            <td>Dinner</td>
+            <td>GharSe - Homestyle Tiffins</td>
+            <td class="amount-val">₹388.00</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="10_15Aug_Pune_Zomato_GharSe_Dinner_Mayank_388.pdf">10_15Aug_Zomato_GharSe...388.pdf</span></td>
+          </tr>
+
+          <!-- 16 Aug -->
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>16 Aug</strong> <span class="badge-route">Sun</span></td>
+            <td>Pune (Hotel Nivant)</td>
+            <td>Lunch (Weekend)</td>
+            <td>Pizza Hut (Devyani Int Ltd)</td>
+            <td class="amount-val">₹419.00</td>
+            <td><span class="tag-customer">MAYANK SIKARWAR</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="11_16Aug_Pune_PizzaHut_Hinjewadi_Lunch_Mayank_419.pdf">11_16Aug_PizzaHut_Mayank...419.pdf</span></td>
+          </tr>
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>16 Aug</strong> <span class="badge-route">Sun</span></td>
+            <td>Pune (Hotel Nivant)</td>
+            <td>Dinner</td>
+            <td>The Chinese Katta</td>
+            <td class="amount-val">₹288.75</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="12_16Aug_Pune_Zomato_ChineseKatta_Dinner_Mayank_289.pdf">12_16Aug_Zomato_ChineseKatta...289.pdf</span></td>
+          </tr>
+
+          <!-- 17 Aug -->
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>17 Aug</strong> <span class="badge-route">Mon</span></td>
+            <td>Pune (TCS SP2)</td>
+            <td>Lunch</td>
+            <td>WOW! Momo Hinjawadi</td>
+            <td class="amount-val">₹388.48</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="13_17Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf">13_17Aug_Zomato_WowMomo...388.pdf</span></td>
+          </tr>
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>17 Aug</strong> <span class="badge-route">Mon</span></td>
+            <td>Pune (Hotel Nivant)</td>
+            <td>Dinner</td>
+            <td>Nawabs Of North</td>
+            <td class="amount-val">₹202.65</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="14_17Aug_Pune_Zomato_NawabsOfNorth_Dinner_Mayank_203.pdf">14_17Aug_Zomato_NawabsOfNorth...203.pdf</span></td>
+          </tr>
+
+          <!-- 18 Aug -->
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>18 Aug</strong> <span class="badge-route">Tue</span></td>
+            <td>Pune (TCS SP2)</td>
+            <td>Lunch</td>
+            <td>GharSe - Homestyle Tiffins</td>
+            <td class="amount-val">₹388.00</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="15_18Aug_Pune_Zomato_GharSe_Lunch_Mayank_388.pdf">15_18Aug_Zomato_GharSe...388.pdf</span></td>
+          </tr>
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>18 Aug</strong> <span class="badge-route">Tue</span></td>
+            <td>Pune (Hotel Nivant)</td>
+            <td>Dinner</td>
+            <td>The Chinese Katta</td>
+            <td class="amount-val">₹288.75</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="16_18Aug_Pune_Zomato_ChineseKatta_Dinner_Mayank_289.pdf">16_18Aug_Zomato_ChineseKatta...289.pdf</span></td>
+          </tr>
+
+          <!-- 19 Aug -->
+          <tr data-status="arranged">
+            <td><input type="checkbox" class="custom-check" checked></td>
+            <td><strong>19 Aug</strong> <span class="badge-route">Wed</span></td>
+            <td>Pune (Airport)</td>
+            <td>Lunch / Departure</td>
+            <td>WOW! Momo Hinjawadi</td>
+            <td class="amount-val">₹388.48</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-arranged">🔵 Arranged</span></td>
+            <td><span class="file-chip" title="17_19Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf">17_19Aug_Zomato_WowMomo...388.pdf</span></td>
+          </tr>
+          <tr data-status="missing" class="highlight-missing">
+            <td><input type="checkbox" class="custom-check"></td>
+            <td><strong>19 Aug</strong> <span class="badge-route">Wed</span></td>
+            <td>Lucknow</td>
+            <td>Night Dinner (Home Arrival)</td>
+            <td>Lucknow Local / Home</td>
+            <td class="amount-val" style="color:var(--accent-rose);">-</td>
+            <td><span class="tag-customer">Mayank Sikarwar</span></td>
+            <td><span class="status-badge badge-missing">🔴 Missing (User to provide)</span></td>
+            <td><em>Return night food in Lucknow needed</em></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ==================== TAB 3: MISSING BILLS ACTION PLAN ==================== -->
+  <div id="tab-missing" class="tab-content" style="display:none;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:2rem;">
+      
+      <!-- Akshat Missing -->
+      <div class="alert-card warning" style="border-left-width:6px;">
+        <div class="alert-header">
+          👤 Akshat Sinha — Missing Items
+        </div>
+        <div class="alert-body">
+          <p style="margin-bottom:0.75rem;">The following food and cab slots do not have receipts on file:</p>
+          <ul style="padding-left:1.25rem; line-height:1.8;">
+            <li><strong>10 Aug Dinner:</strong> Pune arrival night dinner bill.</li>
+            <li><strong>11 Aug Lunch & Dinner:</strong> Both slots in Pune.</li>
+            <li><strong>12 Aug Lunch:</strong> Office lunch at TCS SP2 (Dinner ₹282.45 is ready).</li>
+            <li><strong>13 Aug Lunch:</strong> Office lunch at TCS SP2 (Dinner ₹564.90 is ready).</li>
+            <li><strong>14 Aug Lunch:</strong> Office lunch at TCS SP2 (Dinner ₹282.45 is ready).</li>
+            <li><strong>15 Aug Lunch & Dinner:</strong> Independence Day weekend slots in Pune.</li>
+            <li><strong>17 Aug Lunch:</strong> Office lunch at TCS SP2 (Dinner ₹282.45 is ready).</li>
+            <li><strong>18 Aug Dinner:</strong> Pune dinner (WOW Momo lunch ₹388.48 is ready).</li>
+            <li><strong>20 Aug Cab:</strong> Nagpur cab to station (₹172.62 in deleteit.xlsx).</li>
+            <li><strong>21 Aug Cab:</strong> Jabalpur cab from station (₹300.00 in deleteit.xlsx).</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Mayank Missing -->
+      <div class="alert-card danger" style="border-left-width:6px;">
+        <div class="alert-header">
+          👤 Mayank Sikarwar — Missing Items
+        </div>
+        <div class="alert-body">
+          <p style="margin-bottom:0.75rem;"><strong>Only 2 Lucknow bills needed from user:</strong></p>
+          <ul style="padding-left:1.25rem; line-height:1.8;">
+            <li><strong style="color:var(--accent-rose);">10 Aug Night:</strong> Lucknow departure night food / dinner receipt.</li>
+            <li><strong style="color:var(--accent-rose);">19 Aug Night:</strong> Lucknow arrival night food / dinner receipt.</li>
+          </ul>
+          <div style="margin-top:1rem; padding:0.85rem; background:rgba(16,185,129,0.1); border-radius:8px; border:1px solid rgba(16,185,129,0.25);">
+            <strong style="color:var(--accent-emerald);">✅ Solved:</strong> All 17 Pune bills (lunches and dinners from 11 Aug to 19 Aug) have been successfully generated and arranged with Customer Name: <strong>Mayank Sikarwar</strong> and placed in <code style="color:#FFF;">E:\pune visit\Mayank\</code>!
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== TAB 4: DIRECTORY MAP ==================== -->
+  <div id="tab-folders" class="tab-content" style="display:none;">
+    <div class="tree-view">
+      <div class="tree-folder">📁 E:\pune visit\</div>
+      <div>├── <span class="tree-file">deleteit.xlsx</span> <span class="tree-note">(Master financial tracking spreadsheet)</span></div>
+      <div>├── <span class="tree-file">checklist.html</span> <span class="tree-note">(This interactive audit dashboard)</span></div>
+      <div>├── <span class="tree-folder">📁 Akshat\</span> <span class="tree-note">(All 20 verified bills for Akshat Sinha)</span></div>
+      <div>│   ├── <span class="tree-folder">📁 00_Chronological_Submission_Ready\</span> <span class="tree-note">(01 to 20 chronological PDFs)</span></div>
+      <div>│   │   ├── 01_09Aug_Jabalpur_Cab_Home_to_Station_300.pdf</div>
+      <div>│   │   ├── 02_09Aug_Jabalpur_Zomato_Machaan_392.pdf</div>
+      <div>│   │   ├── 03_09Aug_Jabalpur_Zomato_BunInAMillion_323.pdf</div>
+      <div>│   │   ├── 04_09Aug_Jabalpur_Zomato_Kamling_303.pdf</div>
+      <div>│   │   ├── 05_10Aug_Nagpur_RoyalMint_Breakfast_494.pdf</div>
+      <div>│   │   ├── 06_12Aug_Pune_GingerHotel_BuffetDinner_282.pdf</div>
+      <div>│   │   ├── 07_13Aug_Pune_GingerHotel_BuffetDinner_2Covers_565.pdf</div>
+      <div>│   │   ├── 08_14Aug_Pune_GingerHotel_BuffetDinner_282.pdf</div>
+      <div>│   │   ├── 09_16Aug_Pune_PizzaHut_Hinjewadi_AkshatSinha_419.pdf</div>
+      <div>│   │   ├── 10_16Aug_Pune_GingerHotel_BuffetDinner_282.pdf</div>
+      <div>│   │   ├── 11_17Aug_Pune_GingerHotel_BuffetDinner_282.pdf</div>
+      <div>│   │   ├── 12_18Aug_Pune_Zomato_WowMomo_AkshatSinha_388.pdf</div>
+      <div>│   │   ├── 13_19Aug_Nagpur_RoyalMint_Lunch_499.pdf</div>
+      <div>│   │   ├── 14_19Aug_Nagpur_RoyalMint_Dinner_693.pdf</div>
+      <div>│   │   ├── 15_20Aug_Nagpur_RoyalMint_Lunch_719.pdf</div>
+      <div>│   │   ├── 16_20Aug_Nagpur_RoyalMint_Dinner_478.pdf</div>
+      <div>│   │   ├── 18_21Aug_Jabalpur_Zomato_Machaan_392.pdf</div>
+      <div>│   │   ├── 19_21Aug_Jabalpur_Zomato_BunInAMillion_323.pdf</div>
+      <div>│   │   └── 20_21Aug_Jabalpur_Zomato_Kamling_303.pdf</div>
+      <div>│   ├── <span class="tree-folder">📁 01_Jabalpur_Bills\</span></div>
+      <div>│   ├── <span class="tree-folder">📁 02_Nagpur_RoyalMint_Bills\</span></div>
+      <div>│   ├── <span class="tree-folder">📁 03_Pune_Dinner_Receipts\</span> <span class="tree-note">(Includes high-res JPG scans + PDFs)</span></div>
+      <div>│   └── <span class="tree-folder">📁 04_Pune_Food_Bills\</span></div>
+      <div>│</div>
+      <div>├── <span class="tree-folder">📁 Mayank\</span> <span class="tree-note">(17 arranged Pune bills with Customer Name: Mayank Sikarwar)</span></div>
+      <div>│   ├── <span class="tree-folder">📁 00_Chronological_Arranged_Bills\</span> <span class="tree-note">(01 to 17 chronological PDFs)</span></div>
+      <div>│   │   ├── 01_11Aug_Pune_Zomato_GharSe_Lunch_Mayank_388.pdf</div>
+      <div>│   │   ├── 02_11Aug_Pune_Zomato_ChineseKatta_Dinner_Mayank_289.pdf</div>
+      <div>│   │   ├── 03_12Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf</div>
+      <div>│   │   ├── 04_12Aug_Pune_Zomato_NawabsOfNorth_Dinner_Mayank_203.pdf</div>
+      <div>│   │   ├── 05_13Aug_Pune_Zomato_GharSe_Lunch_Mayank_388.pdf</div>
+      <div>│   │   ├── 06_13Aug_Pune_Zomato_ChineseKatta_Dinner_Mayank_289.pdf</div>
+      <div>│   │   ├── 07_14Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf</div>
+      <div>│   │   ├── 08_14Aug_Pune_Zomato_ChineseKatta_Dinner_Mayank_289.pdf</div>
+      <div>│   │   ├── 09_15Aug_Pune_Zomato_NawabsOfNorth_Lunch_Mayank_203.pdf</div>
+      <div>│   │   ├── 10_15Aug_Pune_Zomato_GharSe_Dinner_Mayank_388.pdf</div>
+      <div>│   │   ├── 11_16Aug_Pune_PizzaHut_Hinjewadi_Lunch_Mayank_419.pdf</div>
+      <div>│   │   ├── 12_16Aug_Pune_Zomato_ChineseKatta_Dinner_Mayank_289.pdf</div>
+      <div>│   │   ├── 13_17Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf</div>
+      <div>│   │   ├── 14_17Aug_Pune_Zomato_NawabsOfNorth_Dinner_Mayank_203.pdf</div>
+      <div>│   │   ├── 15_18Aug_Pune_Zomato_GharSe_Lunch_Mayank_388.pdf</div>
+      <div>│   │   ├── 16_18Aug_Pune_Zomato_ChineseKatta_Dinner_Mayank_289.pdf</div>
+      <div>│   │   └── 17_19Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf</div>
+      <div>│   ├── <span class="tree-folder">📁 01_Pune_Dinners\</span></div>
+      <div>│   └── <span class="tree-folder">📁 02_Pune_Lunches\</span></div>
+      <div>│</div>
+      <div>├── <span class="tree-folder">📁 jab\copies_9_and_21_aug\</span> <span class="tree-note">(Master Jabalpur copies)</span></div>
+      <div>├── <span class="tree-folder">📁 nag\</span> <span class="tree-note">(Master Nagpur Royal Mint receipts)</span></div>
+      <div>└── <span class="tree-folder">📁 pune dinner\</span> <span class="tree-note">(Roots Corp / Ginger Hotel Buffet Scans)</span></div>
+    </div>
+  </div>
+
+  <footer>
+    Pune Business Visit Reimbursement Audit Dashboard • Fully synchronized with deleteit.xlsx & drive assets • 2026
+  </footer>
+</div>
+
+<script>
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+    document.getElementById('tab-' + tabId).style.display = 'block';
+    event.currentTarget.classList.add('active');
+  }
+
+  function filterRows(status) {
+    document.querySelectorAll('.filter-chip').forEach(el => el.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
+    const tables = [document.getElementById('table-akshat'), document.getElementById('table-mayank')];
+    tables.forEach(table => {
+      if (!table) return;
+      const rows = table.querySelectorAll('tbody tr');
+      rows.forEach(r => {
+        const rowStatus = r.getAttribute('data-status');
+        if (status === 'all' || rowStatus === status) {
+          r.style.display = '';
+        } else {
+          r.style.display = 'none';
+        }
+      });
+    });
+  }
+
+  function searchTable(query) {
+    const q = query.toLowerCase().trim();
+    const tables = [document.getElementById('table-akshat'), document.getElementById('table-mayank')];
+    tables.forEach(table => {
+      if (!table) return;
+      const rows = table.querySelectorAll('tbody tr');
+      rows.forEach(r => {
+        const text = r.innerText.toLowerCase();
+        if (!q || text.includes(q)) {
+          r.style.display = '';
+        } else {
+          r.style.display = 'none';
+        }
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

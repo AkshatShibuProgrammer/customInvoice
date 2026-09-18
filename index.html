@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eternal Invoice Generator</title>
+    <meta name="description" content="A portable invoice workspace with manual editing, AI-assisted drafts, and batch printing." />
+    <!-- User-supplied Canvas integrations. Keep these functions and blank keys unchanged. -->
+    <script id="gemini-canvas-integration">
+// Implementation to include in your code:
+async function geminiGenerateText(promptText) {
+    const apiKey = ""; 
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+    const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
+    });
+    if (!response.ok) throw new Error(`API Error: ${response.status}`);
+    const result = await response.json();
+    return result?.candidates?.[0]?.content?.parts?.[0]?.text || "No text generated.";
+}
+
+// Implementation to include in your code:
+async function geminiSearchText(searchQuery) {
+    const apiKey = ""; 
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+    const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            contents: [{ parts: [{ text: `Search the web for: "${searchQuery}". Provide a concise summary.` }] }],
+            tools: [{ googleSearch: {} }]
+        })
+    });
+    if (!response.ok) throw new Error(`API Error: ${response.status}`);
+    const result = await response.json();
+    return result?.candidates?.[0]?.content?.parts?.[0]?.text || "No search results.";
+}
+
+// Implementation to include in your code:
+async function geminiImageCreation(imagePrompt) {
+    const apiKey = ""; 
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
+    const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            instances: [{ prompt: imagePrompt }],
+            parameters: { sampleCount: 1, aspectRatio: "16:9" }
+        })
+    });
+    if (!response.ok) throw new Error(`API Error: ${response.status}`);
+    const result = await response.json();
+    const base64Encoded = result?.predictions?.[0]?.bytesBase64Encoded;
+    if (!base64Encoded) throw new Error("No image data returned.");
+    return `data:image/png;base64,${base64Encoded}`;
+}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

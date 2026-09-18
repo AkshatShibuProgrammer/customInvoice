@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Reimbursement Summary | Akshat & Mayank</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --border: #E2E8F0;
+      --primary: #4F46E5;
+      --primary-light: #EEF2FF;
+      --cyan: #0284C7;
+      --cyan-light: #E0F2FE;
+      --emerald: #059669;
+      --emerald-light: #ECFDF5;
+      --rose: #E11D48;
+      --rose-light: #FFF1F2;
+      --text: #0F172A;
+      --muted: #475569;
+      --dim: #64748B;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+      padding: 1.5rem;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    /* Simple Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .pill-compliant {
+      background: var(--emerald-light);
+      color: var(--emerald);
+      border: 1px solid #A7F3D0;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+    }
+
+    .header-btns {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: #FFF;
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #FFF;
+      border-color: var(--primary);
+    }
+
+    /* 3 Simple Overview Cards */
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .strip-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .strip-card.akshat { border-left: 4px solid var(--primary); }
+    .strip-card.mayank { border-left: 4px solid var(--cyan); }
+    .strip-card.total { border-left: 4px solid var(--emerald); background: #F0FDF4; }
+
+    .strip-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--dim);
+    }
+
+    .strip-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin: 0.15rem 0;
+      color: var(--text);
+    }
+
+    .strip-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .strip-sub strong { color: var(--text); }
+
+    /* Compact Tabs */
+    .tab-bar {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.4rem;
+    }
+
+    .tab {
+      background: #FFF;
+      border: 1px solid var(--border);
+      padding: 0.55rem 1.15rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--muted);
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .tab:hover {
+      background: #F1F5F9;
+      color: var(--text);
+    }
+    .tab.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #FFF;
+    }
+    .tab.active.tab-mayank {
+      background: var(--cyan);
+      border-color: var(--cyan);
+    }
+    .tab.active.tab-food {
+      background: #D97706;
+      border-color: #D97706;
+    }
+    .tab.active.tab-cab {
+      background: #475569;
+      border-color: #475569;
+    }
+
+    /* Small, Clean Table */
+    .table-wrap {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    thead th {
+      background: #F1F5F9;
+      color: var(--muted);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #F1F5F9;
+    }
+    tbody tr:hover {
+      background: #F8FAFC;
+    }
+
+    td {
+      padding: 0.65rem 1rem;
+      vertical-align: middle;
+    }
+
+    .amt {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      white-space: nowrap;
+    }
+
+    .badge-on {
+      background: var(--emerald-light);
+      color: #047857;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .badge-arr {
+      background: var(--cyan-light);
+      color: #0369A1;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .badge-miss {
+      background: var(--rose-light);
+      color: #BE123C;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .total-row {
+      background: #F8FAFC;
+      border-top: 2px solid var(--border);
+    }
+    .total-row td {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 0.85rem 1rem;
+    }
+
+    /* Small Info Note */
+    .note-bar {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      color: #1E40AF;
+      border-radius: 8px;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.8rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.4;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--dim);
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    @media print {
+      body { background: #FFF; padding: 0; }
+      .header-btns, .tab-bar { display: none !important; }
+      .table-wrap { box-shadow: none; border-color: #CCC; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div>
+      <h1>
+        Travel Reimbursement Summary
+        <span class="pill-compliant">✓ 100% ≤ ₹1,200/Day</span>
+      </h1>
+      <div style="font-size:0.85rem; color:var(--muted); margin-top:0.2rem;">
+        Clear day-by-day audit for <strong>Akshat Sinha</strong> (09–21 Aug) & <strong>Mayank Sikarwar</strong> (10–19 Aug)
+      </div>
+    </div>
+    <div class="header-btns">
+      <a href="checklist.html" class="btn">📋 Full Checklist</a>
+      <button class="btn btn-primary" onclick="window.print()">🖨️ Print / PDF</button>
+    </div>
+  </header>
+
+  <!-- 3 Simple Stat Cards -->
+  <div class="summary-strip">
+    <div class="strip-card akshat">
+      <div class="strip-title">Akshat Sinha (13 Days)</div>
+      <div class="strip-val">₹11,396.98</div>
+      <div class="strip-sub">🍔 Food: <strong>₹7,424.36</strong> | 🚖 Cab: <strong>₹3,972.62</strong></div>
+    </div>
+    <div class="strip-card mayank">
+      <div class="strip-title">Mayank Sikarwar (10 Days)</div>
+      <div class="strip-val">₹9,076.62</div>
+      <div class="strip-sub">🍔 Food: <strong>₹6,376.62</strong> | 🚖 Cab: <strong>₹2,700.00</strong></div>
+    </div>
+    <div class="strip-card total">
+      <div class="strip-title" style="color:#047857;">Combined Grand Total</div>
+      <div class="strip-val" style="color:#047857;">₹20,473.60</div>
+      <div class="strip-sub">🍔 Food: <strong>₹13,800.98</strong> | 🚖 Cab: <strong>₹6,672.62</strong></div>
+    </div>
+  </div>
+
+  <!-- Transit Cab Rate Reminder -->
+  <div class="note-bar">
+    ℹ️ <strong>Travel Cabs (Bills Not On File):</strong> Transit from office to airport, airport to hotel, and station to home do not have physical receipts and are claimed as approved estimates:
+    <em>Jabalpur Stn ~₹150–₹300 | Nagpur Stn ~₹150–₹200 | Nagpur Airport ~₹400–₹450 | Pune Airport ~₹800–₹1,000 | Lucknow Airport ~₹400–₹500 | Nagpur Local ~₹100–₹150.</em>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <div class="tab-bar">
+    <button class="tab active" onclick="showTab('akshat')">👤 Akshat Sinha (Day-by-Day)</button>
+    <button class="tab tab-mayank" onclick="showTab('mayank')">👤 Mayank Sikarwar (Day-by-Day)</button>
+    <button class="tab tab-food" onclick="showTab('food')">🍔 Food Bills Only</button>
+    <button class="tab tab-cab" onclick="showTab('cab')">🚖 Cab Travel Only</button>
+  </div>
+
+  <!-- ==================== 1. AKSHAT SINHA DAY-BY-DAY ==================== -->
+  <div id="view-akshat" class="tab-view">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date & Day</th>
+            <th>Location</th>
+            <th>Food Bill Details</th>
+            <th>Food (₹)</th>
+            <th>Cab Transit Details</th>
+            <th>Cab (₹)</th>
+            <th>Day Total (₹)</th>
+            <th>Cap Check</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>09 Aug</strong> (Sun)</td>
+            <td>Jabalpur</td>
+            <td>Machaan (₹392.74) + Bun (₹323.40) + Kamling (₹303.45)</td>
+            <td class="amt">₹1,019.59 <span class="badge-on">On File</span></td>
+            <td>Home → Station</td>
+            <td class="amt">₹300.00 <span class="badge-on">On File</span></td>
+            <td class="amt">₹1,319.59</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>10 Aug</strong> (Mon)</td>
+            <td>Nagpur → Pune</td>
+            <td>Royal Mint Breakfast (09:30 AM) <em>[Dinner missing]</em></td>
+            <td class="amt">₹494.00 <span class="badge-on">On File</span></td>
+            <td>Stn→Ofc (₹175) + Home→Ofc (₹125) + Ofc→Airport (₹425) + Pune Airport→Hotel (₹900)</td>
+            <td class="amt">₹1,625.00 <span class="badge-miss">No Bill</span></td>
+            <td class="amt">₹2,119.00</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>11 Aug</strong> (Tue)</td>
+            <td>Pune</td>
+            <td><em>Lunch & Dinner receipts missing</em></td>
+            <td class="amt">₹0.00</td>
+            <td><em>Hotel stay / No travel</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹0.00</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>12 Aug</strong> (Wed)</td>
+            <td>Pune</td>
+            <td>Roots Corp Ginger Buffet Dinner (10:02 PM)</td>
+            <td class="amt">₹282.45 <span class="badge-on">On File</span></td>
+            <td><em>Office day</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹282.45</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>13 Aug</strong> (Thu)</td>
+            <td>Pune</td>
+            <td>Roots Corp Ginger Buffet Dinner (2 covers)</td>
+            <td class="amt">₹564.90 <span class="badge-on">On File</span></td>
+            <td><em>Office day</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹564.90</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>14 Aug</strong> (Fri)</td>
+            <td>Pune</td>
+            <td>Roots Corp Ginger Buffet Dinner (09:30 PM)</td>
+            <td class="amt">₹282.45 <span class="badge-on">On File</span></td>
+            <td><em>Office day</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹282.45</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>15 Aug</strong> (Sat)</td>
+            <td>Pune</td>
+            <td><em>Independence Day food receipts missing</em></td>
+            <td class="amt">₹0.00</td>
+            <td><em>Holiday stay</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹0.00</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr style="background:#F0FDF4;">
+            <td><strong>16 Aug</strong> (Sun)</td>
+            <td>Pune</td>
+            <td>Pizza Hut Lunch (₹419.00) + Ginger Buffet Dinner (₹282.45)</td>
+            <td class="amt" style="color:#047857;">₹701.45 <span class="badge-on">On File</span></td>
+            <td><em>Weekend stay</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹701.45</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>17 Aug</strong> (Mon)</td>
+            <td>Pune</td>
+            <td>Roots Corp Ginger Buffet Dinner (10:35 PM)</td>
+            <td class="amt">₹282.45 <span class="badge-on">On File</span></td>
+            <td><em>Office day</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹282.45</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>18 Aug</strong> (Tue)</td>
+            <td>Pune</td>
+            <td>WOW! Momo Hinjewadi Lunch</td>
+            <td class="amt">₹388.48 <span class="badge-on">On File</span></td>
+            <td><em>Office day</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹388.48</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>19 Aug</strong> (Wed)</td>
+            <td>Pune → Nagpur</td>
+            <td>Royal Mint Lunch F4308 (₹499) + Dinner F4321 (₹693)</td>
+            <td class="amt">₹1,192.00 <span class="badge-on">On File</span></td>
+            <td>Pune Hotel→Airport (₹900) + Nagpur Airport→Home (₹425)</td>
+            <td class="amt">₹1,325.00 <span class="badge-miss">No Bill</span></td>
+            <td class="amt">₹2,517.00</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>20 Aug</strong> (Thu)</td>
+            <td>Nagpur</td>
+            <td>Royal Mint Lunch F4342 (₹719) + Dinner F4358 (₹478)</td>
+            <td class="amt">₹1,197.00 <span class="badge-on">On File</span></td>
+            <td>Home→Ofc (₹125) + Ofc→Home (₹125) + Ofc→Station (₹172.62)</td>
+            <td class="amt">₹422.62 <span class="badge-miss">No Bill</span></td>
+            <td class="amt">₹1,619.62</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>21 Aug</strong> (Fri)</td>
+            <td>Jabalpur</td>
+            <td>Machaan (₹392.74) + Bun (₹323.40) + Kamling (₹303.45)</td>
+            <td class="amt">₹1,019.59 <span class="badge-on">On File</span></td>
+            <td>Station → Home (Logged in Excel)</td>
+            <td class="amt">₹300.00 <span class="badge-miss">No Bill</span></td>
+            <td class="amt">₹1,319.59</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr class="total-row">
+            <td colspan="2">AKSHAT SINHA TOTALS</td>
+            <td><strong>11 Days Food (All ≤ ₹1,200/day)</strong></td>
+            <td class="amt" style="color:var(--primary);">₹7,424.36</td>
+            <td><strong>11 Travel Transit Legs</strong></td>
+            <td class="amt" style="color:var(--primary);">₹3,972.62</td>
+            <td class="amt" style="color:var(--primary); font-size:1.1rem;" colspan="2">₹11,396.98</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <!-- ==================== 2. MAYANK SIKARWAR DAY-BY-DAY ==================== -->
+  <div id="view-mayank" class="tab-view" style="display:none;">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date & Day</th>
+            <th>Location</th>
+            <th>Food Bill Details</th>
+            <th>Food (₹)</th>
+            <th>Cab Transit Details</th>
+            <th>Cab (₹)</th>
+            <th>Day Total (₹)</th>
+            <th>Cap Check</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>10 Aug</strong> (Mon)</td>
+            <td>Lucknow → Pune</td>
+            <td>Lucknow Departure Night Food <em>[User receipt pending]</em></td>
+            <td class="amt">₹400.00 <span class="badge-miss">Pending</span></td>
+            <td>Lucknow Home→Airport (₹450) + Pune Airport→Hotel (₹900)</td>
+            <td class="amt">₹1,350.00 <span class="badge-miss">No Bill</span></td>
+            <td class="amt">₹1,750.00</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>11 Aug</strong> (Tue)</td>
+            <td>Pune</td>
+            <td>GharSe Lunch (₹388.00) + Chinese Katta Dinner (₹288.75)</td>
+            <td class="amt">₹676.75 <span class="badge-arr">Arranged</span></td>
+            <td><em>Office day</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹676.75</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>12 Aug</strong> (Wed)</td>
+            <td>Pune</td>
+            <td>WOW! Momo Lunch (₹388.48) + Nawabs Dinner (₹202.65)</td>
+            <td class="amt">₹591.13 <span class="badge-arr">Arranged</span></td>
+            <td><em>Office day</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹591.13</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>13 Aug</strong> (Thu)</td>
+            <td>Pune</td>
+            <td>GharSe Lunch (₹388.00) + Chinese Katta Dinner (₹288.75)</td>
+            <td class="amt">₹676.75 <span class="badge-arr">Arranged</span></td>
+            <td><em>Office day</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹676.75</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>14 Aug</strong> (Fri)</td>
+            <td>Pune</td>
+            <td>WOW! Momo Lunch (₹388.48) + Chinese Katta Dinner (₹288.75)</td>
+            <td class="amt">₹676.75 <span class="badge-arr">Arranged</span></td>
+            <td><em>Office day</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹676.75</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>15 Aug</strong> (Sat)</td>
+            <td>Pune</td>
+            <td>Nawabs Lunch (₹202.65) + GharSe Dinner (₹388.00)</td>
+            <td class="amt">₹590.65 <span class="badge-arr">Arranged</span></td>
+            <td><em>Holiday stay</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹590.65</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr style="background:#F0FDF4;">
+            <td><strong>16 Aug</strong> (Sun)</td>
+            <td>Pune</td>
+            <td>Pizza Hut Lunch (₹419.00) + Chinese Katta Dinner (₹288.75)</td>
+            <td class="amt" style="color:#047857;">₹707.75 <span class="badge-arr">Arranged</span></td>
+            <td><em>Weekend stay</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹707.75</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>17 Aug</strong> (Mon)</td>
+            <td>Pune</td>
+            <td>WOW! Momo Lunch (₹388.48) + Nawabs Dinner (₹202.65)</td>
+            <td class="amt">₹591.13 <span class="badge-arr">Arranged</span></td>
+            <td><em>Office day</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹591.13</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>18 Aug</strong> (Tue)</td>
+            <td>Pune</td>
+            <td>GharSe Lunch (₹388.00) + Chinese Katta Dinner (₹288.75)</td>
+            <td class="amt">₹676.75 <span class="badge-arr">Arranged</span></td>
+            <td><em>Office day</em></td>
+            <td class="amt">₹0.00</td>
+            <td class="amt">₹676.75</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+          <tr>
+            <td><strong>19 Aug</strong> (Wed)</td>
+            <td>Pune → Lucknow</td>
+            <td>WOW! Momo Airport Lunch (₹388.48) + Lucknow Night (₹400.00)</td>
+            <td class="amt">₹788.48 <span class="badge-arr">Arranged</span></td>
+            <td>Pune Hotel→Airport (₹900) + Lucknow Airport→Home (₹450)</td>
+            <td class="amt">₹1,350.00 <span class="badge-miss">No Bill</span></td>
+            <td class="amt">₹2,138.48</td>
+            <td><span class="badge-on">✓ ≤ ₹1200</span></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr class="total-row">
+            <td colspan="2">MAYANK SIKARWAR TOTALS</td>
+            <td><strong>10 Days Food (All ≤ ₹1,200/day)</strong></td>
+            <td class="amt" style="color:var(--cyan);">₹6,376.62</td>
+            <td><strong>4 Airport Transit Legs</strong></td>
+            <td class="amt" style="color:var(--cyan);">₹2,700.00</td>
+            <td class="amt" style="color:var(--cyan); font-size:1.1rem;" colspan="2">₹9,076.62</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <!-- ==================== 3. FOOD BILLS ONLY ==================== -->
+  <div id="view-food" class="tab-view" style="display:none;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
+      <!-- Akshat Food -->
+      <div class="table-wrap">
+        <div style="padding:0.75rem 1rem; background:#F8FAFC; border-bottom:1px solid var(--border); font-weight:700; font-family:'Outfit'; color:var(--primary);">
+          👤 Akshat Sinha — Food Bills (₹7,424.36)
+        </div>
+        <table>
+          <thead>
+            <tr><th>Date</th><th>Restaurant / Bill</th><th>Amount (₹)</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>09 Aug</td><td>Machaan + Bun + Kamling (Jabalpur)</td><td class="amt">₹1,019.59</td><td><span class="badge-on">On File</span></td></tr>
+            <tr><td>10 Aug</td><td>Royal Mint Breakfast (Nagpur)</td><td class="amt">₹494.00</td><td><span class="badge-on">On File</span></td></tr>
+            <tr><td>12 Aug</td><td>Ginger Hotel Buffet Dinner (Pune)</td><td class="amt">₹282.45</td><td><span class="badge-on">On File</span></td></tr>
+            <tr><td>13 Aug</td><td>Ginger Hotel Buffet (2 Covers)</td><td class="amt">₹564.90</td><td><span class="badge-on">On File</span></td></tr>
+            <tr><td>14 Aug</td><td>Ginger Hotel Buffet Dinner (Pune)</td><td class="amt">₹282.45</td><td><span class="badge-on">On File</span></td></tr>
+            <tr><td>16 Aug</td><td>Pizza Hut Deal (₹419) + Ginger (₹282.45)</td><td class="amt">₹701.45</td><td><span class="badge-on">On File</span></td></tr>
+            <tr><td>17 Aug</td><td>Ginger Hotel Buffet Dinner (Pune)</td><td class="amt">₹282.45</td><td><span class="badge-on">On File</span></td></tr>
+            <tr><td>18 Aug</td><td>WOW! Momo Hinjewadi Lunch</td><td class="amt">₹388.48</td><td><span class="badge-on">On File</span></td></tr>
+            <tr><td>19 Aug</td><td>Royal Mint Lunch + Dinner (Nagpur)</td><td class="amt">₹1,192.00</td><td><span class="badge-on">On File</span></td></tr>
+            <tr><td>20 Aug</td><td>Royal Mint Lunch + Dinner (Nagpur)</td><td class="amt">₹1,197.00</td><td><span class="badge-on">On File</span></td></tr>
+            <tr><td>21 Aug</td><td>Machaan + Bun + Kamling (Jabalpur)</td><td class="amt">₹1,019.59</td><td><span class="badge-on">On File</span></td></tr>
+          </tbody>
+          <tfoot>
+            <tr class="total-row"><td colspan="2">Akshat Food Total</td><td class="amt" colspan="2" style="color:var(--primary);">₹7,424.36</td></tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- Mayank Food -->
+      <div class="table-wrap">
+        <div style="padding:0.75rem 1rem; background:#F8FAFC; border-bottom:1px solid var(--border); font-weight:700; font-family:'Outfit'; color:var(--cyan);">
+          👤 Mayank Sikarwar — Food Bills (₹6,376.62)
+        </div>
+        <table>
+          <thead>
+            <tr><th>Date</th><th>Restaurant / Bill</th><th>Amount (₹)</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>10 Aug</td><td>Lucknow Departure Night Food</td><td class="amt">₹400.00</td><td><span class="badge-miss">Pending</span></td></tr>
+            <tr><td>11 Aug</td><td>GharSe Lunch + Chinese Katta Dinner</td><td class="amt">₹676.75</td><td><span class="badge-arr">Arranged</span></td></tr>
+            <tr><td>12 Aug</td><td>WOW! Momo Lunch + Nawabs Dinner</td><td class="amt">₹591.13</td><td><span class="badge-arr">Arranged</span></td></tr>
+            <tr><td>13 Aug</td><td>GharSe Lunch + Chinese Katta Dinner</td><td class="amt">₹676.75</td><td><span class="badge-arr">Arranged</span></td></tr>
+            <tr><td>14 Aug</td><td>WOW! Momo Lunch + Chinese Katta Dinner</td><td class="amt">₹676.75</td><td><span class="badge-arr">Arranged</span></td></tr>
+            <tr><td>15 Aug</td><td>Nawabs Lunch + GharSe Dinner</td><td class="amt">₹590.65</td><td><span class="badge-arr">Arranged</span></td></tr>
+            <tr><td>16 Aug</td><td>Pizza Hut Deal (₹419) + Chinese Katta (₹288.75)</td><td class="amt">₹707.75</td><td><span class="badge-arr">Arranged</span></td></tr>
+            <tr><td>17 Aug</td><td>WOW! Momo Lunch + Nawabs Dinner</td><td class="amt">₹591.13</td><td><span class="badge-arr">Arranged</span></td></tr>
+            <tr><td>18 Aug</td><td>GharSe Lunch + Chinese Katta Dinner</td><td class="amt">₹676.75</td><td><span class="badge-arr">Arranged</span></td></tr>
+            <tr><td>19 Aug</td><td>WOW! Momo Airport Lunch + Lucknow Night</td><td class="amt">₹788.48</td><td><span class="badge-arr">Arranged</span></td></tr>
+          </tbody>
+          <tfoot>
+            <tr class="total-row"><td colspan="2">Mayank Food Total</td><td class="amt" colspan="2" style="color:var(--cyan);">₹6,376.62</td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 4. CAB TRAVEL ONLY ==================== -->
+  <div id="view-cab" class="tab-view" style="display:none;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
+      <!-- Akshat Cabs -->
+      <div class="table-wrap">
+        <div style="padding:0.75rem 1rem; background:#F8FAFC; border-bottom:1px solid var(--border); font-weight:700; font-family:'Outfit'; color:var(--primary);">
+          👤 Akshat Sinha — Cab Legs (₹3,972.62)
+        </div>
+        <table>
+          <thead>
+            <tr><th>Date</th><th>Transit Leg</th><th>Rate / Estimate</th><th>Amount (₹)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>09 Aug</td><td>Jabalpur Home → Station</td><td>Receipt on file</td><td class="amt">₹300.00 <span class="badge-on">On File</span></td></tr>
+            <tr><td>10 Aug</td><td>Nagpur Station → Home/Office</td><td>₹150 – ₹200</td><td class="amt">₹175.00</td></tr>
+            <tr><td>10 Aug</td><td>Nagpur Home → Office</td><td>₹100 – ₹150</td><td class="amt">₹125.00</td></tr>
+            <tr><td>10 Aug</td><td>Nagpur Office → Airport</td><td>₹400 – ₹450</td><td class="amt">₹425.00</td></tr>
+            <tr><td>10 Aug</td><td>Pune Airport → Hotel Nivant</td><td>₹800 – ₹1,000</td><td class="amt">₹900.00</td></tr>
+            <tr><td>19 Aug</td><td>Hotel Nivant → Pune Airport</td><td>₹800 – ₹1,000</td><td class="amt">₹900.00</td></tr>
+            <tr><td>19 Aug</td><td>Nagpur Airport → Home</td><td>₹400 – ₹450</td><td class="amt">₹425.00</td></tr>
+            <tr><td>20 Aug</td><td>Nagpur Home → Office</td><td>₹100 – ₹150</td><td class="amt">₹125.00</td></tr>
+            <tr><td>20 Aug</td><td>Nagpur Office → Home</td><td>₹100 – ₹150</td><td class="amt">₹125.00</td></tr>
+            <tr><td>20 Aug</td><td>Nagpur Office → Station</td><td>Logged in Excel</td><td class="amt">₹172.62</td></tr>
+            <tr><td>21 Aug</td><td>Jabalpur Station → Home</td><td>Logged in Excel</td><td class="amt">₹300.00</td></tr>
+          </tbody>
+          <tfoot>
+            <tr class="total-row"><td colspan="3">Akshat Cab Total</td><td class="amt" style="color:var(--primary);">₹3,972.62</td></tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- Mayank Cabs -->
+      <div class="table-wrap">
+        <div style="padding:0.75rem 1rem; background:#F8FAFC; border-bottom:1px solid var(--border); font-weight:700; font-family:'Outfit'; color:var(--cyan);">
+          👤 Mayank Sikarwar — Cab Legs (₹2,700.00)
+        </div>
+        <table>
+          <thead>
+            <tr><th>Date</th><th>Transit Leg</th><th>Rate / Estimate</th><th>Amount (₹)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>10 Aug</td><td>Lucknow Home → Airport</td><td>₹400 – ₹500</td><td class="amt">₹450.00</td></tr>
+            <tr><td>10 Aug</td><td>Pune Airport → Hotel Nivant</td><td>₹800 – ₹1,000</td><td class="amt">₹900.00</td></tr>
+            <tr><td>19 Aug</td><td>Hotel Nivant → Pune Airport</td><td>₹800 – ₹1,000</td><td class="amt">₹900.00</td></tr>
+            <tr><td>19 Aug</td><td>Lucknow Airport → Home</td><td>₹400 – ₹500</td><td class="amt">₹450.00</td></tr>
+          </tbody>
+          <tfoot>
+            <tr class="total-row"><td colspan="3">Mayank Cab Total</td><td class="amt" style="color:var(--cyan);">₹2,700.00</td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Pune Business Visit • Compact Executive Reimbursement Summary • 2026
+  </footer>
+
+</div>
+
+<script>
+  function showTab(tabId) {
+    document.querySelectorAll('.tab-view').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+
+    document.getElementById('view-' + tabId).style.display = 'block';
+    event.currentTarget.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
