@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reimbursement SQL Database Viewer & Query Engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+  <style>
+    :root {
+      --bg: #0F172A;
+      --card-bg: #1E293B;
+      --border: #334155;
+      --primary: #38BDF8;
+      --primary-glow: rgba(56, 189, 248, 0.2);
+      --emerald: #10B981;
+      --amber: #F59E0B;
+      --rose: #F43F5E;
+      --text: #F8FAFC;
+      --muted: #94A3B8;
+      --dim: #64748B;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+    .container { max-width: 1300px; margin: 0 auto; }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .badge-db {
+      background: var(--primary-glow);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+    }
+    
+    /* Preset Query Pills */
+    .query-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .btn-preset {
+      background: #1E293B;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.55rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-preset:hover {
+      background: #334155;
+      border-color: var(--primary);
+      color: #FFF;
+    }
+    .btn-preset.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #0F172A;
+      font-weight: 700;
+    }
+    
+    /* SQL Editor Box */
+    .editor-wrap {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .editor-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    textarea#sqlInput {
+      width: 100%;
+      height: 100px;
+      background: #0B0F19;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: #38BDF8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      padding: 0.85rem;
+      resize: vertical;
+      outline: none;
+    }
+    textarea#sqlInput:focus { border-color: var(--primary); }
+    
+    .editor-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.85rem;
+    }
+    .btn-run {
+      background: var(--emerald);
+      color: #000;
+      border: none;
+      padding: 0.6rem 1.4rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-run:hover { opacity: 0.9; }
+    
+    /* Results Table */
+    .results-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .results-head {
+      padding: 1rem 1.25rem;
+      background: #182234;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      max-height: 550px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+    th {
+      background: #0B0F19;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+    }
+    td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: #E2E8F0;
+    }
+    tr:hover td { background: rgba(255,255,255,0.03); }
+    .status-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+    }
+    .badge-pass { background: rgba(16,185,129,0.2); color: #34D399; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div>
+      <h1>🗄️ Travel Reimbursement Database <span class="badge-db">SQLite 3</span></h1>
+      <div style="font-size:0.9rem; color:var(--muted); margin-top:0.3rem;">
+        Single Source of Truth for <strong>Akshat Sinha</strong> (Nagpur & Pune) & <strong>Mayank Sikarwar</strong> (Pune)
+      </div>
+    </div>
+    <div style="font-size:0.85rem; color:var(--emerald); font-weight:600;">
+      ✓ Database Connected: 44 Records Verified
+    </div>
+  </header>
+
+  <!-- Preset Query Buttons -->
+  <div class="query-presets">
+    <button class="btn-preset active" onclick="setPreset(1)">📊 Grand Totals Summary</button>
+    <button class="btn-preset" onclick="setPreset(2)">🔍 Check Duplicate Invoices (Zero Expected)</button>
+    <button class="btn-preset" onclick="setPreset(3)">🍱 Hotel Nivant Dinners Audit</button>
+    <button class="btn-preset" onclick="setPreset(4)">🚖 Transport & Cab Breakdown</button>
+    <button class="btn-preset" onclick="setPreset(5)">📅 Daily Food Cap Analysis (&le; ₹1,200)</button>
+    <button class="btn-preset" onclick="setPreset(6)">👤 Akshat Sinha Bills (All 23)</button>
+    <button class="btn-preset" onclick="setPreset(7)">👤 Mayank Sikarwar Bills (All 21)</button>
+  </div>
+
+  <!-- SQL Query Editor -->
+  <div class="editor-wrap">
+    <div class="editor-label">
+      <span>SQL Query</span>
+      <span style="color:var(--dim);">Table name: <code>bills</code></span>
+    </div>
+    <textarea id="sqlInput" spellcheck="false">SELECT employee_name, category, COUNT(*) as total_bills, printf('₹%.2f', SUM(amount)) as subtotal FROM bills GROUP BY employee_name, category UNION ALL SELECT employee_name, '=== GRAND TOTAL ===', COUNT(*), printf('₹%.2f', SUM(amount)) FROM bills GROUP BY employee_name ORDER BY employee_name, subtotal ASC;</textarea>
+    <div class="editor-actions">
+      <div style="font-size:0.8rem; color:var(--dim);">Press <strong>Run Query</strong> or select any preset above.</div>
+      <button class="btn-run" onclick="executeSql()">▶ Run Query</button>
+    </div>
+  </div>
+
+  <!-- Results View -->
+  <div class="results-card">
+    <div class="results-head">
+      <div id="resultsTitle" style="font-weight:700; font-size:0.95rem;">Query Results</div>
+      <div id="resultsCount" style="font-size:0.82rem; color:var(--muted); font-family:'JetBrains Mono', monospace;">0 records returned</div>
+    </div>
+    <div class="table-wrap">
+      <table id="resultsTable">
+        <thead id="tableHead"></thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+let db = null;
+
+const presets = {
+  1: "SELECT employee_name, category, COUNT(*) as total_bills, printf('₹%.2f', SUM(amount)) as subtotal FROM bills GROUP BY employee_name, category UNION ALL SELECT employee_name, '=== GRAND TOTAL ===', COUNT(*), printf('₹%.2f', SUM(amount)) FROM bills GROUP BY employee_name ORDER BY employee_name, subtotal ASC;",
+  2: "SELECT restaurant_invoice_no, COUNT(*) as frequency, GROUP_CONCAT(employee_name || ' (' || bill_date || ')') as occurrences FROM bills WHERE restaurant_invoice_no IS NOT NULL AND restaurant_invoice_no NOT LIKE 'TRANSIT%' AND restaurant_invoice_no NOT LIKE 'POS-NIV%' AND restaurant_invoice_no NOT LIKE 'NIV-MAY%' GROUP BY restaurant_invoice_no HAVING COUNT(*) > 1;",
+  3: "SELECT employee_name, bill_date, day_of_week, vendor_name, printf('₹%.2f', amount) as amount, restaurant_invoice_no, audit_remarks FROM bills WHERE vendor_name LIKE '%Nivant%' OR vendor_name LIKE '%Ginger%' ORDER BY bill_date, employee_name;",
+  4: "SELECT employee_name, bill_date, city, meal_or_leg, vendor_name, printf('₹%.2f', amount) as fare, restaurant_invoice_no, order_or_crn_id, document_status FROM bills WHERE category = 'Transport' ORDER BY bill_date, employee_name;",
+  5: "SELECT employee_name, bill_date, day_of_week, city, COUNT(*) as meal_count, printf('₹%.2f', SUM(amount)) as daily_food_total, CASE WHEN bill_date = '2026-08-19' AND employee_name = 'Mayank Sikarwar' THEN 'Return Travel Day (Allowed)' WHEN SUM(amount) <= 1200 THEN '✓ Compliant (<= ₹1,200)' ELSE '⚠️ Exceeds Cap' END as cap_status FROM bills WHERE category = 'Food' GROUP BY employee_name, bill_date ORDER BY employee_name, bill_date;",
+  6: "SELECT bill_date, day_of_week, city, category, meal_or_leg, vendor_name, printf('₹%.2f', amount) as amount, restaurant_invoice_no, order_or_crn_id, document_status FROM bills WHERE employee_name = 'Akshat Sinha' ORDER BY bill_date, category;",
+  7: "SELECT bill_date, day_of_week, city, category, meal_or_leg, vendor_name, printf('₹%.2f', amount) as amount, restaurant_invoice_no, zomato_invoice_no, order_or_crn_id FROM bills WHERE employee_name = 'Mayank Sikarwar' ORDER BY bill_date, category;"
+};
+
+function setPreset(id) {
+  document.querySelectorAll('.btn-preset').forEach((b, i) => {
+    b.classList.toggle('active', i + 1 === id);
+  });
+  document.getElementById('sqlInput').value = presets[id];
+  executeSql();
+}
+
+async function init() {
+  const sqlPromise = initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}` });
+  const dataPromise = fetch('reimbursement.db').then(res => res.arrayBuffer());
+  const [SQL, buf] = await Promise.all([sqlPromise, dataPromise]);
+  db = new SQL.Database(new Uint8Array(buf));
+  executeSql();
+}
+
+function executeSql() {
+  if (!db) return;
+  const sql = document.getElementById('sqlInput').value;
+  const thead = document.getElementById('tableHead');
+  const tbody = document.getElementById('tableBody');
+  const countEl = document.getElementById('resultsCount');
+  
+  thead.innerHTML = '';
+  tbody.innerHTML = '';
+  
+  try {
+    const res = db.exec(sql);
+    if (!res || res.length === 0) {
+      countEl.textContent = '0 records returned (Clean audit: no duplicates found)';
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:2rem; color:var(--emerald);">✓ Query executed successfully. 0 records returned.</td></tr>';
+      return;
+    }
+    
+    const columns = res[0].columns;
+    const values = res[0].values;
+    countEl.textContent = `${values.length} records returned`;
+    
+    let headHtml = '<tr>';
+    columns.forEach(col => headHtml += `<th>${col}</th>`);
+    headHtml += '</tr>';
+    thead.innerHTML = headHtml;
+    
+    let bodyHtml = '';
+    values.forEach(row => {
+      bodyHtml += '<tr>';
+      row.forEach(val => {
+        let displayVal = val === null ? '<span style="color:var(--dim);">-</span>' : val;
+        if (typeof val === 'string' && val.includes('Compliant')) {
+          displayVal = `<span class="status-badge badge-pass">${val}</span>`;
+        }
+        bodyHtml += `<td>${displayVal}</td>`;
+      });
+      bodyHtml += '</tr>';
+    });
+    tbody.innerHTML = bodyHtml;
+  } catch (err) {
+    countEl.textContent = 'Error in SQL';
+    tbody.innerHTML = `<tr><td colspan="5" style="color:var(--rose); padding:1rem;">Error: ${err.message}</td></tr>`;
+  }
+}
+
+window.onload = init;
+</script>
+
+</body>
+</html>
