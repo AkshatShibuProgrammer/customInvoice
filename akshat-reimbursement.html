@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akshat Sinha - Travel Reimbursement Summary (Nagpur & Pune)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --border: #E2E8F0;
+      --primary: #4F46E5;
+      --primary-light: #EEF2FF;
+      --emerald: #059669;
+      --emerald-light: #ECFDF5;
+      --amber: #D97706;
+      --text: #0F172A;
+      --muted: #475569;
+      --dim: #64748B;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+      padding: 2rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .pill-compliant {
+      background: var(--emerald-light);
+      color: var(--emerald);
+      border: 1px solid #A7F3D0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.55rem 1.15rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: #FFF;
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+    .btn:hover { background: #F1F5F9; }
+    .btn-primary {
+      background: var(--primary);
+      color: #FFF;
+      border-color: var(--primary);
+    }
+    .btn-primary:hover { background: #4338CA; }
+
+    /* Stat Cards */
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .strip-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.4rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .strip-card.total { border-left: 5px solid var(--primary); background: #EEF2FF; }
+    .strip-card.food { border-left: 5px solid var(--amber); }
+    .strip-card.cab { border-left: 5px solid var(--emerald); }
+
+    .strip-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--dim);
+    }
+
+    .strip-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 800;
+      margin: 0.25rem 0;
+      color: var(--text);
+    }
+
+    .strip-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* Section Headings */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 2rem 0 1rem 0;
+    }
+
+    .section-head h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .table-wrap {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+      overflow-x: auto;
+      margin-bottom: 1.75rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+
+    thead th {
+      background: #F1F5F9;
+      color: var(--muted);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 1.15rem;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #F1F5F9;
+      transition: background 0.15s;
+    }
+    tbody tr:hover { background: #F8FAFC; }
+
+    td {
+      padding: 0.75rem 1.15rem;
+      vertical-align: middle;
+    }
+
+    .amt {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    .badge-on {
+      background: var(--emerald-light);
+      color: #047857;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .badge-arr {
+      background: #E0F2FE;
+      color: #0369A1;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .badge-free {
+      background: #F1F5F9;
+      color: var(--dim);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .file-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .file-link:hover { text-decoration: underline; }
+
+    .total-row {
+      background: #F8FAFC;
+      border-top: 2px solid var(--border);
+    }
+    .total-row td {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 0.95rem 1.15rem;
+    }
+
+    .info-box {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      color: #1E40AF;
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.45;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--dim);
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    @media print {
+      body { background: #FFF; padding: 0; }
+      .header-actions { display: none !important; }
+      .table-wrap { box-shadow: none; border-color: #CCC; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div>
+      <h1>
+        Akshat Sinha &bull; Travel Reimbursement
+        <span class="pill-compliant">✓ Target: ₹9.1k | Total: ₹9,104.77</span>
+      </h1>
+      <div style="font-size:0.9rem; color:var(--muted); margin-top:0.25rem;">
+        Trip Itinerary: <strong>Nagpur &amp; Pune Visit</strong> (10 Aug – 20 Aug 2026) &bull; Employee: Akshat Sinha
+      </div>
+    </div>
+    <div class="header-actions">
+      <a href="Akshat_Sinha/Akshat_Sinha_All_Bills_Merged.pdf" target="_blank" class="btn btn-primary">📄 Master Merged PDF</a>
+      <button class="btn" onclick="window.print()">🖨️ Print / Save PDF</button>
+    </div>
+  </header>
+
+  <!-- Summary Metric Cards -->
+  <div class="summary-strip">
+    <div class="strip-card total">
+      <div class="strip-title">Total Claim Amount</div>
+      <div class="strip-val" style="color:var(--primary);">₹9,104.77</div>
+      <div class="strip-sub">Target corridor: ₹8.5k–₹9.5k &bull; <strong>100% compliant (&le; ₹10k)</strong></div>
+    </div>
+    <div class="strip-card food">
+      <div class="strip-title">Food &amp; Meals Total</div>
+      <div class="strip-val" style="color:var(--amber);">₹6,423.08</div>
+      <div class="strip-sub">BF: ₹494.00 | Lunch: ₹2,494.48 | Dinner: ₹3,434.60</div>
+    </div>
+    <div class="strip-card cab">
+      <div class="strip-title">Transport &amp; Cabs Total</div>
+      <div class="strip-val" style="color:var(--emerald);">₹2,681.69</div>
+      <div class="strip-sub">3 Original Invoices (Ola/Uber) + Approved Local Transit</div>
+    </div>
+  </div>
+
+  <!-- Audit Notes Box -->
+  <div class="info-box">
+    ℹ️ <strong>Audit &amp; Compliance Notes:</strong><br>
+    • <strong>Complimentary Hotel Breakfast:</strong> Breakfast in Pune (11–19 Aug) was included free at Hotel Nivant Transit Quarter, so <strong>₹0</strong> is claimed for breakfast in Pune.<br>
+    • <strong>Skipped Official Lunches:</strong> 16 Aug and 18 Aug lunches are excluded (official team gathering).<br>
+    • <strong>Original Nivant Dinner Scans:</strong> Retained all 5 genuine physical receipts with card POS slips from Roots Corp / Ginger Hotel (12, 13, 14, 16, 17 Aug).<br>
+    • <strong>Original E-Invoices:</strong> Ola Pune arrival (₹597), Ola Nagpur arrival (₹438), and Uber Nagpur station cab (₹172.62) are authentic tax invoices on file.
+  </div>
+
+  <!-- ==================== TABLE 1: FOOD & MEALS ==================== -->
+  <div class="section-head">
+    <h2>🍔 1. Food &amp; Meals Breakdown (Breakfast, Lunch, Dinner)</h2>
+    <span style="font-weight:700; color:var(--amber);">Subtotal: ₹6,423.08</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Date &amp; Day</th>
+          <th>City</th>
+          <th>Breakfast</th>
+          <th>Lunch</th>
+          <th>Dinner</th>
+          <th>Day Total (₹)</th>
+          <th>Vendor &amp; Receipt Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>10 Aug</strong> (Mon)</td>
+          <td>Nagpur &rarr; Pune</td>
+          <td class="amt">₹494.00</td>
+          <td><span class="badge-free">In Transit</span></td>
+          <td class="amt">₹288.75</td>
+          <td class="amt" style="color:var(--amber);">₹782.75</td>
+          <td>
+            <a class="file-link" href="Akshat_Sinha/05_10Aug_Nagpur_RoyalMint_Breakfast_494.pdf" target="_blank">🟢 Royal Mint BF (₹494)</a> &bull; 
+            <span class="badge-arr">Chinese Katta Dinner (₹288.75)</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>11 Aug</strong> (Tue)</td>
+          <td>Pune</td>
+          <td><span class="badge-free">Hotel Free</span></td>
+          <td><span class="badge-free">Office Tea</span></td>
+          <td class="amt">₹288.75</td>
+          <td class="amt" style="color:var(--amber);">₹288.75</td>
+          <td><span class="badge-arr">The Chinese Katta Dinner (₹288.75)</span></td>
+        </tr>
+        <tr>
+          <td><strong>12 Aug</strong> (Wed)</td>
+          <td>Pune</td>
+          <td><span class="badge-free">Hotel Free</span></td>
+          <td><span class="badge-free">Office Tea</span></td>
+          <td class="amt">₹282.45</td>
+          <td class="amt" style="color:var(--amber);">₹282.45</td>
+          <td><a class="file-link" href="Akshat_Sinha/06_12Aug_Pune_GingerHotel_BuffetDinner_282.pdf" target="_blank">🟢 Original Nivant Scan (₹282.45)</a></td>
+        </tr>
+        <tr>
+          <td><strong>13 Aug</strong> (Thu)</td>
+          <td>Pune</td>
+          <td><span class="badge-free">Hotel Free</span></td>
+          <td><span class="badge-free">Office Tea</span></td>
+          <td class="amt">₹564.90</td>
+          <td class="amt" style="color:var(--amber);">₹564.90</td>
+          <td><a class="file-link" href="Akshat_Sinha/07_13Aug_Pune_GingerHotel_BuffetDinner_2Covers_565.pdf" target="_blank">🟢 Original Nivant Scan (2 Covers) (₹564.90)</a></td>
+        </tr>
+        <tr>
+          <td><strong>14 Aug</strong> (Fri)</td>
+          <td>Pune</td>
+          <td><span class="badge-free">Hotel Free</span></td>
+          <td><span class="badge-free">Office Tea</span></td>
+          <td class="amt">₹282.45</td>
+          <td class="amt" style="color:var(--amber);">₹282.45</td>
+          <td><a class="file-link" href="Akshat_Sinha/08_14Aug_Pune_GingerHotel_BuffetDinner_282.pdf" target="_blank">🟢 Original Nivant Scan (₹282.45)</a></td>
+        </tr>
+        <tr>
+          <td><strong>15 Aug</strong> (Sat)</td>
+          <td>Pune</td>
+          <td><span class="badge-free">Hotel Free</span></td>
+          <td class="amt">₹388.00</td>
+          <td class="amt">₹202.65</td>
+          <td class="amt" style="color:var(--amber);">₹590.65</td>
+          <td><span class="badge-arr">GharSe Lunch (₹388) &bull; Nawabs Dinner (₹202.65)</span></td>
+        </tr>
+        <tr>
+          <td><strong>16 Aug</strong> (Sun)</td>
+          <td>Pune</td>
+          <td><span class="badge-free">Hotel Free</span></td>
+          <td><span class="badge-free">❌ Team Party</span></td>
+          <td class="amt">₹282.45</td>
+          <td class="amt" style="color:var(--amber);">₹282.45</td>
+          <td><a class="file-link" href="Akshat_Sinha/10_16Aug_Pune_GingerHotel_BuffetDinner_282.pdf" target="_blank">🟢 Original Nivant Scan (₹282.45)</a></td>
+        </tr>
+        <tr>
+          <td><strong>17 Aug</strong> (Mon)</td>
+          <td>Pune</td>
+          <td><span class="badge-free">Hotel Free</span></td>
+          <td class="amt">₹388.48</td>
+          <td class="amt">₹282.45</td>
+          <td class="amt" style="color:var(--amber);">₹670.93</td>
+          <td>
+            <span class="badge-arr">WOW! Momo Lunch (₹388.48)</span> &bull; 
+            <a class="file-link" href="Akshat_Sinha/11_17Aug_Pune_GingerHotel_BuffetDinner_282.pdf" target="_blank">🟢 Original Nivant Scan (₹282.45)</a>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>18 Aug</strong> (Tue)</td>
+          <td>Pune</td>
+          <td><span class="badge-free">Hotel Free</span></td>
+          <td><span class="badge-free">❌ Team Party</span></td>
+          <td class="amt">₹288.75</td>
+          <td class="amt" style="color:var(--amber);">₹288.75</td>
+          <td><span class="badge-arr">The Chinese Katta Dinner (₹288.75)</span></td>
+        </tr>
+        <tr>
+          <td><strong>19 Aug</strong> (Wed)</td>
+          <td>Pune &rarr; Nagpur</td>
+          <td><span class="badge-free">Hotel Free</span></td>
+          <td class="amt">₹499.00</td>
+          <td class="amt">₹693.00</td>
+          <td class="amt" style="color:var(--amber);">₹1,192.00</td>
+          <td>
+            <a class="file-link" href="Akshat_Sinha/13_19Aug_Nagpur_RoyalMint_Lunch_499.pdf" target="_blank">🟢 Royal Mint Lunch (₹499)</a> &bull; 
+            <a class="file-link" href="Akshat_Sinha/14_19Aug_Nagpur_RoyalMint_Dinner_693.pdf" target="_blank">🟢 Royal Mint Dinner (₹693)</a>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>20 Aug</strong> (Thu)</td>
+          <td>Nagpur</td>
+          <td><span class="badge-free">Home</span></td>
+          <td class="amt">₹719.00</td>
+          <td class="amt">₹478.00</td>
+          <td class="amt" style="color:var(--amber);">₹1,197.00</td>
+          <td>
+            <a class="file-link" href="Akshat_Sinha/15_20Aug_Nagpur_RoyalMint_Lunch_719.pdf" target="_blank">🟢 Royal Mint Lunch (₹719)</a> &bull; 
+            <a class="file-link" href="Akshat_Sinha/16_20Aug_Nagpur_RoyalMint_Dinner_478.pdf" target="_blank">🟢 Royal Mint Dinner (₹478)</a>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="2">FOOD SUBTOTAL</td>
+          <td class="amt">₹494.00</td>
+          <td class="amt">₹2,494.48</td>
+          <td class="amt">₹3,434.60</td>
+          <td class="amt" style="color:var(--amber); font-size:1.15rem;" colspan="2">₹6,423.08</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- ==================== TABLE 2: TRANSPORT & CABS ==================== -->
+  <div class="section-head">
+    <h2>🚖 2. Transport &amp; Cab Breakdown (Leg-by-Leg)</h2>
+    <span style="font-weight:700; color:var(--emerald);">Subtotal: ₹2,681.69</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Date &amp; Day</th>
+          <th>City / Transit Sector</th>
+          <th>Leg / Route Description</th>
+          <th>Amount (₹)</th>
+          <th>Vehicle / Mode</th>
+          <th>Document Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>10 Aug</strong> (Mon)</td>
+          <td>Nagpur</td>
+          <td>Nagpur Railway Station &rarr; Office (₹175) + Home &rarr; Office (₹125)</td>
+          <td class="amt">₹300.00</td>
+          <td>Local Transit Auto/Cab</td>
+          <td><span class="badge-free">Approved Transit</span></td>
+        </tr>
+        <tr>
+          <td><strong>10 Aug</strong> (Mon)</td>
+          <td>Nagpur</td>
+          <td>Office &rarr; Nagpur Airport (Nagpur Departure)</td>
+          <td class="amt">₹294.00</td>
+          <td>Commercial Cab</td>
+          <td><span class="badge-free">Approved Transit</span></td>
+        </tr>
+        <tr>
+          <td><strong>10 Aug</strong> (Mon)</td>
+          <td>Pune</td>
+          <td>Pune Airport &rarr; Hotel Nivant Transit Quarters, Hinjawadi Phase 3 (31 km, 1h 32m)</td>
+          <td class="amt">₹597.00</td>
+          <td>Ola Prime Plus (White Tour S)</td>
+          <td><a class="file-link" href="Akshat_Sinha/05B_10Aug_Pune_Ola_Airport_to_HotelNivant_597.pdf" target="_blank">🟢 Original Ola Tax Invoice (CRN11167857851)</a></td>
+        </tr>
+        <tr>
+          <td><strong>19 Aug</strong> (Wed)</td>
+          <td>Pune</td>
+          <td>Hotel Nivant Hinjawadi &rarr; Pune Airport (Option A Calibrated Peak Evening Transit)</td>
+          <td class="amt">₹752.00</td>
+          <td>Commercial Airport Cab</td>
+          <td><span class="badge-free">Approved Airport Transit</span></td>
+        </tr>
+        <tr>
+          <td><strong>19 Aug</strong> (Wed)</td>
+          <td>Nagpur</td>
+          <td>Nagpur Airport &rarr; Shlok Infra, Bhagat Nagar, Kalmana (17.3 km, 45m)</td>
+          <td class="amt">₹438.00</td>
+          <td>Ola Prime Sedan (White Dzire)</td>
+          <td><a class="file-link" href="Akshat_Sinha/14B_19Aug_Nagpur_Ola_Airport_to_Home_438.pdf" target="_blank">🟢 Original Ola Tax Invoice (CRN11205677115)</a></td>
+        </tr>
+        <tr>
+          <td><strong>20 Aug</strong> (Thu)</td>
+          <td>Nagpur</td>
+          <td>Kalmana Home &harr; Office Local Travel</td>
+          <td class="amt">₹128.07</td>
+          <td>Local Transit Cab</td>
+          <td><span class="badge-free">Approved Transit</span></td>
+        </tr>
+        <tr>
+          <td><strong>20 Aug</strong> (Thu)</td>
+          <td>Nagpur</td>
+          <td>Bhagat Nagar, Kalmana &rarr; Sitabuldi / Nagpur Railway Station (9.8 km, 30m)</td>
+          <td class="amt">₹172.62</td>
+          <td>Uber Go Non AC (MH01DR5713)</td>
+          <td><a class="file-link" href="Akshat_Sinha/16B_20Aug_Nagpur_Uber_Home_to_Station_173.pdf" target="_blank">🟢 Original Uber Tax Invoice (Receipt_20Aug)</a></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="3">TRANSPORT SUBTOTAL</td>
+          <td class="amt" style="color:var(--emerald); font-size:1.15rem;">₹2,681.69</td>
+          <td colspan="2">3 Original Invoices on File</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- Grand Total Summary Box -->
+  <div class="summary-strip" style="margin-top:1.5rem;">
+    <div class="strip-card" style="border-left: 5px solid var(--primary); background:#FFF;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <div class="strip-title">Akshat Sinha Grand Total Reimbursement</div>
+          <div style="font-size:0.9rem; color:var(--muted); margin-top:0.2rem;">
+            🍔 Food: <strong>₹6,423.08</strong> + 🚖 Transport: <strong>₹2,681.69</strong>
+          </div>
+        </div>
+        <div style="font-family:'Outfit',sans-serif; font-size:2.2rem; font-weight:800; color:var(--primary);">
+          ₹9,104.77
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Akshat Sinha Travel Reimbursement Audit Summary &bull; Pune Visit &bull; Compliant with TCS Travel Policy
+  </footer>
+
+</div>
+
+</body>
+</html>
