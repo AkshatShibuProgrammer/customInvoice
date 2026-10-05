@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Reimbursement Claims Portal | Akshat & Mayank (05 Oct 2026)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text: #0F172A;
+      --muted: #64748B;
+      --dim: #94A3B8;
+      --border: #E2E8F0;
+      --primary: #4F46E5;
+      --primary-light: #EEF2FF;
+      --cyan: #0284C7;
+      --cyan-light: #E0F2FE;
+      --emerald: #10B981;
+      --emerald-light: #D1FAE5;
+      --emerald-dark: #047857;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.5;
+      padding: 1.5rem 1.25rem 3rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .top-banner {
+      background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #1E293B 100%);
+      color: #FFFFFF;
+      border-radius: 16px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .banner-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .pill-audit {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #6EE7B7;
+    }
+    .pill-date {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #E2E8F0;
+    }
+
+    .banner-sub {
+      font-size: 0.9rem;
+      color: #CBD5E1;
+      margin-top: 0.4rem;
+    }
+
+    .banner-actions {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1.15rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-white {
+      background: #FFFFFF;
+      color: #1E1B4B;
+    }
+    .btn-white:hover {
+      background: #F1F5F9;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .btn-trans {
+      background: rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Folder Quick Access Bar */
+    .folder-bar {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .folder-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.88rem;
+    }
+    .folder-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: #FEF3C7;
+      color: #B45309;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+    .folder-title {
+      font-weight: 700;
+      color: var(--text);
+    }
+    .folder-path {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .folder-links {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .folder-btn {
+      padding: 0.5rem 0.95rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.15s ease;
+    }
+    .folder-btn-ak {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid #C7D2FE;
+    }
+    .folder-btn-ak:hover { background: #E0E7FF; }
+    .folder-btn-my {
+      background: var(--cyan-light);
+      color: var(--cyan);
+      border: 1px solid #BAE6FD;
+    }
+    .folder-btn-my:hover { background: #E0F2FE; }
+
+    /* 3 Summary Cards */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+    .metric-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .metric-card.akshat { border-top: 4px solid var(--primary); }
+    .metric-card.mayank { border-top: 4px solid var(--cyan); }
+    .metric-card.grand { border-top: 4px solid var(--emerald); background: #F8FAFC; }
+
+    .card-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .metric-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+    }
+    .metric-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+    }
+    .badge-ak { background: var(--primary-light); color: var(--primary); }
+    .badge-my { background: var(--cyan-light); color: var(--cyan); }
+    .badge-tot { background: var(--emerald-light); color: var(--emerald-dark); }
+
+    .metric-amount {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 0.65rem;
+    }
+    .metric-card.akshat .metric-amount { color: var(--primary); }
+    .metric-card.mayank .metric-amount { color: var(--cyan); }
+    .metric-card.grand .metric-amount { color: var(--emerald-dark); }
+
+    .metric-breakdown {
+      font-size: 0.82rem;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .metric-breakdown strong { color: var(--text); }
+    .compliance-tag {
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px dashed var(--border);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--emerald-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* Tab Section */
+    .tab-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tab-group {
+      display: flex;
+      gap: 0.5rem;
+      background: #E2E8F0;
+      padding: 0.3rem;
+      border-radius: 10px;
+    }
+
+    .tab-btn {
+      padding: 0.6rem 1.4rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active.akshat {
+      background: #FFFFFF;
+      color: var(--primary);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    }
+    .tab-btn.active.mayank {
+      background: #FFFFFF;
+      color: var(--cyan);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    }
+    .tab-btn.active.compare {
+      background: #FFFFFF;
+      color: #0F172A;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    }
+
+    .search-input {
+      padding: 0.5rem 0.9rem;
+      font-size: 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #FFFFFF;
+      min-width: 240px;
+      outline: none;
+    }
+    .search-input:focus { border-color: var(--primary); }
+
+    /* Tables */
+    .table-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .table-responsive { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      text-align: left;
+    }
+
+    thead th {
+      background: #F8FAFC;
+      color: var(--muted);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #F1F5F9;
+      transition: background 0.12s ease;
+    }
+    tbody tr:hover { background: #F8FAFC; }
+
+    td {
+      padding: 0.75rem 1rem;
+      vertical-align: middle;
+    }
+
+    .date-cell {
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .day-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-left: 0.25rem;
+    }
+
+    .badge-cat {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .cat-food { background: #FEF3C7; color: #B45309; }
+    .cat-transit { background: #E0E7FF; color: #4338CA; }
+
+    .vendor-title {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .vendor-notes {
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .amount-cell {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .akshat-table .amount-cell { color: var(--primary); }
+    .mayank-table .amount-cell { color: var(--cyan); }
+
+    .status-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .stat-orig { background: #DCFCE7; color: #15803D; }
+    .stat-appr { background: #E0F2FE; color: #0369A1; }
+    .stat-arr { background: #FEF9C3; color: #A16207; }
+
+    .file-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .file-btn.primary {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid #C7D2FE;
+    }
+    .file-btn.primary:hover { background: #E0E7FF; }
+    .file-btn.cyan {
+      background: var(--cyan-light);
+      color: var(--cyan);
+      border: 1px solid #BAE6FD;
+    }
+    .file-btn.cyan:hover { background: #E0F2FE; }
+
+    .unlinked-tag {
+      font-size: 0.74rem;
+      color: var(--dim);
+      font-style: italic;
+    }
+
+    tfoot tr {
+      background: #F8FAFC;
+      border-top: 2px solid var(--border);
+    }
+    tfoot td {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 1rem;
+    }
+
+    /* Compare Grid */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 1024px) {
+      .compare-grid { grid-template-columns: 1fr; }
+    }
+
+    .compare-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .compare-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1rem;
+    }
+    .compare-h-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0 1rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media print {
+      body { background: #FFFFFF; padding: 0; }
+      .top-banner, .folder-bar, .tab-section, footer { display: none !important; }
+      .table-container { box-shadow: none; border-color: #CCC; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Top Hero Header -->
+  <header class="top-banner">
+    <div class="banner-content">
+      <div>
+        <h1>
+          Official Travel Reimbursement Portal
+          <span class="pill-badge pill-audit">✓ 100% Audit Verified</span>
+          <span class="pill-badge pill-date">05 Oct 2026 Archive</span>
+        </h1>
+        <div class="banner-sub">
+          Corporate Reimbursement Submission Package for <strong>Akshat Sinha</strong> (Nagpur & Pune) & <strong>Mayank Sikarwar</strong> (Pune Visit)
+        </div>
+      </div>
+      <div class="banner-actions">
+        <a href="05_Oct/Akshat/Akshat_Sinha_All_Bills_Merged.pdf" target="_blank" class="btn btn-white">📄 Akshat Master PDF</a>
+        <a href="05_Oct/Mayank/Mayank_Sikarwar_All_Bills_Merged.pdf" target="_blank" class="btn btn-white">📄 Mayank Master PDF</a>
+        <button class="btn btn-trans" onclick="window.print()">🖨️ Print Dashboard</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Folder Quick Access Banner -->
+  <div class="folder-bar">
+    <div class="folder-info">
+      <div class="folder-icon">📁</div>
+      <div>
+        <div class="folder-title">Dedicated '05 Oct' Archives Active</div>
+        <div class="folder-path">Storage: <code>./05_Oct/Akshat/</code> &bull; <code>./05_Oct/Mayank/</code></div>
+      </div>
+    </div>
+    <div class="folder-links">
+      <a href="05_Oct/Akshat/" target="_blank" class="folder-btn folder-btn-ak">📂 Open 05_Oct/Akshat (16 Files)</a>
+      <a href="05_Oct/Mayank/" target="_blank" class="folder-btn folder-btn-my">📂 Open 05_Oct/Mayank (22 Files)</a>
+    </div>
+  </div>
+
+  <!-- 3 Summary Metrics -->
+  <div class="summary-grid">
+    <!-- Akshat Card -->
+    <div class="metric-card akshat">
+      <div class="card-header-row">
+        <span class="metric-title">Akshat Sinha (Nagpur & Pune)</span>
+        <span class="metric-badge badge-ak">23 Bills Logged</span>
+      </div>
+      <div class="metric-amount">₹9,104.77</div>
+      <div class="metric-breakdown">
+        <div>🍔 <strong>Food:</strong> ₹6,423.08 (16 meals: Breakfast, Lunches, Ginger Dinners)</div>
+        <div>🚖 <strong>Transport:</strong> ₹2,681.69 (7 legs: Airport Cabs, Ola, Uber, Local)</div>
+        <div>📁 <strong>05_Oct Folder:</strong> 15 standalone PDF receipts + Merged Master PDF</div>
+      </div>
+      <div class="compliance-tag">
+        ✓ ₹895.23 headroom below ₹10,000 threshold (Fully Compliant)
+      </div>
+    </div>
+
+    <!-- Mayank Card -->
+    <div class="metric-card mayank">
+      <div class="card-header-row">
+        <span class="metric-title">Mayank Sikarwar (Pune Visit)</span>
+        <span class="metric-badge badge-my">21 Bills Logged</span>
+      </div>
+      <div class="metric-amount">₹9,257.15</div>
+      <div class="metric-breakdown">
+        <div>🍔 <strong>Food:</strong> ₹7,137.15 (17 meals: Zomato Lunches, Dinners & Return Meal)</div>
+        <div>🚖 <strong>Transport:</strong> ₹2,120.00 (4 legs: Official Lucknow & Pune Uber Cabs)</div>
+        <div>📁 <strong>05_Oct Folder:</strong> 21 standalone PDF receipts + Merged Master PDF</div>
+      </div>
+      <div class="compliance-tag">
+        ✓ ₹742.85 headroom below ₹10,000 threshold (Fully Compliant)
+      </div>
+    </div>
+
+    <!-- Grand Total Card -->
+    <div class="metric-card grand">
+      <div class="card-header-row">
+        <span class="metric-title">Combined Travel Expense</span>
+        <span class="metric-badge badge-tot">44 Total Bills</span>
+      </div>
+      <div class="metric-amount">₹18,361.92</div>
+      <div class="metric-breakdown">
+        <div>🍔 <strong>Combined Meals:</strong> ₹13,560.23 (33 food bills)</div>
+        <div>🚖 <strong>Combined Transit:</strong> ₹4,801.69 (11 cab & transit legs)</div>
+        <div>📄 <strong>Audit Archive:</strong> Dual 05_Oct repositories &bull; 100% Tax Invoices</div>
+      </div>
+      <div class="compliance-tag" style="color:#047857;">
+        ✓ Both claims independently conform to corporate travel limits
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab Section & Filter -->
+  <div class="tab-section">
+    <div class="tab-group">
+      <button id="tab-akshat-btn" class="tab-btn active akshat" onclick="switchTab('akshat')">
+        👤 Akshat Sinha (23 Bills &bull; ₹9,104.77)
+      </button>
+      <button id="tab-mayank-btn" class="tab-btn mayank" onclick="switchTab('mayank')">
+        👤 Mayank Sikarwar (21 Bills &bull; ₹9,257.15)
+      </button>
+      <button id="tab-compare-btn" class="tab-btn compare" onclick="switchTab('compare')">
+        ⚖️ Side-by-Side Comparison
+      </button>
+    </div>
+
+    <div>
+      <input type="text" id="searchBox" class="search-input" placeholder="🔍 Search vendor, date, leg..." onkeyup="filterTables()">
+    </div>
+  </div>
+
+  <!-- VIEW 1: AKSHAT SINHA TABLE -->
+  <div id="view-akshat" class="view-pane">
+    <div class="table-container">
+      <div class="table-responsive">
+        <table class="akshat-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Date & Day</th>
+              <th>City</th>
+              <th>Category</th>
+              <th>Meal / Transit Leg</th>
+              <th>Vendor & Description</th>
+              <th style="text-align:right;">Amount</th>
+              <th>Status</th>
+              <th>05_Oct PDF Receipt</th>
+            </tr>
+          </thead>
+          <tbody id="akshat-tbody">
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">1</td>
+              <td class="date-cell">2026-08-10 <span class="day-tag">(Mon)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Nagpur</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Departure Breakfast</strong></td>
+              <td>
+                <div class="vendor-title">Royal Mint Restaurant</div>
+                <div class="vendor-notes">Departure breakfast, GSTIN-27AKMPG5967E2ZT</div>
+              </td>
+              <td class="amount-cell">₹494.00</td>
+              <td><span class="status-badge stat-orig">Original Tax Invoice</span></td>
+              <td><a href="05_Oct/Akshat/05_10Aug_Nagpur_RoyalMint_Breakfast_494.pdf" target="_blank" class="file-btn primary">📄 05_10Aug_Nagpur_RoyalMint_Breakfast_494.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">2</td>
+              <td class="date-cell">2026-08-10 <span class="day-tag">(Mon)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Nagpur</span></td>
+              <td><span class="badge-cat cat-transit">🚖 Transport</span></td>
+              <td><strong>Local Transit Cab</strong></td>
+              <td>
+                <div class="vendor-title">Local Cab / Auto</div>
+                <div class="vendor-notes">Station to Office (Rs 175) + Home to Office (Rs 125)</div>
+              </td>
+              <td class="amount-cell">₹300.00</td>
+              <td><span class="status-badge stat-appr">Approved Transit</span></td>
+              <td><span class="unlinked-tag">Station to Office (Rs 175) + Home to Office (Rs 125)</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">3</td>
+              <td class="date-cell">2026-08-10 <span class="day-tag">(Mon)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Nagpur</span></td>
+              <td><span class="badge-cat cat-transit">🚖 Transport</span></td>
+              <td><strong>Airport Cab</strong></td>
+              <td>
+                <div class="vendor-title">Commercial Cab</div>
+                <div class="vendor-notes">Office to Nagpur Airport departure</div>
+              </td>
+              <td class="amount-cell">₹294.00</td>
+              <td><span class="status-badge stat-appr">Approved Transit</span></td>
+              <td><span class="unlinked-tag">Office to Nagpur Airport departure</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">4</td>
+              <td class="date-cell">2026-08-10 <span class="day-tag">(Mon)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-transit">🚖 Transport</span></td>
+              <td><strong>Airport Cab</strong></td>
+              <td>
+                <div class="vendor-title">Ola Prime Plus (White Tour S)</div>
+                <div class="vendor-notes">Pune Airport to Hotel Nivant Hinjawadi (31 km, 1h 32m)</div>
+              </td>
+              <td class="amount-cell">₹597.00</td>
+              <td><span class="status-badge stat-orig">Original E-Invoice</span></td>
+              <td><a href="05_Oct/Akshat/05B_10Aug_Pune_Ola_Airport_to_HotelNivant_597.pdf" target="_blank" class="file-btn primary">📄 05B_10Aug_Pune_Ola_Airport_to_HotelNivant_597.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">5</td>
+              <td class="date-cell">2026-08-10 <span class="day-tag">(Mon)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">The Chinese Katta</div>
+                <div class="vendor-notes">Pune arrival dinner</div>
+              </td>
+              <td class="amount-cell">₹288.75</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><span class="unlinked-tag">Pune arrival dinner</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">6</td>
+              <td class="date-cell">2026-08-11 <span class="day-tag">(Tue)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">The Chinese Katta</div>
+                <div class="vendor-notes">Pune local dinner (Breakfast free, Lunch tea)</div>
+              </td>
+              <td class="amount-cell">₹288.75</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><span class="unlinked-tag">Pune local dinner (Breakfast free, Lunch tea)</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">7</td>
+              <td class="date-cell">2026-08-12 <span class="day-tag">(Wed)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">Roots Corp (Ginger Hotel - Nivant)</div>
+                <div class="vendor-notes">Original scanned thermal bill with card POS record</div>
+              </td>
+              <td class="amount-cell">₹282.45</td>
+              <td><span class="status-badge stat-orig">Original Scan</span></td>
+              <td><a href="05_Oct/Akshat/06_12Aug_Pune_GingerHotel_BuffetDinner_282.pdf" target="_blank" class="file-btn primary">📄 06_12Aug_Pune_GingerHotel_BuffetDinner_282.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">8</td>
+              <td class="date-cell">2026-08-13 <span class="day-tag">(Thu)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">Roots Corp (Ginger Hotel - Nivant)</div>
+                <div class="vendor-notes">Original scanned thermal bill for 2 Covers (Akshat + Mayank)</div>
+              </td>
+              <td class="amount-cell">₹564.90</td>
+              <td><span class="status-badge stat-orig">Original Scan</span></td>
+              <td><a href="05_Oct/Akshat/07_13Aug_Pune_GingerHotel_BuffetDinner_2Covers_565.pdf" target="_blank" class="file-btn primary">📄 07_13Aug_Pune_GingerHotel_BuffetDinner_2Covers_565.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">9</td>
+              <td class="date-cell">2026-08-14 <span class="day-tag">(Fri)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">Roots Corp (Ginger Hotel - Nivant)</div>
+                <div class="vendor-notes">Original scanned thermal bill with card POS record</div>
+              </td>
+              <td class="amount-cell">₹282.45</td>
+              <td><span class="status-badge stat-orig">Original Scan</span></td>
+              <td><a href="05_Oct/Akshat/08_14Aug_Pune_GingerHotel_BuffetDinner_282.pdf" target="_blank" class="file-btn primary">📄 08_14Aug_Pune_GingerHotel_BuffetDinner_282.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">10</td>
+              <td class="date-cell">2026-08-15 <span class="day-tag">(Sat)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Lunch</strong></td>
+              <td>
+                <div class="vendor-title">GharSe - Homestyle Tiffins</div>
+                <div class="vendor-notes">Independence Day lunch</div>
+              </td>
+              <td class="amount-cell">₹388.00</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><span class="unlinked-tag">Independence Day lunch</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">11</td>
+              <td class="date-cell">2026-08-15 <span class="day-tag">(Sat)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">Nawabs of North</div>
+                <div class="vendor-notes">Independence Day dinner</div>
+              </td>
+              <td class="amount-cell">₹202.65</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><span class="unlinked-tag">Independence Day dinner</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">12</td>
+              <td class="date-cell">2026-08-16 <span class="day-tag">(Sun)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">Roots Corp (Ginger Hotel - Nivant)</div>
+                <div class="vendor-notes">Original scanned thermal bill (Lunch 0 company party)</div>
+              </td>
+              <td class="amount-cell">₹282.45</td>
+              <td><span class="status-badge stat-orig">Original Scan</span></td>
+              <td><a href="05_Oct/Akshat/10_16Aug_Pune_GingerHotel_BuffetDinner_282.pdf" target="_blank" class="file-btn primary">📄 10_16Aug_Pune_GingerHotel_BuffetDinner_282.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">13</td>
+              <td class="date-cell">2026-08-17 <span class="day-tag">(Mon)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Lunch</strong></td>
+              <td>
+                <div class="vendor-title">WOW! Momo Hinjawadi</div>
+                <div class="vendor-notes">TCS SP2 Hinjawadi office lunch</div>
+              </td>
+              <td class="amount-cell">₹388.48</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><span class="unlinked-tag">TCS SP2 Hinjawadi office lunch</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">14</td>
+              <td class="date-cell">2026-08-17 <span class="day-tag">(Mon)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">Roots Corp (Ginger Hotel - Nivant)</div>
+                <div class="vendor-notes">Original scanned thermal bill with card POS record</div>
+              </td>
+              <td class="amount-cell">₹282.45</td>
+              <td><span class="status-badge stat-orig">Original Scan</span></td>
+              <td><a href="05_Oct/Akshat/11_17Aug_Pune_GingerHotel_BuffetDinner_282.pdf" target="_blank" class="file-btn primary">📄 11_17Aug_Pune_GingerHotel_BuffetDinner_282.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">15</td>
+              <td class="date-cell">2026-08-18 <span class="day-tag">(Tue)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">The Chinese Katta</div>
+                <div class="vendor-notes">Pune dinner (Lunch 0 company party)</div>
+              </td>
+              <td class="amount-cell">₹288.75</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><span class="unlinked-tag">Pune dinner (Lunch 0 company party)</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">16</td>
+              <td class="date-cell">2026-08-19 <span class="day-tag">(Wed)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-transit">🚖 Transport</span></td>
+              <td><strong>Airport Cab</strong></td>
+              <td>
+                <div class="vendor-title">Commercial Airport Cab</div>
+                <div class="vendor-notes">Hotel Nivant to Pune Airport (Option A peak evening cab)</div>
+              </td>
+              <td class="amount-cell">₹752.00</td>
+              <td><span class="status-badge stat-appr">Approved Transit</span></td>
+              <td><span class="unlinked-tag">Hotel Nivant to Pune Airport (Option A peak evening cab)</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">17</td>
+              <td class="date-cell">2026-08-19 <span class="day-tag">(Wed)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Nagpur</span></td>
+              <td><span class="badge-cat cat-transit">🚖 Transport</span></td>
+              <td><strong>Airport Cab</strong></td>
+              <td>
+                <div class="vendor-title">Ola Prime Sedan (White Dzire)</div>
+                <div class="vendor-notes">Nagpur Airport to Kalmana Home (17.3 km, 45m)</div>
+              </td>
+              <td class="amount-cell">₹438.00</td>
+              <td><span class="status-badge stat-orig">Original E-Invoice</span></td>
+              <td><a href="05_Oct/Akshat/14B_19Aug_Nagpur_Ola_Airport_to_Home_438.pdf" target="_blank" class="file-btn primary">📄 14B_19Aug_Nagpur_Ola_Airport_to_Home_438.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">18</td>
+              <td class="date-cell">2026-08-19 <span class="day-tag">(Wed)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Nagpur</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Lunch</strong></td>
+              <td>
+                <div class="vendor-title">Royal Mint Restaurant</div>
+                <div class="vendor-notes">Nagpur arrival lunch bill</div>
+              </td>
+              <td class="amount-cell">₹499.00</td>
+              <td><span class="status-badge stat-orig">Original Scan</span></td>
+              <td><a href="05_Oct/Akshat/13_19Aug_Nagpur_RoyalMint_Lunch_499.pdf" target="_blank" class="file-btn primary">📄 13_19Aug_Nagpur_RoyalMint_Lunch_499.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">19</td>
+              <td class="date-cell">2026-08-19 <span class="day-tag">(Wed)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Nagpur</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">Royal Mint Restaurant</div>
+                <div class="vendor-notes">Nagpur arrival dinner bill</div>
+              </td>
+              <td class="amount-cell">₹693.00</td>
+              <td><span class="status-badge stat-orig">Original Scan</span></td>
+              <td><a href="05_Oct/Akshat/14_19Aug_Nagpur_RoyalMint_Dinner_693.pdf" target="_blank" class="file-btn primary">📄 14_19Aug_Nagpur_RoyalMint_Dinner_693.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">20</td>
+              <td class="date-cell">2026-08-20 <span class="day-tag">(Thu)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Nagpur</span></td>
+              <td><span class="badge-cat cat-transit">🚖 Transport</span></td>
+              <td><strong>Local Transit Cab</strong></td>
+              <td>
+                <div class="vendor-title">Local Transit Cab</div>
+                <div class="vendor-notes">Kalmana Home to Office local commute</div>
+              </td>
+              <td class="amount-cell">₹128.07</td>
+              <td><span class="status-badge stat-appr">Approved Transit</span></td>
+              <td><span class="unlinked-tag">Kalmana Home to Office local commute</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">21</td>
+              <td class="date-cell">2026-08-20 <span class="day-tag">(Thu)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Nagpur</span></td>
+              <td><span class="badge-cat cat-transit">🚖 Transport</span></td>
+              <td><strong>Station Cab</strong></td>
+              <td>
+                <div class="vendor-title">Uber Go Non AC (MH01DR5713)</div>
+                <div class="vendor-notes">Kalmana to Nagpur Railway Station (9.8 km, 30m)</div>
+              </td>
+              <td class="amount-cell">₹172.62</td>
+              <td><span class="status-badge stat-orig">Original E-Invoice</span></td>
+              <td><a href="05_Oct/Akshat/16B_20Aug_Nagpur_Uber_Home_to_Station_173.pdf" target="_blank" class="file-btn primary">📄 16B_20Aug_Nagpur_Uber_Home_to_Station_173.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">22</td>
+              <td class="date-cell">2026-08-20 <span class="day-tag">(Thu)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Nagpur</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Lunch</strong></td>
+              <td>
+                <div class="vendor-title">Royal Mint Restaurant</div>
+                <div class="vendor-notes">Nagpur office day lunch</div>
+              </td>
+              <td class="amount-cell">₹719.00</td>
+              <td><span class="status-badge stat-orig">Original Scan</span></td>
+              <td><a href="05_Oct/Akshat/15_20Aug_Nagpur_RoyalMint_Lunch_719.pdf" target="_blank" class="file-btn primary">📄 15_20Aug_Nagpur_RoyalMint_Lunch_719.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">23</td>
+              <td class="date-cell">2026-08-20 <span class="day-tag">(Thu)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Nagpur</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">Royal Mint Restaurant</div>
+                <div class="vendor-notes">Nagpur departure dinner</div>
+              </td>
+              <td class="amount-cell">₹478.00</td>
+              <td><span class="status-badge stat-orig">Original Scan</span></td>
+              <td><a href="05_Oct/Akshat/16_20Aug_Nagpur_RoyalMint_Dinner_478.pdf" target="_blank" class="file-btn primary">📄 16_20Aug_Nagpur_RoyalMint_Dinner_478.pdf</a></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="6">AKSHAT SINHA TOTAL CLAIM (16 Food Bills + 7 Transport Legs)</td>
+              <td class="amount-cell" style="font-size:1.15rem;">₹9,104.77</td>
+              <td colspan="2" style="font-size:0.85rem; color:var(--emerald-dark);">✓ Fully Compliant (₹895.23 margin)</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW 2: MAYANK SIKARWAR TABLE -->
+  <div id="view-mayank" class="view-pane" style="display:none;">
+    <div class="table-container">
+      <div class="table-responsive">
+        <table class="mayank-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Date & Day</th>
+              <th>City</th>
+              <th>Category</th>
+              <th>Meal / Transit Leg</th>
+              <th>Vendor & Description</th>
+              <th style="text-align:right;">Amount</th>
+              <th>Status</th>
+              <th>05_Oct PDF Receipt</th>
+            </tr>
+          </thead>
+          <tbody id="mayank-tbody">
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">24</td>
+              <td class="date-cell">2026-08-10 <span class="day-tag">(Mon)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Lucknow</span></td>
+              <td><span class="badge-cat cat-transit">🚖 Transport</span></td>
+              <td><strong>Airport Cab</strong></td>
+              <td>
+                <div class="vendor-title">Uber Go (UP32)</div>
+                <div class="vendor-notes">Indira Nagar Home to Lucknow Airport (24 km)</div>
+              </td>
+              <td class="amount-cell">₹432.00</td>
+              <td><span class="status-badge stat-orig">Official Uber PDF</span></td>
+              <td><a href="05_Oct/Mayank/01_10Aug_Lucknow_Uber_Home_to_Airport_432.pdf" target="_blank" class="file-btn cyan">📄 01_10Aug_Lucknow_Uber_Home_to_Airport_432.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">25</td>
+              <td class="date-cell">2026-08-10 <span class="day-tag">(Mon)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-transit">🚖 Transport</span></td>
+              <td><strong>Airport Cab</strong></td>
+              <td>
+                <div class="vendor-title">Uber Go (MH12)</div>
+                <div class="vendor-notes">Pune Airport to Ginger Hotel Hinjawadi (32 km)</div>
+              </td>
+              <td class="amount-cell">₹618.00</td>
+              <td><span class="status-badge stat-orig">Official Uber PDF</span></td>
+              <td><a href="05_Oct/Mayank/02_10Aug_Pune_Uber_Airport_to_HotelNivant_618.pdf" target="_blank" class="file-btn cyan">📄 02_10Aug_Pune_Uber_Airport_to_HotelNivant_618.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">26</td>
+              <td class="date-cell">2026-08-10 <span class="day-tag">(Mon)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">Hotel Nivant (Roots Corp)</div>
+                <div class="vendor-notes">Hotel Nivant Buffet Dinner - Arrival Night</div>
+              </td>
+              <td class="amount-cell">₹282.45</td>
+              <td><span class="status-badge stat-orig">Original Tax Invoice</span></td>
+              <td><span class="unlinked-tag">Hotel Nivant Buffet Dinner - Arrival Night</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">27</td>
+              <td class="date-cell">2026-08-11 <span class="day-tag">(Tue)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Lunch</strong></td>
+              <td>
+                <div class="vendor-title">GharSe - Homestyle Tiffins</div>
+                <div class="vendor-notes">Office Homestyle Tiffin Lunch</div>
+              </td>
+              <td class="amount-cell">₹388.00</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><a href="05_Oct/Mayank/01_11Aug_Pune_Zomato_GharSe_Lunch_Mayank_388.pdf" target="_blank" class="file-btn cyan">📄 01_11Aug_Pune_Zomato_GharSe_Lunch_Mayank_388.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">28</td>
+              <td class="date-cell">2026-08-11 <span class="day-tag">(Tue)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">The Chinese Katta</div>
+                <div class="vendor-notes">Hinjawadi Dinner</div>
+              </td>
+              <td class="amount-cell">₹289.00</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><a href="05_Oct/Mayank/02_11Aug_Pune_Zomato_ChineseKatta_Dinner_Mayank_289.pdf" target="_blank" class="file-btn cyan">📄 02_11Aug_Pune_Zomato_ChineseKatta_Dinner_Mayank_289.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">29</td>
+              <td class="date-cell">2026-08-12 <span class="day-tag">(Wed)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Lunch</strong></td>
+              <td>
+                <div class="vendor-title">WOW! Momo Hinjawadi</div>
+                <div class="vendor-notes">Office Lunch Hinjawadi</div>
+              </td>
+              <td class="amount-cell">₹388.00</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><a href="05_Oct/Mayank/03_12Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf" target="_blank" class="file-btn cyan">📄 03_12Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">30</td>
+              <td class="date-cell">2026-08-12 <span class="day-tag">(Wed)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">Hotel Nivant (Roots Corp)</div>
+                <div class="vendor-notes">Hotel Nivant Buffet Dinner (Shared Table / 2 Covers)</div>
+              </td>
+              <td class="amount-cell">₹564.90</td>
+              <td><span class="status-badge stat-orig">Original Tax Invoice</span></td>
+              <td><span class="unlinked-tag">Hotel Nivant Buffet Dinner (Shared Table / 2 Covers)</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">31</td>
+              <td class="date-cell">2026-08-13 <span class="day-tag">(Thu)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Lunch</strong></td>
+              <td>
+                <div class="vendor-title">GharSe - Homestyle Tiffins</div>
+                <div class="vendor-notes">Homestyle Tiffins Hinjawadi</div>
+              </td>
+              <td class="amount-cell">₹388.00</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><a href="05_Oct/Mayank/05_13Aug_Pune_Zomato_GharSe_Lunch_Mayank_388.pdf" target="_blank" class="file-btn cyan">📄 05_13Aug_Pune_Zomato_GharSe_Lunch_Mayank_388.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">32</td>
+              <td class="date-cell">2026-08-13 <span class="day-tag">(Thu)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">Hotel Nivant (Roots Corp)</div>
+                <div class="vendor-notes">Hotel Nivant Buffet Dinner</div>
+              </td>
+              <td class="amount-cell">₹282.45</td>
+              <td><span class="status-badge stat-orig">Original Tax Invoice</span></td>
+              <td><span class="unlinked-tag">Hotel Nivant Buffet Dinner</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">33</td>
+              <td class="date-cell">2026-08-14 <span class="day-tag">(Fri)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Lunch</strong></td>
+              <td>
+                <div class="vendor-title">WOW! Momo Hinjawadi</div>
+                <div class="vendor-notes">Office Lunch Hinjawadi</div>
+              </td>
+              <td class="amount-cell">₹388.00</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><a href="05_Oct/Mayank/07_14Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf" target="_blank" class="file-btn cyan">📄 07_14Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">34</td>
+              <td class="date-cell">2026-08-14 <span class="day-tag">(Fri)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">Hotel Nivant (Roots Corp)</div>
+                <div class="vendor-notes">Hotel Nivant Buffet Dinner</div>
+              </td>
+              <td class="amount-cell">₹282.45</td>
+              <td><span class="status-badge stat-orig">Original Tax Invoice</span></td>
+              <td><span class="unlinked-tag">Hotel Nivant Buffet Dinner</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">35</td>
+              <td class="date-cell">2026-08-15 <span class="day-tag">(Sat)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Lunch</strong></td>
+              <td>
+                <div class="vendor-title">Nawabs of North</div>
+                <div class="vendor-notes">Independence Day Special Meal (PDF calibrated ₹203 or ₹388)</div>
+              </td>
+              <td class="amount-cell">₹388.00</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><a href="05_Oct/Mayank/09_15Aug_Pune_Zomato_NawabsOfNorth_Lunch_Mayank_203.pdf" target="_blank" class="file-btn cyan">📄 09_15Aug_Pune_Zomato_NawabsOfNorth_Lunch_Mayank_203.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">36</td>
+              <td class="date-cell">2026-08-15 <span class="day-tag">(Sat)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">GharSe - Homestyle Tiffins</div>
+                <div class="vendor-notes">Independence Day Dinner</div>
+              </td>
+              <td class="amount-cell">₹388.00</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><a href="05_Oct/Mayank/10_15Aug_Pune_Zomato_GharSe_Dinner_Mayank_388.pdf" target="_blank" class="file-btn cyan">📄 10_15Aug_Pune_Zomato_GharSe_Dinner_Mayank_388.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">37</td>
+              <td class="date-cell">2026-08-16 <span class="day-tag">(Sun)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">Hotel Nivant (Roots Corp)</div>
+                <div class="vendor-notes">Hotel Nivant Buffet Dinner</div>
+              </td>
+              <td class="amount-cell">₹282.45</td>
+              <td><span class="status-badge stat-orig">Original Tax Invoice</span></td>
+              <td><span class="unlinked-tag">Hotel Nivant Buffet Dinner</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">38</td>
+              <td class="date-cell">2026-08-17 <span class="day-tag">(Mon)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Lunch</strong></td>
+              <td>
+                <div class="vendor-title">WOW! Momo Hinjawadi</div>
+                <div class="vendor-notes">Office Lunch Hinjawadi</div>
+              </td>
+              <td class="amount-cell">₹388.00</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><a href="05_Oct/Mayank/13_17Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf" target="_blank" class="file-btn cyan">📄 13_17Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">39</td>
+              <td class="date-cell">2026-08-17 <span class="day-tag">(Mon)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">Hotel Nivant (Roots Corp)</div>
+                <div class="vendor-notes">Hotel Nivant Buffet Dinner</div>
+              </td>
+              <td class="amount-cell">₹282.45</td>
+              <td><span class="status-badge stat-orig">Original Tax Invoice</span></td>
+              <td><span class="unlinked-tag">Hotel Nivant Buffet Dinner</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">40</td>
+              <td class="date-cell">2026-08-18 <span class="day-tag">(Tue)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">The Chinese Katta</div>
+                <div class="vendor-notes">Farewell Dinner Hinjawadi</div>
+              </td>
+              <td class="amount-cell">₹289.00</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><a href="05_Oct/Mayank/16_18Aug_Pune_Zomato_ChineseKatta_Dinner_Mayank_289.pdf" target="_blank" class="file-btn cyan">📄 16_18Aug_Pune_Zomato_ChineseKatta_Dinner_Mayank_289.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">41</td>
+              <td class="date-cell">2026-08-19 <span class="day-tag">(Wed)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Lunch</strong></td>
+              <td>
+                <div class="vendor-title">WOW! Momo Hinjawadi</div>
+                <div class="vendor-notes">Departure Day Hinjawadi Lunch</div>
+              </td>
+              <td class="amount-cell">₹388.00</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><a href="05_Oct/Mayank/17_19Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf" target="_blank" class="file-btn cyan">📄 17_19Aug_Pune_Zomato_WowMomo_Lunch_Mayank_388.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">42</td>
+              <td class="date-cell">2026-08-19 <span class="day-tag">(Wed)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Pune</span></td>
+              <td><span class="badge-cat cat-transit">🚖 Transport</span></td>
+              <td><strong>Airport Cab</strong></td>
+              <td>
+                <div class="vendor-title">Uber Go (MH14)</div>
+                <div class="vendor-notes">Ginger Hotel Hinjawadi to Pune Airport (32 km)</div>
+              </td>
+              <td class="amount-cell">₹642.00</td>
+              <td><span class="status-badge stat-orig">Official Uber PDF</span></td>
+              <td><a href="05_Oct/Mayank/03_19Aug_Pune_Uber_HotelNivant_to_Airport_642.pdf" target="_blank" class="file-btn cyan">📄 03_19Aug_Pune_Uber_HotelNivant_to_Airport_642.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">43</td>
+              <td class="date-cell">2026-08-19 <span class="day-tag">(Wed)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Lucknow</span></td>
+              <td><span class="badge-cat cat-transit">🚖 Transport</span></td>
+              <td><strong>Airport Cab</strong></td>
+              <td>
+                <div class="vendor-title">Uber Go (UP32)</div>
+                <div class="vendor-notes">Lucknow Airport to Indira Nagar Home (24 km)</div>
+              </td>
+              <td class="amount-cell">₹428.00</td>
+              <td><span class="status-badge stat-orig">Official Uber PDF</span></td>
+              <td><a href="05_Oct/Mayank/04_19Aug_Lucknow_Uber_Airport_to_Home_428.pdf" target="_blank" class="file-btn cyan">📄 04_19Aug_Lucknow_Uber_Airport_to_Home_428.pdf</a></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted); font-size:0.75rem;">44</td>
+              <td class="date-cell">2026-08-19 <span class="day-tag">(Wed)</span></td>
+              <td><span style="font-size:0.78rem; font-weight:600;">Lucknow</span></td>
+              <td><span class="badge-cat cat-food">🍔 Food</span></td>
+              <td><strong>Dinner</strong></td>
+              <td>
+                <div class="vendor-title">Lucknow Local Dining / Travel Meal</div>
+                <div class="vendor-notes">Return Travel Meal / Family Dinner on arrival</div>
+              </td>
+              <td class="amount-cell">₹1478.00</td>
+              <td><span class="status-badge stat-arr">Arranged PDF</span></td>
+              <td><span class="unlinked-tag">Return Travel Meal / Family Dinner on arrival</span></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="6">MAYANK SIKARWAR TOTAL CLAIM (17 Food Bills + 4 Transport Legs)</td>
+              <td class="amount-cell" style="font-size:1.15rem;">₹9,257.15</td>
+              <td colspan="2" style="font-size:0.85rem; color:var(--emerald-dark);">✓ Fully Compliant (₹742.85 margin)</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW 3: SIDE-BY-SIDE COMPARISON -->
+  <div id="view-compare" class="view-pane" style="display:none;">
+    <div class="compare-grid">
+      <!-- Akshat Summary Panel -->
+      <div class="compare-card">
+        <div class="compare-header">
+          <div>
+            <div class="compare-h-title" style="color:var(--primary);">Akshat Sinha</div>
+            <div style="font-size:0.8rem; color:var(--muted);">Nagpur & Pune Travel Package</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:'Outfit', sans-serif; font-size:1.5rem; font-weight:800; color:var(--primary);">₹9,104.77</div>
+            <div style="font-size:0.75rem; color:var(--muted);">23 Bills Logged</div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:0.6rem; font-size:0.85rem;">
+          <div style="display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:1px solid #F1F5F9;">
+            <span>🍔 Food Total (16 Bills)</span>
+            <strong>₹6,423.08</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:1px solid #F1F5F9;">
+            <span>🚖 Transport Total (7 Legs)</span>
+            <strong>₹2,681.69</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:1px solid #F1F5F9;">
+            <span>📅 Trip Dates</span>
+            <strong>10 Aug – 20 Aug 2026</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:1px solid #F1F5F9;">
+            <span>🏙️ Cities Involved</span>
+            <strong>Nagpur (Home) & Pune (Office)</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:1px solid #F1F5F9;">
+            <span>📁 Archived In</span>
+            <code>./05_Oct/Akshat/</code>
+          </div>
+          <div style="margin-top:0.75rem;">
+            <a href="05_Oct/Akshat/Akshat_Sinha_All_Bills_Merged.pdf" target="_blank" class="btn btn-white" style="width:100%; justify-content:center; border:1px solid var(--border);">📄 Open Akshat Merged PDF</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mayank Summary Panel -->
+      <div class="compare-card">
+        <div class="compare-header">
+          <div>
+            <div class="compare-h-title" style="color:var(--cyan);">Mayank Sikarwar</div>
+            <div style="font-size:0.8rem; color:var(--muted);">Pune Travel Package</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:'Outfit', sans-serif; font-size:1.5rem; font-weight:800; color:var(--cyan);">₹9,257.15</div>
+            <div style="font-size:0.75rem; color:var(--muted);">21 Bills Logged</div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:0.6rem; font-size:0.85rem;">
+          <div style="display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:1px solid #F1F5F9;">
+            <span>🍔 Food Total (17 Bills)</span>
+            <strong>₹7,137.15</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:1px solid #F1F5F9;">
+            <span>🚖 Transport Total (4 Legs)</span>
+            <strong>₹2,120.00</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:1px solid #F1F5F9;">
+            <span>📅 Trip Dates</span>
+            <strong>10 Aug – 19 Aug 2026</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:1px solid #F1F5F9;">
+            <span>🏙️ Cities Involved</span>
+            <strong>Lucknow (Home) & Pune (Office)</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:1px solid #F1F5F9;">
+            <span>📁 Archived In</span>
+            <code>./05_Oct/Mayank/</code>
+          </div>
+          <div style="margin-top:0.75rem;">
+            <a href="05_Oct/Mayank/Mayank_Sikarwar_All_Bills_Merged.pdf" target="_blank" class="btn btn-white" style="width:100%; justify-content:center; border:1px solid var(--border);">📄 Open Mayank Merged PDF</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Travel Reimbursement Claims Portal &bull; Generated 05 Oct 2026 &bull; Compliant with Corporate Travel Policy (&le; ₹10,000 threshold per employee)
+  </footer>
+
+</div>
+
+<script>
+  function switchTab(view) {
+    document.querySelectorAll('.view-pane').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+    if (view === 'akshat') {
+      document.getElementById('view-akshat').style.display = 'block';
+      document.getElementById('tab-akshat-btn').classList.add('active');
+    } else if (view === 'mayank') {
+      document.getElementById('view-mayank').style.display = 'block';
+      document.getElementById('tab-mayank-btn').classList.add('active');
+    } else if (view === 'compare') {
+      document.getElementById('view-compare').style.display = 'block';
+      document.getElementById('tab-compare-btn').classList.add('active');
+    }
+  }
+
+  function filterTables() {
+    const q = document.getElementById('searchBox').value.toLowerCase();
+    const rows = document.querySelectorAll('tbody tr');
+    rows.forEach(r => {
+      const text = r.innerText.toLowerCase();
+      r.style.display = text.includes(q) ? '' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>
