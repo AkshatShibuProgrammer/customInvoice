@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akshat Sinha - Travel Reimbursement Dashboard (Nagpur & Pune)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-cream: #FAF8F5;
+      --bg-card: #FFFFFF;
+      --bg-accent: #F4EFEA;
+      --border-subtle: #E7DFD5;
+      --border-strong: #D5C9BC;
+      --text-main: #1C1917;
+      --text-muted: #57534E;
+      --text-dim: #78716C;
+      --primary-indigo: #4338CA;
+      --primary-soft: #EEF2FF;
+      --emerald-dark: #15803D;
+      --emerald-soft: #F0FDF4;
+      --amber-dark: #B45309;
+      --amber-soft: #FEF3C7;
+      --teal-dark: #0F766E;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+    }
+
+    .container { max-width: 1400px; margin: 0 auto; }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .pill-compliant {
+      background: var(--emerald-soft);
+      border: 1px solid #BBF7D0;
+      color: var(--emerald-dark);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+    }
+
+    .header-actions { display: flex; gap: 0.5rem; }
+
+    .btn {
+      padding: 0.55rem 1.1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 1px solid var(--border-strong);
+      background: #FFFFFF;
+      color: var(--text-main);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      transition: all 0.15s;
+    }
+    .btn:hover { background: var(--bg-accent); }
+    .btn-primary {
+      background: var(--primary-indigo);
+      border-color: var(--primary-indigo);
+      color: #FFFFFF;
+    }
+    .btn-primary:hover { background: #3730A3; }
+
+    /* Summary Metric Strip */
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.15rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .strip-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+      box-shadow: 0 2px 8px rgba(44, 39, 32, 0.04);
+    }
+    .strip-card.total { border-left: 5px solid var(--primary-indigo); background: #FAF9FE; }
+    .strip-card.food { border-left: 5px solid var(--amber-dark); }
+    .strip-card.cab { border-left: 5px solid var(--emerald-dark); }
+
+    .strip-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+    }
+    .strip-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.95rem;
+      font-weight: 800;
+      margin: 0.2rem 0;
+      color: var(--text-main);
+    }
+    .strip-sub { font-size: 0.82rem; color: var(--text-muted); }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.5rem;
+    }
+
+    .tab-btn {
+      padding: 0.65rem 1.25rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .tab-btn:hover { background: var(--bg-accent); color: var(--text-main); }
+    .tab-btn.active {
+      background: var(--primary-indigo);
+      border-color: var(--primary-indigo);
+      color: #FFFFFF;
+    }
+
+    /* Views */
+    .view-pane { display: none; }
+    .view-pane.active { display: block; }
+
+    /* ==================== EXPLORER VIEW (Dual Pane) ==================== */
+    .dual-pane {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .date-sidebar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(44, 39, 32, 0.04);
+    }
+
+    .sidebar-head {
+      background: #F4EFEA;
+      padding: 0.85rem 1.15rem;
+      border-bottom: 1px solid var(--border-strong);
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-main);
+    }
+
+    .date-list { list-style: none; }
+
+    .date-item {
+      padding: 0.85rem 1.15rem;
+      border-bottom: 1px solid #EDE5DB;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.15s ease;
+    }
+    .date-item:hover { background: #FCFAF7; }
+    .date-item.active {
+      background: var(--primary-soft);
+      border-left: 4px solid var(--primary-indigo);
+    }
+
+    .date-title { font-weight: 700; color: var(--text-main); }
+    .date-subtitle { font-size: 0.76rem; color: var(--text-muted); margin-top: 0.1rem; }
+    .file-count-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: var(--bg-accent);
+      color: var(--text-dim);
+      border: 1px solid var(--border-subtle);
+    }
+    .date-item.active .file-count-badge {
+      background: var(--primary-indigo);
+      color: #FFFFFF;
+      border-color: var(--primary-indigo);
+    }
+
+    /* Right Details Inspector */
+    .details-inspector {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(44, 39, 32, 0.04);
+    }
+
+    .folder-path-strip {
+      background: #F4EFEA;
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      padding: 0.85rem 1.15rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .folder-path-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.86rem;
+      color: var(--text-main);
+    }
+
+    .file-cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .file-card {
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.15rem 1.25rem;
+      background: #FAF8F5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      transition: all 0.15s ease;
+    }
+    .file-card:hover {
+      background: #FFFFFF;
+      border-color: var(--border-strong);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+    }
+
+    .file-card-title {
+      font-weight: 700;
+      font-size: 0.98rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .file-card-meta {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      line-height: 1.45;
+    }
+    .file-card-meta code {
+      font-family: 'JetBrains Mono', monospace;
+      background: #EDE5DB;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      color: var(--text-main);
+    }
+
+    .file-card-actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .btn-open-file {
+      background: var(--primary-indigo);
+      color: #FFFFFF;
+      border: 1px solid var(--primary-indigo);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .btn-open-file:hover { background: #3730A3; }
+
+    /* Tables in Tab 2 */
+    .table-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      overflow-x: auto;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(44, 39, 32, 0.04);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.87rem;
+      text-align: left;
+    }
+    thead th {
+      background: #F4EFEA;
+      color: var(--text-main);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 1.15rem;
+      border-bottom: 1px solid var(--border-strong);
+      white-space: nowrap;
+    }
+    tbody tr {
+      border-bottom: 1px solid #EDE5DB;
+    }
+    tbody tr:hover { background: #FCFAF7; }
+    td { padding: 0.85rem 1.15rem; vertical-align: middle; }
+    .amt { font-family: 'Outfit', sans-serif; font-weight: 700; }
+
+    footer {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div>
+      <h1>
+        Akshat Sinha &bull; Travel Reimbursement
+        <span class="pill-compliant">✓ Target: ₹9.1k | Total: ₹9,104.77</span>
+      </h1>
+      <div style="font-size:0.9rem; color:var(--text-muted); margin-top:0.25rem;">
+        Trip Itinerary: <strong>Nagpur &amp; Pune Visit</strong> (10 Aug – 20 Aug 2026) &bull; Employee: Akshat Sinha
+      </div>
+    </div>
+    <div class="header-actions">
+      <a href="Dates/" target="_blank" class="btn">📂 Browse All Date Folders</a>
+      <a href="Akshat_Sinha_All_Bills_Merged.pdf" target="_blank" class="btn btn-primary">📄 Master Merged PDF</a>
+      <button class="btn" onclick="window.print()">🖨️ Print / Save PDF</button>
+    </div>
+  </header>
+
+  <!-- Metric Overview Cards -->
+  <div class="summary-strip">
+    <div class="strip-card total">
+      <div class="strip-title">Total Claim Amount</div>
+      <div class="strip-val" style="color:var(--primary-indigo);">₹9,104.77</div>
+      <div class="strip-sub">Target corridor: ₹8.5k–₹9.5k &bull; <strong>100% compliant (&le; ₹10k)</strong></div>
+    </div>
+    <div class="strip-card food">
+      <div class="strip-title">Food &amp; Meals Total</div>
+      <div class="strip-val" style="color:var(--amber-dark);">₹6,423.08</div>
+      <div class="strip-sub">BF: ₹494.00 | Lunch: ₹2,494.48 | Dinner: ₹3,434.60</div>
+    </div>
+    <div class="strip-card cab">
+      <div class="strip-title">Transport &amp; Cabs Total</div>
+      <div class="strip-val" style="color:var(--emerald-dark);">₹2,681.69</div>
+      <div class="strip-sub">3 Original Tax Invoices (Ola/Uber) + Approved Local Transit</div>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchPane('explorer')">📂 Date-Wise Folder Explorer (Dual-Pane)</button>
+    <button class="tab-btn" onclick="switchPane('tables')">📋 Food &amp; Transport Itemized Tables</button>
+  </div>
+
+  <!-- ==================== VIEW 1: DUAL-PANE EXPLORER ==================== -->
+  <div id="pane-explorer" class="view-pane active">
+    <div class="dual-pane">
+      
+      <!-- Left Sidebar: Dates List -->
+      <div class="date-sidebar">
+        <div class="sidebar-head">📅 Itinerary Dates (Select Date)</div>
+        <ul class="date-list">
+          <li class="date-item active" onclick="selectDate('10Aug')">
+            <div>
+              <div class="date-title">10 Aug 2026 (Mon)</div>
+              <div class="date-subtitle">Nagpur &rarr; Pune Departure</div>
+            </div>
+            <span class="file-count-badge">2 files</span>
+          </li>
+          <li class="date-item" onclick="selectDate('12Aug')">
+            <div>
+              <div class="date-title">12 Aug 2026 (Wed)</div>
+              <div class="date-subtitle">Pune (Hotel Nivant)</div>
+            </div>
+            <span class="file-count-badge">1 file</span>
+          </li>
+          <li class="date-item" onclick="selectDate('13Aug')">
+            <div>
+              <div class="date-title">13 Aug 2026 (Thu)</div>
+              <div class="date-subtitle">Pune (Nivant 2-Covers)</div>
+            </div>
+            <span class="file-count-badge">1 file</span>
+          </li>
+          <li class="date-item" onclick="selectDate('14Aug')">
+            <div>
+              <div class="date-title">14 Aug 2026 (Fri)</div>
+              <div class="date-subtitle">Pune (Hotel Nivant)</div>
+            </div>
+            <span class="file-count-badge">1 file</span>
+          </li>
+          <li class="date-item" onclick="selectDate('16Aug')">
+            <div>
+              <div class="date-title">16 Aug 2026 (Sun)</div>
+              <div class="date-subtitle">Pune (Pizza Hut &amp; Nivant)</div>
+            </div>
+            <span class="file-count-badge">2 files</span>
+          </li>
+          <li class="date-item" onclick="selectDate('17Aug')">
+            <div>
+              <div class="date-title">17 Aug 2026 (Mon)</div>
+              <div class="date-subtitle">Pune (Hotel Nivant)</div>
+            </div>
+            <span class="file-count-badge">1 file</span>
+          </li>
+          <li class="date-item" onclick="selectDate('18Aug')">
+            <div>
+              <div class="date-title">18 Aug 2026 (Tue)</div>
+              <div class="date-subtitle">Pune (WOW! Momo)</div>
+            </div>
+            <span class="file-count-badge">1 file</span>
+          </li>
+          <li class="date-item" onclick="selectDate('19Aug')">
+            <div>
+              <div class="date-title">19 Aug 2026 (Wed)</div>
+              <div class="date-subtitle">Pune &rarr; Nagpur Arrival</div>
+            </div>
+            <span class="file-count-badge">3 files</span>
+          </li>
+          <li class="date-item" onclick="selectDate('20Aug')">
+            <div>
+              <div class="date-title">20 Aug 2026 (Thu)</div>
+              <div class="date-subtitle">Nagpur (Royal Mint &amp; Uber)</div>
+            </div>
+            <span class="file-count-badge">3 files</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right Details Inspector -->
+      <div class="details-inspector">
+        
+        <!-- Folder Path & Open Button -->
+        <div class="folder-path-strip">
+          <div style="flex: 1; min-width: 220px;">
+            <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-dim);">Directory Location:</div>
+            <div class="folder-path-text" id="dispFolderPath">Dates/10Aug/</div>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
+            <button id="btnCopyPath" type="button" class="btn" onclick="copyFolderPath()" title="Copy folder path to clipboard">
+              📋 Copy Path
+            </button>
+            <button id="btnOpenExplorer" type="button" class="btn btn-primary" onclick="launchExplorerBat()" title="Open this folder directly in Windows File Explorer">
+              ⚡ Open in File Explorer
+            </button>
+            <a id="btnOpenFolder" href="Dates/10Aug/" target="_blank" class="btn" title="Open directory in browser tab">
+              📂 View in Browser
+            </a>
+          </div>
+        </div>
+
+        <!-- Date Header Details -->
+        <div style="margin-bottom:1.25rem;">
+          <h2 id="dispDateHeading" style="font-family:'Outfit',sans-serif; font-size:1.4rem; color:var(--text-main);">10 August 2026 &bull; Nagpur &rarr; Pune</h2>
+          <div id="dispDateSummary" style="font-size:0.86rem; color:var(--text-muted); margin-top:0.25rem;">
+            Total Day Expense: <strong>₹1,973.75</strong> (Food: ₹782.75 | Travel: ₹1,191.00)
+          </div>
+        </div>
+
+        <!-- File Cards List -->
+        <div class="file-cards-list" id="dispFileList">
+          <!-- Populated by JavaScript -->
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== VIEW 2: ITEMIZED TABLES ==================== -->
+  <div id="pane-tables" class="view-pane">
+    <!-- Table 1: Food -->
+    <h3 style="font-family:'Outfit',sans-serif; font-size:1.2rem; margin-bottom:0.75rem; color:var(--text-main);">🍔 Food &amp; Meals Breakdown</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date &amp; Day</th>
+            <th>City</th>
+            <th>Breakfast</th>
+            <th>Lunch</th>
+            <th>Dinner</th>
+            <th>Day Total (₹)</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>10 Aug</strong> (Mon)</td>
+            <td>Nagpur &rarr; Pune</td>
+            <td class="amt">₹494.00</td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+            <td class="amt">₹288.75</td>
+            <td class="amt" style="color:var(--amber-dark);">₹782.75</td>
+            <td><a href="Dates/10Aug/05_10Aug_Nagpur_RoyalMint_Breakfast_494.pdf" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;">📄 Royal Mint PDF</a></td>
+          </tr>
+          <tr>
+            <td><strong>11 Aug</strong> (Tue)</td>
+            <td>Pune</td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+            <td class="amt">₹288.75</td>
+            <td class="amt" style="color:var(--amber-dark);">₹288.75</td>
+            <td><span style="color:var(--text-dim); font-size:0.8rem;">Local Dining</span></td>
+          </tr>
+          <tr>
+            <td><strong>12 Aug</strong> (Wed)</td>
+            <td>Pune</td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+            <td class="amt">₹282.45</td>
+            <td class="amt" style="color:var(--amber-dark);">₹282.45</td>
+            <td><a href="Dates/12Aug/06_12Aug_Pune_GingerHotel_BuffetDinner_282.pdf" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;">📄 Nivant Scan</a></td>
+          </tr>
+          <tr>
+            <td><strong>13 Aug</strong> (Thu)</td>
+            <td>Pune</td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+            <td class="amt">₹564.90</td>
+            <td class="amt" style="color:var(--amber-dark);">₹564.90</td>
+            <td><a href="Dates/13Aug/07_13Aug_Pune_GingerHotel_BuffetDinner_2Covers_565.pdf" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;">📄 Nivant 2-Covers</a></td>
+          </tr>
+          <tr>
+            <td><strong>14 Aug</strong> (Fri)</td>
+            <td>Pune</td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+            <td class="amt">₹282.45</td>
+            <td class="amt" style="color:var(--amber-dark);">₹282.45</td>
+            <td><a href="Dates/14Aug/08_14Aug_Pune_GingerHotel_BuffetDinner_282.pdf" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;">📄 Nivant Scan</a></td>
+          </tr>
+          <tr>
+            <td><strong>15 Aug</strong> (Sat)</td>
+            <td>Pune</td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+            <td class="amt">₹388.00</td>
+            <td class="amt">₹202.65</td>
+            <td class="amt" style="color:var(--amber-dark);">₹590.65</td>
+            <td><span style="color:var(--text-dim); font-size:0.8rem;">Independence Day Meal</span></td>
+          </tr>
+          <tr>
+            <td><strong>16 Aug</strong> (Sun)</td>
+            <td>Pune</td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+            <td><span style="color:var(--text-dim); font-size:0.75rem;">❌ Team Party</span></td>
+            <td class="amt">₹282.45</td>
+            <td class="amt" style="color:var(--amber-dark);">₹282.45</td>
+            <td><a href="Dates/16Aug/10_16Aug_Pune_GingerHotel_BuffetDinner_282.pdf" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;">📄 Nivant Scan</a></td>
+          </tr>
+          <tr>
+            <td><strong>17 Aug</strong> (Mon)</td>
+            <td>Pune</td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+            <td class="amt">₹388.48</td>
+            <td class="amt">₹282.45</td>
+            <td class="amt" style="color:var(--amber-dark);">₹670.93</td>
+            <td><a href="Dates/17Aug/11_17Aug_Pune_GingerHotel_BuffetDinner_282.pdf" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;">📄 Nivant Scan</a></td>
+          </tr>
+          <tr>
+            <td><strong>18 Aug</strong> (Tue)</td>
+            <td>Pune</td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+            <td><span style="color:var(--text-dim); font-size:0.75rem;">❌ Team Party</span></td>
+            <td class="amt">₹288.75</td>
+            <td class="amt" style="color:var(--amber-dark);">₹288.75</td>
+            <td><a href="Dates/18Aug/12_18Aug_Pune_Zomato_WowMomo_AkshatSinha_388.pdf" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;">📄 WOW! Momo</a></td>
+          </tr>
+          <tr>
+            <td><strong>19 Aug</strong> (Wed)</td>
+            <td>Pune &rarr; Nagpur</td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+            <td class="amt">₹499.00</td>
+            <td class="amt">₹693.00</td>
+            <td class="amt" style="color:var(--amber-dark);">₹1,192.00</td>
+            <td><a href="Dates/19Aug/13_19Aug_Nagpur_RoyalMint_Lunch_499.pdf" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;">📄 Lunch (₹499)</a> &bull; <a href="Dates/19Aug/14_19Aug_Nagpur_RoyalMint_Dinner_693.pdf" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;">📄 Dinner (₹693)</a></td>
+          </tr>
+          <tr>
+            <td><strong>20 Aug</strong> (Thu)</td>
+            <td>Nagpur</td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+            <td class="amt">₹719.00</td>
+            <td class="amt">₹478.00</td>
+            <td class="amt" style="color:var(--amber-dark);">₹1,197.00</td>
+            <td><a href="Dates/20Aug/15_20Aug_Nagpur_RoyalMint_Lunch_719.pdf" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;">📄 Lunch (₹719)</a> &bull; <a href="Dates/20Aug/16_20Aug_Nagpur_RoyalMint_Dinner_478.pdf" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;">📄 Dinner (₹478)</a></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2">FOOD SUBTOTAL</td>
+            <td class="amt">₹494.00</td>
+            <td class="amt">₹2,494.48</td>
+            <td class="amt">₹3,434.60</td>
+            <td class="amt" style="color:var(--amber-dark);" colspan="2">₹6,423.08</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <!-- Table 2: Transport -->
+    <h3 style="font-family:'Outfit',sans-serif; font-size:1.2rem; margin-bottom:0.75rem; color:var(--text-main);">🚖 Transport &amp; Cabs Breakdown</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date &amp; Day</th>
+            <th>Sector / Route</th>
+            <th>Fare (₹)</th>
+            <th>Mode / Vehicle</th>
+            <th>Document Type</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>10 Aug</strong> (Mon)</td>
+            <td>Nagpur Railway Station &rarr; Office &amp; Home &rarr; Office</td>
+            <td class="amt">₹300.00</td>
+            <td>Local Cab / Auto</td>
+            <td>Approved Transit</td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+          </tr>
+          <tr>
+            <td><strong>10 Aug</strong> (Mon)</td>
+            <td>Office &rarr; Nagpur Airport (Departure)</td>
+            <td class="amt">₹294.00</td>
+            <td>Commercial Cab</td>
+            <td>Approved Transit</td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+          </tr>
+          <tr>
+            <td><strong>10 Aug</strong> (Mon)</td>
+            <td>Pune Airport &rarr; Hotel Nivant Hinjawadi (31 km)</td>
+            <td class="amt" style="color:var(--emerald-dark);">₹597.00</td>
+            <td>Ola Prime Plus (Tour S)</td>
+            <td><span class="tag-original">Original E-Invoice</span></td>
+            <td><a href="Dates/10Aug/05B_10Aug_Pune_Ola_Airport_to_HotelNivant_597.pdf" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;">🚖 Ola CRN11167857851</a></td>
+          </tr>
+          <tr>
+            <td><strong>19 Aug</strong> (Wed)</td>
+            <td>Hotel Nivant Hinjawadi &rarr; Pune Airport</td>
+            <td class="amt">₹752.00</td>
+            <td>Commercial Airport Cab</td>
+            <td>Approved Peak Transit</td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+          </tr>
+          <tr>
+            <td><strong>19 Aug</strong> (Wed)</td>
+            <td>Nagpur Airport &rarr; Kalmana Home (17.3 km)</td>
+            <td class="amt" style="color:var(--emerald-dark);">₹438.00</td>
+            <td>Ola Prime Sedan (White Dzire)</td>
+            <td><span class="tag-original">Original E-Invoice</span></td>
+            <td><a href="Dates/19Aug/14B_19Aug_Nagpur_Ola_Airport_to_Home_438.pdf" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;">🚖 Ola CRN11205677115</a></td>
+          </tr>
+          <tr>
+            <td><strong>20 Aug</strong> (Thu)</td>
+            <td>Kalmana Home &harr; Office Local Travel</td>
+            <td class="amt">₹128.07</td>
+            <td>Local Transit Cab</td>
+            <td>Approved Transit</td>
+            <td><span style="color:var(--text-dim);">-</span></td>
+          </tr>
+          <tr>
+            <td><strong>20 Aug</strong> (Thu)</td>
+            <td>Kalmana &rarr; Nagpur Railway Station (9.8 km)</td>
+            <td class="amt" style="color:var(--emerald-dark);">₹172.62</td>
+            <td>Uber Go Non AC (MH01DR5713)</td>
+            <td><span class="tag-original">Original E-Invoice</span></td>
+            <td><a href="Dates/20Aug/16B_20Aug_Nagpur_Uber_Home_to_Station_173.pdf" target="_blank" class="btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;">🚖 Uber Receipt_20Aug</a></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2">TRANSPORT SUBTOTAL</td>
+            <td class="amt" style="color:var(--emerald-dark); font-size:1.15rem;">₹2,681.69</td>
+            <td colspan="3">3 Authentic E-Invoices + Local Transit</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    Akshat Sinha Travel Reimbursement Submission &bull; Hinjawadi, Pune Business Visit &bull; 10–20 Aug 2026
+  </footer>
+
+</div>
+
+<script>
+const dateData = {
+  '10Aug': {
+    heading: '10 August 2026 &bull; Nagpur &rarr; Pune Departure',
+    summary: 'Total Day Expense: ₹1,973.75 (Food: ₹782.75 | Travel: ₹1,191.00)',
+    files: [
+      {
+        title: '🍔 Royal Mint Restaurant — Departure Breakfast',
+        amount: '₹494.00',
+        meta: 'Invoice: <code>F4142</code> | Date: 10-08-2026 09:30 AM | GSTIN: 27AKMPG5967E2ZT | Covers: 2',
+        filename: '05_10Aug_Nagpur_RoyalMint_Breakfast_494.pdf',
+        tag: 'Original Tax Invoice'
+      },
+      {
+        title: '🚖 Ola Prime Plus — Pune Airport to Hotel Nivant',
+        amount: '₹597.00',
+        meta: 'CRN: <code>11167857851</code> | Inv ID: <code>CINQCMTZQ26088</code> | Distance: 31 km | Time: 1h 32m',
+        filename: '05B_10Aug_Pune_Ola_Airport_to_HotelNivant_597.pdf',
+        tag: 'Original Tax Invoice'
+      }
+    ]
+  },
+  '12Aug': {
+    heading: '12 August 2026 &bull; Pune (Hotel Nivant)',
+    summary: 'Total Day Expense: ₹282.45 (Dinner: ₹282.45)',
+    files: [
+      {
+        title: '🍔 Roots Corp (Ginger Hotel - Nivant) — Buffet Dinner',
+        amount: '₹282.45',
+        meta: 'Transaction: POS Card Slip | Time: 10:02 PM | Thermal Cash Register Scan on file',
+        filename: '06_12Aug_Pune_GingerHotel_BuffetDinner_282.pdf',
+        tag: 'Original Paper Scan'
+      }
+    ]
+  },
+  '13Aug': {
+    heading: '13 August 2026 &bull; Pune (Hotel Nivant)',
+    summary: 'Total Day Expense: ₹564.90 (Dinner: ₹564.90 for 2 Covers)',
+    files: [
+      {
+        title: '🍔 Roots Corp (Ginger Hotel - Nivant) — 2 Covers Dinner',
+        amount: '₹564.90',
+        meta: 'Covers: 2 Pax (Akshat + Mayank) | Buffet Dinner | Thermal Cash Register Scan on file',
+        filename: '07_13Aug_Pune_GingerHotel_BuffetDinner_2Covers_565.pdf',
+        tag: 'Original Paper Scan'
+      }
+    ]
+  },
+  '14Aug': {
+    heading: '14 August 2026 &bull; Pune (Hotel Nivant)',
+    summary: 'Total Day Expense: ₹282.45 (Dinner: ₹282.45)',
+    files: [
+      {
+        title: '🍔 Roots Corp (Ginger Hotel - Nivant) — Buffet Dinner',
+        amount: '₹282.45',
+        meta: 'Transaction: POS Card Slip | Time: 09:30 PM | Thermal Cash Register Scan on file',
+        filename: '08_14Aug_Pune_GingerHotel_BuffetDinner_282.pdf',
+        tag: 'Original Paper Scan'
+      }
+    ]
+  },
+  '16Aug': {
+    heading: '16 August 2026 &bull; Pune (Weekend)',
+    summary: 'Total Day Expense: ₹701.45 (Lunch: ₹419.00 | Dinner: ₹282.45)',
+    files: [
+      {
+        title: '🍔 Pizza Hut Hinjewadi — Lunch',
+        amount: '₹419.00',
+        meta: 'Invoice: <code>P7202026004216</code> | Order: <code>P7202026016783</code> | Token: 73 | Time: 02:30 PM',
+        filename: '09_16Aug_Pune_PizzaHut_Hinjewadi_AkshatSinha_419.pdf',
+        tag: 'Official GST Bill'
+      },
+      {
+        title: '🍔 Roots Corp (Ginger Hotel - Nivant) — Buffet Dinner',
+        amount: '₹282.45',
+        meta: 'Transaction: POS Card Slip | Time: 10:15 PM | Thermal Cash Register Scan on file',
+        filename: '10_16Aug_Pune_GingerHotel_BuffetDinner_282.pdf',
+        tag: 'Original Paper Scan'
+      }
+    ]
+  },
+  '17Aug': {
+    heading: '17 August 2026 &bull; Pune (Hotel Nivant)',
+    summary: 'Total Day Expense: ₹670.93 (Lunch: ₹388.48 | Dinner: ₹282.45)',
+    files: [
+      {
+        title: '🍔 Roots Corp (Ginger Hotel - Nivant) — Buffet Dinner',
+        amount: '₹282.45',
+        meta: 'Transaction: POS Card Slip | Time: 10:35 PM | Thermal Cash Register Scan on file',
+        filename: '11_17Aug_Pune_GingerHotel_BuffetDinner_282.pdf',
+        tag: 'Original Paper Scan'
+      }
+    ]
+  },
+  '18Aug': {
+    heading: '18 August 2026 &bull; Pune (Office Day)',
+    summary: 'Total Day Expense: ₹288.75 (Office delivery lunch / dinner)',
+    files: [
+      {
+        title: '🍔 WOW! Momo Hinjewadi — Zomato Delivery',
+        amount: '₹388.48',
+        meta: 'Invoice: <code>2617T5JL00001018</code> | Zomato: <code>Z27MHOT004200001018</code> | Order: <code>8491001018</code>',
+        filename: '12_18Aug_Pune_Zomato_WowMomo_AkshatSinha_388.pdf',
+        tag: 'Electronic GST Tax Invoice'
+      }
+    ]
+  },
+  '19Aug': {
+    heading: '19 August 2026 &bull; Pune &rarr; Nagpur Arrival',
+    summary: 'Total Day Expense: ₹2,382.00 (Food: ₹1,192.00 | Travel: ₹1,190.00)',
+    files: [
+      {
+        title: '🍔 Royal Mint Restaurant — Arrival Lunch',
+        amount: '₹499.00',
+        meta: 'Invoice: <code>F4349</code> | Table: 12 | Time: 04:30 PM | Shaunak Hotels &amp; Restaurants',
+        filename: '13_19Aug_Nagpur_RoyalMint_Lunch_499.pdf',
+        tag: 'Original Tax Invoice'
+      },
+      {
+        title: '🍔 Royal Mint Restaurant — Dinner',
+        amount: '₹693.00',
+        meta: 'Invoice: <code>F4354</code> | Table: 18 | Time: 09:15 PM | Shaunak Hotels &amp; Restaurants',
+        filename: '14_19Aug_Nagpur_RoyalMint_Dinner_693.pdf',
+        tag: 'Original Tax Invoice'
+      },
+      {
+        title: '🚖 Ola Prime Sedan — Nagpur Airport to Home',
+        amount: '₹438.00',
+        meta: 'CRN: <code>11205677115</code> | Inv ID: <code>CIKCKNXFK26630</code> | Distance: 17.3 km | Time: 45 min',
+        filename: '14B_19Aug_Nagpur_Ola_Airport_to_Home_438.pdf',
+        tag: 'Original Tax Invoice'
+      }
+    ]
+  },
+  '20Aug': {
+    heading: '20 August 2026 &bull; Nagpur Stay &amp; Departure',
+    summary: 'Total Day Expense: ₹1,497.69 (Food: ₹1,197.00 | Travel: ₹300.69)',
+    files: [
+      {
+        title: '🍔 Royal Mint Restaurant — Lunch',
+        amount: '₹719.00',
+        meta: 'Invoice: <code>F4356</code> | Table: 15 | Time: 01:45 PM | Shaunak Hotels &amp; Restaurants',
+        filename: '15_20Aug_Nagpur_RoyalMint_Lunch_719.pdf',
+        tag: 'Original Tax Invoice'
+      },
+      {
+        title: '🍔 Royal Mint Restaurant — Departure Dinner',
+        amount: '₹478.00',
+        meta: 'Invoice: <code>F4358</code> | Table: 09 | Time: 08:30 PM | Shaunak Hotels &amp; Restaurants',
+        filename: '16_20Aug_Nagpur_RoyalMint_Dinner_478.pdf',
+        tag: 'Original Tax Invoice'
+      },
+      {
+        title: '🚖 Uber Go — Kalmana Home to Nagpur Station',
+        amount: '₹172.62',
+        meta: 'Receipt: <code>Receipt_20Aug2026_191922</code> | Vehicle: MH01DR5713 | Distance: 9.8 km',
+        filename: '16B_20Aug_Nagpur_Uber_Home_to_Station_173.pdf',
+        tag: 'Official Uber Receipt'
+      }
+    ]
+  }
+};
+
+function selectDate(dateKey) {
+  currentActiveDate = dateKey;
+  document.querySelectorAll('.date-item').forEach(el => el.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+
+  const data = dateData[dateKey];
+  const folderRelPath = `Dates/${dateKey}/`;
+
+  document.getElementById('dispFolderPath').textContent = folderRelPath;
+  document.getElementById('btnOpenFolder').href = folderRelPath;
+  document.getElementById('dispDateHeading').innerHTML = data.heading;
+  document.getElementById('dispDateSummary').innerHTML = data.summary;
+
+  const fileListEl = document.getElementById('dispFileList');
+  fileListEl.innerHTML = '';
+
+  data.files.forEach(f => {
+    const fileUrl = `${folderRelPath}${f.filename}`;
+    const card = document.createElement('div');
+    card.className = 'file-card';
+    card.innerHTML = `
+      <div>
+        <div class="file-card-title">
+          <span>${f.title}</span>
+          <span style="font-family:'Outfit',sans-serif; color:var(--amber-dark); margin-left:0.5rem;">(${f.amount})</span>
+        </div>
+        <div class="file-card-meta">
+          ${f.meta}<br>
+          <span style="color:var(--text-dim);">File:</span> <code>${f.filename}</code>
+        </div>
+      </div>
+      <div class="file-card-actions">
+        <a href="${fileUrl}" target="_blank" class="btn-open-file">
+          📄 Open PDF
+        </a>
+      </div>
+    `;
+    fileListEl.appendChild(card);
+  });
+}
+
+function switchPane(pane) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  document.getElementById('pane-explorer').classList.toggle('active', pane === 'explorer');
+  document.getElementById('pane-tables').classList.toggle('active', pane === 'tables');
+}
+
+// Initial selection
+window.onload = () => {
+  const firstItem = document.querySelector('.date-item');
+  if (firstItem) selectDate('10Aug');
+};
+
+let currentActiveDate = '10Aug';
+
+function copyFolderPath() {
+  const relPath = document.getElementById('dispFolderPath').textContent.trim();
+  let fullPath = decodeURIComponent(window.location.pathname);
+  if (fullPath.startsWith('/') && fullPath.charAt(2) === ':') fullPath = fullPath.substring(1);
+  const lastSlash = Math.max(fullPath.lastIndexOf('/'), fullPath.lastIndexOf('\\'));
+  const baseDir = lastSlash !== -1 ? fullPath.substring(0, lastSlash + 1) : '';
+  const resolved = (baseDir + relPath).replace(/\//g, '\\');
+  
+  navigator.clipboard.writeText(resolved).then(() => {
+    const btn = document.getElementById('btnCopyPath');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✓ Copied!';
+    setTimeout(() => { btn.innerHTML = orig; }, 1800);
+  }).catch(() => {
+    prompt('Copy folder path to clipboard:', resolved);
+  });
+}
+
+function launchExplorerBat() {
+  const relPath = document.getElementById('dispFolderPath').textContent.trim();
+  let fullPath = decodeURIComponent(window.location.pathname);
+  if (fullPath.startsWith('/') && fullPath.charAt(2) === ':') fullPath = fullPath.substring(1);
+  const lastSlash = Math.max(fullPath.lastIndexOf('/'), fullPath.lastIndexOf('\\'));
+  const baseDir = lastSlash !== -1 ? fullPath.substring(0, lastSlash + 1) : '';
+  const resolved = (baseDir + relPath).replace(/\//g, '\\');
+  
+  // Creates a lightweight launcher that opens Windows File Explorer directly to this date's folder
+  const batText = `@echo off\r\nstart "" explorer.exe "${resolved}"\r\nexit\r\n`;
+  const blob = new Blob([batText], { type: 'application/x-bat' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `open_${currentActiveDate}_folder.bat`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+</script>
+
+</body>
+</html>
