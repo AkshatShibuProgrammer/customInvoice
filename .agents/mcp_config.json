@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "reimbursement-ledger": {
+      "command": "python",
+      "args": [
+        "f:/Code by Akshat/testgemini/customizable-invoice-generator-webpage (2)/mcp_server.py"
+      ],
+      "env": {
+        "PYTHONIOENCODING": "utf-8"
+      }
+    }
+  }
+}
