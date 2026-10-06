@@ -11,23 +11,23 @@
   },
   {
     "source": "01_uber_bill_specification.md",
-    "title": "Crucial Anti-Pattern To Avoid",
-    "text": "## Crucial Anti-Pattern To Avoid\nDO NOT use raw ReportLab canvas with standard Helvetica text and table dumps (`generate_mayank_uber_pdfs.py`). Such PDFs lack maps, lack brand typography, lack icons, and get flagged during corporate reimbursement audits."
+    "title": "Dimensions & Canvas",
+    "text": "## Dimensions & Canvas\n- **Page Size**: Strictly US Letter (`612pt \u00d7 792pt`), NOT A4. Rendering on A4 squishes width and misplaces footer elements.\n- **Margins**: Left `43.5pt`, Right `43.5pt` (usable width `525pt`), Top `27.5pt`."
   },
   {
     "source": "01_uber_bill_specification.md",
     "title": "Page 1: Official Fare & Payment Summary",
-    "text": "### Page 1: Official Fare & Payment Summary\n1. **Header**:\n   - Left: Wordmark \"Uber\" (31px bold, tracking -0.04em)\n   - Right: Date (e.g. `Aug 10, 2026`) and trip start time (e.g. `11:04 AM`)\n2. **Greeting**:\n   - `Thanks for riding, [Rider First Name]` (e.g. `Thanks for riding, Mayank`)\n   - Subtitle: `We hope you enjoyed your ride this morning.` (or `this evening.` based on time of day)\n3. **Total & Fare Breakdown**:\n   - Label: `Total` (24px bold)\n   - Value: `\u20b9[Amount]` (e.g. `\u20b9432.00` with official Rupee symbol `\u20b9`, NOT `INR`)\n   - `Suggested fare`: `\u20b9[Amount]`\n4. **Payments Section**:\n   - Payment method: `Cash` with the official borderless Cash banknote icon, or `Uber Cash` / `Card`\n   - Timestamp of completion\n5. **Regulatory Disclaimer**:\n   - *\"This receipt reflects the Suggested Fare (excluding GST) and is not a tax invoice, but can be used for official reimbursement purposes. No GST is being recovered by Uber from the riders on this Trip.\"*\n   - *\"Uber does not provide transportation services; Issued on behalf of [Driver Full Name]\"*\n6. **Trip Details Overview**:\n   - Service tier: `Uber Go` (or `Go Non AC` / `Uber Premier`)\n   - Distance and Duration: e.g. `16.8 kilometers, 38 minutes`\n   - Vehicle details & License plate: e.g. `UP32LN4821` (Lucknow) or `MH12QW8923` (Pune)\n   - Official car icon (SVG/PNG)"
+    "text": "### Page 1: Official Fare & Payment Summary\n1. **Header**:\n   - Left: Wordmark \"Uber\" (`33pt` bold, font `UberMove-Bold`, color `#000000`, tracking `-0.04em`).\n   - Right: Date (e.g. `Aug 10, 2026`) and Trip start time (e.g. `10:32 AM`) in `10.5pt`, font `UberMoveText-Regular`, color `#4b4b4b` (NOT black).\n2. **Greeting**:\n   - `Thanks for riding, [Rider First Name]` (`28pt` bold, font `UberMove-Bold`, color `#000000`).\n   - Subtitle: `We hope you enjoyed your ride [this morning/afternoon/evening].` (`13.5pt`, font `UberMoveText-Regular`, color `#000000` - NOT gray).\n3. **Total & Fare Breakdown**:\n   - Divider line: `height: 1pt`, color `#F3F3F3`.\n   - `Total`: `24pt` bold, font `UberMove-Bold`, color `#000000`. Amount: `24pt` bold, color `#000000`.\n   - `Suggested fare`: `12pt`, font `UberMoveText-Medium`, color `#000000` (NOT gray). Amount: `12pt`, color `#000000`.\n4. **Payments Section**:\n   - Title: `Payments` (`18pt` bold, font `UberMove-Bold`, color `#000000`).\n   - Cash Icon: Extracted genuine RGBA icon (`24pt \u00d7 24pt`) with 100% alpha transparency. **CRITICAL**: Never use raw RGB mode which renders an unwanted solid black rectangle!\n   - Payment method: `Cash` (`12pt`, font `UberMoveText-Medium`, color `#000000`).\n   - Timestamp: `8/10/26 11:04 AM` (`10.5pt`, font `UberMoveText-Regular`, color `#4b4b4b`, margin-left `36pt`).\n5. **Regulatory Disclaimer**:\n   - Font: `10.5pt`, font `UberMoveText-Regular`, color `#000000`, line-height `15pt`, max-width `495pt`.\n   - Continuous 3-line block without artificial `<br><br>` double breaks:\n     ```\n     This receipt reflects the Suggested Fare (excluding GST) and is not a tax invoice, but can be used for official reimbursement purposes. No GST is being recovered by Uber from the riders on this Trip.\n     Uber does not provide transportation services; Issued on behalf of [Driver Full Name]\n     ```\n6. **Trip Details Overview**:\n   - Title: `Trip details` (`18pt` bold, color `#000000`).\n   - Car Icon: Genuine RGBA image with 100% alpha transparency (`52pt \u00d7 52pt`). Never use raw RGB mode which renders a black square box outside the car.\n   - Service tier: `Uber Go` (`12pt`, color `#000000`).\n   - Distance & duration: `10.5pt`, font `UberMoveText-Regular`, color `#5e5e5e`.\n   - License plate label: `License Plate:` (`12pt`, color `#000000`). Number: `10.5pt`, color `#5e5e5e`."
   },
   {
     "source": "01_uber_bill_specification.md",
     "title": "Page 2: Route Map & Trip Timeline",
-    "text": "### Page 2: Route Map & Trip Timeline\n1. **Two-Column Side-by-Side Top Grid**:\n   - **Left Column: Trip Timeline**:\n     - Pickup: Solid black square (8\u00d78px), Pickup time, Complete pickup address\n     - Vertical black connecting line (2px width)\n     - Dropoff: Hollow black circle (9\u00d79px, 2.5px border), Dropoff time, Complete dropoff address\n   - **Right Column: Official Route Map**:\n     - Container: 624\u00d7716 aspect ratio (min-height 175px, max-height 215px, rounded 12px)\n     - Content: High-contrast street map tile with the highlighted route connecting pickup to dropoff.\n2. **Driver Information Row**:\n   - Circular avatar placeholder\n   - Driver greeting: `You rode with [Driver First Name]`\n   - Driver rating badge: e.g. `4.85 \u2605`\n3. **Footer**:\n   - Link: `Want to review your trip history?`\n   - Action: `My trips`"
+    "text": "### Page 2: Route Map & Trip Timeline\n1. **Side-by-Side Top Grid**:\n   - **Left Column (Timeline)**:\n     - Pickup Time: `12pt`, font `ArialMT`, normal weight (NOT bold), color `#000000`.\n     - Pickup Address: `10.5pt`, font `UberMoveText-Regular`, color `#5e5e5e` (NOT `#000000`).\n     - Dropoff Time: `12pt`, font `ArialMT`, normal weight (NOT bold), color `#000000`.\n     - Dropoff Address: `10.5pt`, font `UberMoveText-Regular`, color `#5e5e5e` (NOT `#000000`).\n     - Spacing: Stops sit naturally grouped in the upper half (`margin-bottom: 28pt`), NOT stretched apart to bottom.\n     - Indicators:\n       - Pickup: Clean hollow black circular ring (`11pt \u00d7 11pt`, inner transparent/white hole `4.5pt`, border `3.25pt` black). **CRITICAL**: Pure hollow ring, NO center black dot!\n       - Connecting line: `1.5pt` solid black, attached directly to the bottom of the circle, running straight down towards the square.\n       - Dropoff: Clean hollow black square (`10pt \u00d7 10pt`, inner transparent/white hole `3.5pt`, border `3.25pt` black). **CRITICAL**: Pure hollow square, NO center black dot!\n   - **Right Column (Route Map)**:\n     - Size: `262.5pt \u00d7 268.5pt`, rounded corners `12pt`.\n     - Map tile: High-contrast street map with clean turn-by-turn route polyline.\n2. **Driver Information Card**:\n   - Container: `height: 40.5pt`, `width: 525pt`, border `1.5pt solid #F3F3F3`, border-radius `4px`.\n   - Left text: `You rode with [Driver First Name]` (`12pt`, font `UberMoveText-Medium`, color `#000000`).\n   - Right: Rating number e.g. `4.86` (`12pt`, font `UberMoveText-Medium`, color `#000000`).\n   - Driver Star: **CRITICAL**: Pure 5-pointed star icon (`12pt \u00d7 12pt`) with transparent background. NEVER enclose in a square box or use an RGB image with black corners.\n3. **Footer**:\n   - Left: `Want to review your trip history?` (`12pt`, font `UberMoveText-Medium`, color `#000000`).\n   - Right: `My trips` (`12pt`, font `UberMoveText-Medium`, color `#000000`, underline)."
   },
   {
     "source": "01_uber_bill_specification.md",
-    "title": "Template Implementation",
-    "text": "## Template Implementation\nThe pixel-perfect HTML/CSS implementation is available in `src/utils/official_uber_2_page_receipt_generator.html`.\nWhen generating PDFs, render this HTML template with high-DPI headless Chromium/playwright or wkhtmltopdf to achieve 100% fidelity."
+    "title": "Generation Pipeline",
+    "text": "## Generation Pipeline\n- HTML generator: `scratch/generate_all_authentic_uber_bills.py`.\n- Rendered with Playwright Chromium directly to US Letter PDF with exact CSS page sizing."
   },
   {
     "source": "02_zomato_bill_specification.md",
@@ -163,5 +163,35 @@
     "source": "05_gap_analysis_and_anti_patterns.md",
     "title": "Failure Mode 4: Hardcoding Machine-Specific Absolute Paths",
     "text": "### Failure Mode 4: Hardcoding Machine-Specific Absolute Paths\n- **What happened**: Links in dashboards sometimes referenced local drive letters (`F:\\...`, `E:\\...`).\n- **Why it failed audit**: When opened on an auditor or colleague's computer, all links broke.\n- **Rule for future AI**: Always use relative paths (`Akshat/...`, `Mayank/...`) so the entire package remains 100% portable when zipped or shared across machines."
+  },
+  {
+    "source": "06_pizzahut_bill_specification.md",
+    "title": "Specification: Authentic Pizza Hut (Devyani International Ltd) Tax Invoices",
+    "text": "# Specification: Authentic Pizza Hut (Devyani International Ltd) Tax Invoices"
+  },
+  {
+    "source": "06_pizzahut_bill_specification.md",
+    "title": "Overview",
+    "text": "## Overview\nAuthentic Pizza Hut invoices in this codebase originate from Devyani International Ltd. (PHD VJ Happiness Street, Shop 4 & 5, Ground Floor, Hinjewadi, Pune).\nReference genuine bills:\n- `E:/pune visit/zomato/akshat sinha.pdf` (Original Akshat Sinha \u2014 \u20b93,250.80)\n- `E:/pune visit/zomato/rakesh gupta.pdf` (Original Rakesh Gupta \u2014 \u20b93,041.86)"
+  },
+  {
+    "source": "06_pizzahut_bill_specification.md",
+    "title": "Document Geometry & Key Visual Elements",
+    "text": "## Document Geometry & Key Visual Elements\n1. **Page Size & Geometry**:\n   - Page dimensions: Standard A4 (`595.28 x 841.89` pt).\n   - Layout: Single-column centered thermal register bill (content width ~210 pt, centered horizontally at `x \u2248 2.0 \u2013 210.0` pt).\n2. **Authentic Embedded Dynamic QR Code**:\n   - Location: On Page 1 at bottom: `Rect(81.25, 789.52, 115.44, 823.70)` (34.18 x 34.18 pt square).\n   - Authentic Decoded Devyani PineLabs/POS Payload Schema:\n     `RR No ;AuthCode -;TDate -;TTime-cardType-cardname -GST IN NO -27AABCD5534A1Z5;HSN -996331;Invoice No-{internal_inv};Date & Time{qr_dt_str};Items -{num_items};Mode of Payment -Cash-0;Total-{total_str};SGST-{sgst_str}CGST-{cgst_str}`\n   - Dynamic per-order generation:\n     - `internal_inv`: Walk-in POS invoice identifier (e.g. `P720W00624`, `P720W00612`).\n     - `qr_dt_str`: Format `MM/DD/YY H:MM:SS AM/PM` matching Promise Delivery Time.\n     - `num_items`: Exact count of line items in order.\n     - `total_str`: Net total amount formatted to 2 decimals.\n     - `sgst_str` / `cgst_str`: Exact 2.5% tax components.\n   - Quiet Zone / Generation Parameters: Standard QR error correction `M`, `border=4` modules, `box_size=6` ensuring instant optical decode by OpenCV and smartphone cameras.\n   - **Critical Rule**: All generated Pizza Hut bills MUST generate a unique dynamic QR code matching the specific order, embedded losslessly at `Rect(81.25, 789.52, 115.44, 823.70)`."
+  },
+  {
+    "source": "06_pizzahut_bill_specification.md",
+    "title": "Mandatory Header & Legal Identifiers",
+    "text": "## Mandatory Header & Legal Identifiers\n- Brand: `PIZZAHUT`\n- Legal Entity: `Devyani International Ltd.`\n- Unit: `PHD VJ Happiness Street`\n- Address: `Shop.4 & 5, Ground Floor, VJ Happiness Street, Hinjewadi, Pune`\n- POS State: `Maharashtra`\n- Store Contact: `8510039631`\n- GSTIN: `27AABCD5534A1Z5`\n- FSSAI License: `11522083000418`\n- Service Code Tariff: `996331` (Restaurant service)\n- Corporate Email: `devyani@dil-rjcorp.com`\n- Corporate CIN: `L15135HR1991PLC143853`"
+  },
+  {
+    "source": "06_pizzahut_bill_specification.md",
+    "title": "Sequential Invoice Structure",
+    "text": "## Sequential Invoice Structure\n- `INVOICE` header\n- `INV No.`: Format `P720202600[4-digit-id]` (e.g. `P7202026004216`, `P7202026004217`, `P7202026004218`)\n- `POS No.`: `TP7221`\n- `Order No.`: Format `P720202601[4-digit-id]` (e.g. `P7202026016781`, `P7202026016783`, `P7202026016785`)\n- `Token No.`: Sequential 2-digit integer (e.g. 71, 73, 79, 65)\n- `OLO No.`: 8-digit online tracking number (e.g. `14420297`, `15156386`)\n- `Staff`: `vaishnavi`\n- `Table No`: `0`\n- `Guest Name`: `*** TAKEAWAY ***`\n- `**DUPLICATE**` or `ORIGINAL COPY`\n- Customer Name: Full employee name (`AKSHAT SINHA` or `MAYANK SIKARWAR`)\n- Order Punch & Promise Delivery Times: Sequential lunch window (1:00 PM \u2013 1:35 PM)"
+  },
+  {
+    "source": "06_pizzahut_bill_specification.md",
+    "title": "Tax Calculation Architecture",
+    "text": "## Tax Calculation Architecture\n- GST Rate: 5% (CGST 2.5% + SGST 2.5%)\n- Subtotal + GST 5% = Total Net Bill Amount\n- Payments: `Online Payment`"
   }
 ]
